@@ -1,0 +1,31 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.0"
+
+    defaultConfig {
+        applicationId "com.example.huma.al_malzma"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.github.rey5137:material:1.2.1'
+    compile 'com.android.support:cardview-v7:23.0.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.parse.bolts:bolts-android:1.2.0'
+    compile fileTree(include: 'Parse-*.jar', dir: 'libs')
+    compile 'com.github.clans:fab:1.5.5'
+}
