@@ -2,16 +2,18 @@ package com.example.huma.al_malzma.parse;
 
 import android.app.Application;
 
+import com.example.huma.al_malzma.subject_model.Lecture;
 import com.parse.Parse;
+import com.parse.ParseObject;
 
-/**
- * Created by huma on 4/17/2015.
- *
- */
+
 public class ParseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // Add subclass.
+        ParseObject.registerSubclass(Lecture.class);
 
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);

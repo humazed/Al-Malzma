@@ -8,8 +8,11 @@ public final class ParseConstants {
     public static final String OBJECT_ANNOUNCEMENTS = "announcements";
 
     //Keys names.
-    public static final String KEY_CREATED_AT = "createdAt";
+    public static final String KEY_COLLEGE = "college";
+    public static final String KEY_DEPARTMENT = "department";
     public static final String KEY_GRADE = "grade";
+
+    public static final String KEY_CREATED_AT = "createdAt";
     public static final String KEY_CURRENT_USER = "currentUser";
     public static final String KEY_SUBJECT_NAME = "subject";
     public static final String KEY_QUOTE = "quote";
