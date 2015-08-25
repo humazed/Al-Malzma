@@ -28,4 +28,5 @@ dependencies {
     compile 'com.parse.bolts:bolts-android:1.2.0'
     compile fileTree(include: 'Parse-*.jar', dir: 'libs')
     compile 'com.github.clans:fab:1.5.5'
+    compile 'com.android.support:recyclerview-v7:23.0.0'
 }

@@ -4,7 +4,7 @@ import com.parse.ParseClassName;
 
 
 @ParseClassName("Lecture")
-public class Lecture extends DataItem {
+public class Lecture extends BaseDataItem {
 
     public static final String TYPE_LECTURE = "lecture";
 

@@ -5,7 +5,7 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 
-public abstract class DataItem extends ParseObject {
+public abstract class BaseDataItem extends ParseObject {
 
     ParseUser curranUser = ParseUser.getCurrentUser();
 
@@ -23,10 +23,10 @@ public abstract class DataItem extends ParseObject {
     String mNote;
     // TODO: 8/25/2015 add other fields
 
-    public DataItem() {
+    public BaseDataItem() {
     }
 
-    public DataItem(String type, int week) {
+    public BaseDataItem(String type, int week) {
         mType = type;
         mWeek = week;
     }
