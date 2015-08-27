@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.huma.al_malzma.R;
+import com.example.huma.al_malzma.model.data.Faculties;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -40,15 +41,6 @@ public class SignupActivity extends AppCompatActivity {
     String mFaculty, mDepartment, mGrade;
 
 
-    private static final String SYSTEMS_AND_COMPUTER_ENGINEERING = "systems and computer engineering";
-    private static final String PETROL_ENGINEERING = "petrol engineering";
-    private static final String ELECTRICAL_ENGINEERING = "electrical engineering";
-    private static final String ARCHITECTURE_ENGINEERING = "architecture engineering";
-    private static final String CIVIL_ENGINEERING = "civil engineering";
-    private static final String MECHANICAL_ENGINEERING = "mechanical engineering";
-    private static final String URBAN_DESIGN_ENGINEERING = "urban design engineering";
-    private static final String ERROR = "error";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +60,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        mFaculty = "engineering";
+                        mFaculty = Faculties.Engineering.FACULTY_ENGINEERING;
                         showDepartment();
                         break;
                 }
@@ -92,45 +84,45 @@ public class SignupActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        mDepartment = "prep"; //prep
+                        mDepartment = Faculties.Engineering.Departments.DEPARTMENT_PREP; //prep
                         hideGrade();
                         break;
                     case 1:
-                        mDepartment = SYSTEMS_AND_COMPUTER_ENGINEERING;
+                        mDepartment = Faculties.Engineering.Departments.DEPARTMENT_SYSTEMS_AND_COMPUTER_ENGINEERING;
                         showGrade();
                         break;
                     case 2:
-                        mDepartment = PETROL_ENGINEERING;
+                        mDepartment = Faculties.Engineering.Departments.DEPARTMENT_PETROL_ENGINEERING;
                         showGrade();
                         Toast.makeText(SignupActivity.this, R.string.coming_soon_message, Toast.LENGTH_SHORT).show();
                         break;
                     case 3:
-                        mDepartment = ELECTRICAL_ENGINEERING;
+                        mDepartment = Faculties.Engineering.Departments.DEPARTMENT_ELECTRICAL_ENGINEERING;
                         showGrade();
                         Toast.makeText(SignupActivity.this, R.string.coming_soon_message, Toast.LENGTH_SHORT).show();
                         break;
                     case 4:
-                        mDepartment = ARCHITECTURE_ENGINEERING;
+                        mDepartment = Faculties.Engineering.Departments.DEPARTMENT_ARCHITECTURE_ENGINEERING;
                         showGrade();
                         Toast.makeText(SignupActivity.this, R.string.coming_soon_message, Toast.LENGTH_SHORT).show();
                         break;
                     case 5:
-                        mDepartment = CIVIL_ENGINEERING;
+                        mDepartment = Faculties.Engineering.Departments.DEPARTMENT_CIVIL_ENGINEERING;
                         showGrade();
                         Toast.makeText(SignupActivity.this, R.string.coming_soon_message, Toast.LENGTH_SHORT).show();
                         break;
                     case 6:
-                        mDepartment = MECHANICAL_ENGINEERING;
+                        mDepartment = Faculties.Engineering.Departments.DEPARTMENT_MECHANICAL_ENGINEERING;
                         showGrade();
                         Toast.makeText(SignupActivity.this, R.string.coming_soon_message, Toast.LENGTH_SHORT).show();
                         break;
                     case 7:
-                        mDepartment = URBAN_DESIGN_ENGINEERING;
+                        mDepartment = Faculties.Engineering.Departments.DEPARTMENT_URBAN_DESIGN_ENGINEERING;
                         showGrade();
                         Toast.makeText(SignupActivity.this, R.string.coming_soon_message, Toast.LENGTH_SHORT).show();
                         break;
                     default:    //error state case.
-                        mDepartment = ERROR;
+                        mDepartment = Faculties.Engineering.Departments.DEPARTMENT_ERROR;
                         break;
                 }
             }
@@ -156,25 +148,25 @@ public class SignupActivity extends AppCompatActivity {
 
         });
 
-        //let user choose the Grade.
+        //let user choose the Grades.
         mGradeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        mGrade = "1";
+                        mGrade = Faculties.Engineering.Grades.GRADE_1;
                         break;
                     case 1:
-                        mGrade = "2";
+                        mGrade = Faculties.Engineering.Grades.GRADE_2;
                         break;
                     case 2:
-                        mGrade = "3";
+                        mGrade = Faculties.Engineering.Grades.GRADE_3;
                         break;
                     case 3:
-                        mGrade = "4";
+                        mGrade = Faculties.Engineering.Grades.GRADE_4;
                         break;
                     default:
-                        mGrade = "0"; //error.
+                        mGrade = Faculties.Engineering.Grades.GRADE_ERROR; //error.
                         break;
                 }
             }
@@ -198,8 +190,6 @@ public class SignupActivity extends AppCompatActivity {
         mEmail = mEmailEditText.getText().toString().trim().toLowerCase();
         mPassword = mPasswordEditText.getText().toString().trim().toLowerCase();
         mPasswordConfirm = mPasswordConfirmEditText.getText().toString().trim().toLowerCase();
-
-        if (mDepartment.equals("0")) mGrade = "0";
 
         //if user leave any thing empty show him AlertDialog.
         if (mName.isEmpty() || mEmail.isEmpty() || mPassword.isEmpty()) {

@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             mGrade += "2";
 
             Toast.makeText(this, mGrade, Toast.LENGTH_SHORT).show();
-            Log.d("Grade: ", mGrade);
+            Log.d("Grades: ", mGrade);
 
             //switch the user grade to show him the right subjects.
             switch (mGrade) {
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             mSubjectsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    //pass the subject name and Grade to the SubjectActivity to use it making ParseObject.
+                    //pass the subject name and Grades to the SubjectActivity to use it making ParseObject.
 //                    Intent intent = new Intent(MainActivity.this, SubjectActivity.class);
 //                    intent.putExtra(Constants.KET_GRADE, mGrade);
 //                    intent.putExtra(Constants.KEY_SUBJECT_NAME, mSubjects[position]);
