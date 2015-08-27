@@ -2,7 +2,7 @@ package com.example.huma.al_malzma.parse;
 
 import android.app.Application;
 
-import com.example.huma.al_malzma.subject_model.Lecture;
+import com.example.huma.al_malzma.model.Lecture;
 import com.parse.Parse;
 import com.parse.ParseObject;
 

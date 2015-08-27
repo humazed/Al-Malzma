@@ -7,8 +7,12 @@ public final class ParseConstants {
     public static final String OBJECT_SECTIONS = "sections";
     public static final String OBJECT_ANNOUNCEMENTS = "announcements";
 
-    //Keys names.
-    public static final String KEY_COLLEGE = "college";
+
+    ///////////////////////////////////////////////////////////////////////////
+    // KEYs
+    ///////////////////////////////////////////////////////////////////////////
+    // User keys
+    public static final String KEY_FACULTY = "faculty";
     public static final String KEY_DEPARTMENT = "department";
     public static final String KEY_GRADE = "grade";
 
@@ -22,7 +26,6 @@ public final class ParseConstants {
 
     public static final String KEY_IMPORTANT_LINK = "important_link";
     public static final String KEY_IMPORTANT_LINK_DESCRIPTION = "important_link_description";
-
 
 
 }

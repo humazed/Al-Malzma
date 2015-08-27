@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.example.huma.al_malzma.subject_ui.SectionsFragment">
+             tools:context="com.example.huma.al_malzma.ui.subject.SectionsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

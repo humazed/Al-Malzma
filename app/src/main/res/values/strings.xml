@@ -1,14 +1,84 @@
 <resources>
     <string name="app_name">Al-Malzma</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-
     <string name="hello_world">Hello world!</string>
 
     <string name="action_settings">Settings</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_signup">SignupActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <string name="email">Please enter your E-mail</string>
+    <string name="name">Please enter your Name</string>
+    <string name="password">Please enter your password</string>
+    <string name="password_confirm">Please confirm your password</string>
+
+    <string name="login">Log in</string>
+    <string name="signup">Sign up</string>
+
+
+    <string name="faculty_select_message">Please choose your Faculty</string>
+    <string name="department_select_message">Please choose your Department</string>
+    <string name="grade_select_message">Please choose your grade</string>
+
+    <string name="logout">Log out</string>
+    <string name="password_not_match_error_message">Password not matching</string>
+
+
+    <!--title of the SubjectActivity tabs-->
+    <string name="title_section1">Lectures</string>
+    <string name="title_section2">Sections</string>
+    <string name="title_section3">Announcements</string>
+
+    <!-- FloatButtons labels -->
+    <string name="label_doctor_quote">Doctor quote</string>
+    <string name="label_important_link">Important Link</string>
+
+    <string name="label_lecture_pdf_file">Lecture PDF file</string>
+
+    <string name="label_section_pdf_file">Section PDF file</string>
+
+    <!-- Dialogs button title-->
+    <string name="doctor_quote_dialog_title">Doctor quote</string>
+    <string name="doctor_quote_dialog_content">What did the doctor said?</string>
+    <string name="doctor_quote_dialog_hint">the quote</string>
+
+    <string name="important_link_dialog_title">Important link</string>
+    <string name="important_link_dialog_input">Important link</string>
+    <string name="important_link_dialog_hint">The link</string>
+    <string name="description">The description</string>
+    <string name="add">ADD</string>
+
+
+    <string name="label_lecture_link">Lecture Link</string>
+    <string name="lecture_link">Lecture link</string>
+    <string name="lecture_link_dialog_input">Lecture link</string>
+    <string name="lecture_link_dialog_content">What is the lecture PDF link?</string>
+    <string name="lecture_link_dialog_hint">the link</string>
+
+    <string name="label_section_link">Section Link</string>
+
+    <string name="choose">CHOOSE</string>
+
+
+    <string name="add_success_message">Add success</string>
+
+
+    <!--Empty and error messages-->
+    <string name="coming_soon_message">Coming soon</string>
+    <string name="no_announcements_message">No announcements</string>
+    <string name="no_lectures_message">No lectures</string>
+    <string name="no_sections_message">No sections</string>
+    <string name="loading">Loading…</string>
+    <string name="unexpected_error">Sorry un expected error</string>
+    <string name="connection_error">Please check your connection</string>
+    <string name="generic_error_title">Oooops…</string>
+    <string name="signup_error_message">Please fill the empty fields</string>
+    <string name="wrong_uri_error_title">Oooops…</string>
+    <string name="wrong_uri_error_message">Wrong link please make sure you enter correct link.</string>
+    <string name="wrong_link_error_message">Wrong Link</string>
+    <string name="link_helper_text">Enter the Link</string>
+
 </resources>

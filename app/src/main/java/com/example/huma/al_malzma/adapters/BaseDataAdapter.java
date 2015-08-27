@@ -1,4 +1,4 @@
-package com.example.huma.al_malzma.subject_adapters;
+package com.example.huma.al_malzma.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

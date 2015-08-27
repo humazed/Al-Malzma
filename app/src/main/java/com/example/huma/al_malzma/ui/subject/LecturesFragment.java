@@ -1,4 +1,4 @@
-package com.example.huma.al_malzma.subject_ui;
+package com.example.huma.al_malzma.ui.subject;
 
 
 import android.os.Bundle;

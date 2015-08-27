@@ -1,4 +1,4 @@
-package com.example.huma.al_malzma.subject_model;
+package com.example.huma.al_malzma.model;
 
 import com.parse.ParseClassName;
 
