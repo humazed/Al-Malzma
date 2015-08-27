@@ -81,4 +81,8 @@
     <string name="wrong_link_error_message">Wrong Link</string>
     <string name="link_helper_text">Enter the Link</string>
 
+
+    <string name="generic_error_message">Sorry some thing went wrong try again later…</string>
+
+
 </resources>

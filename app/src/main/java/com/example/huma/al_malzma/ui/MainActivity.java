@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.huma.al_malzma.R;
+import com.example.huma.al_malzma.model.data.Faculties;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.github.clans.fab.FloatingActionButton;
 import com.parse.ParseUser;
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static ParseUser mCurrentUser;
 
-    String mGrade;
+    String mFaculty, mDepartment, mGrade, mTerm;
+
     String[] mSubjects;
     private int mPreviousVisibleItem;
 
@@ -49,37 +51,20 @@ public class MainActivity extends AppCompatActivity {
         }
         // do stuff with the user
         else {
-            //get the user grade to show him the right subjects.
+            //get the user Faculty, Department and Grade to show him the right subjects.
+            mFaculty = mCurrentUser.getString(ParseConstants.KEY_FACULTY);
+            mDepartment = mCurrentUser.getString(ParseConstants.KEY_DEPARTMENT);
             mGrade = mCurrentUser.getString(ParseConstants.KEY_GRADE);
             //2 for the second term
             //TODO: replace it with dynamic code that know the current term using the data.
-            mGrade += "2";
+            mTerm = Faculties.TERM_2;
 
             Toast.makeText(this, mGrade, Toast.LENGTH_SHORT).show();
             Log.d("Grades: ", mGrade);
 
-            //switch the user grade to show him the right subjects.
-            switch (mGrade) {
-                case "p0_1_2": //prep
-                    mSubjects = this.getResources().getStringArray(R.array.subjects_p0_1_2);
-                    break;
-                case "n_1_2": //1
-                    mSubjects = this.getResources().getStringArray(R.array.subjects_n_1_2);
-                    break;
-                case "n_2_2": //2
-                    mSubjects = this.getResources().getStringArray(R.array.subjects_n_2_2);
-                    break;
-                case "n_3_2": //3
-                    mSubjects = this.getResources().getStringArray(R.array.subjects_n_3_2);
-                    break;
-                case "n_4_2": //4
-                    mSubjects = this.getResources().getStringArray(R.array.subjects_n_4_2);
-                    break;
-                default:
-                    mSubjects = new String[]{};
-                    mEmptyTextView.setText(getString(R.string.unexpected_error));
-            }
+            mSubjects = getSubjectsArr(mFaculty, mDepartment, mGrade, mTerm);
 
+            // Set the adapter with subjects.
             mSubjectsListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mSubjects));
             mSubjectsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -93,33 +78,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-
-    }
-
-    private String[] getSubjectsArr(String faculty, String department, String grade) {
-
-        switch (faculty + department + grade) {
-            case "p0_1_2": //prep
-                mSubjects = this.getResources().getStringArray(R.array.subjects_p0_1_2);
-                break;
-            case "n_1_2": //1
-                mSubjects = this.getResources().getStringArray(R.array.subjects_n_1_2);
-                break;
-            case "n_2_2": //2
-                mSubjects = this.getResources().getStringArray(R.array.subjects_n_2_2);
-                break;
-            case "n_3_2": //3
-                mSubjects = this.getResources().getStringArray(R.array.subjects_n_3_2);
-                break;
-            case "n_4_2": //4
-                mSubjects = this.getResources().getStringArray(R.array.subjects_n_4_2);
-                break;
-            default:
-                mSubjects = new String[]{};
-                mEmptyTextView.setText(getString(R.string.unexpected_error));
-        }
-
-        return null;
     }
 
     @Override
@@ -146,5 +104,82 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    // Get Subjects array by search in: Faculties >> Departments >> Grades >> Terms. and then get it from xml.
+    private String[] getSubjectsArr(String faculty, String department, String grade, String term) {
+        String[] subjects = new String[0];
+        //switch the user Faculty, Department and Grade to show him the right subjects.
+        switch (faculty) {
+            case Faculties.Engineering.FACULTY_ENGINEERING:
+                switch (department) {
+                    case Faculties.Engineering.Departments.DEPARTMENT_PREP:
+                        switch (term) {
+                            case Faculties.TERM_1:
+                                break;
+                            case Faculties.TERM_2:
+                                subjects = this.getResources().getStringArray(R.array.subjects_p0_1_2);
+                                break;
+                        }
+                        break;
+                    case Faculties.Engineering.Departments.DEPARTMENT_SYSTEMS_AND_COMPUTER_ENGINEERING:
+                        switch (grade) {
+                            case Faculties.Engineering.Grades.GRADE_1:
+                                switch (term) {
+                                    case Faculties.TERM_1:
+                                        break;
+                                    case Faculties.TERM_2:
+                                        subjects = this.getResources().getStringArray(R.array.subjects_n_1_2);
+                                        break;
+                                }
+                                break;
+                            case Faculties.Engineering.Grades.GRADE_2:
+                                switch (term) {
+                                    case Faculties.TERM_1:
+                                        break;
+                                    case Faculties.TERM_2:
+                                        subjects = this.getResources().getStringArray(R.array.subjects_n_2_2);
+                                        break;
+                                }
+                                break;
+                            case Faculties.Engineering.Grades.GRADE_3:
+                                switch (term) {
+                                    case Faculties.TERM_1:
+                                        break;
+                                    case Faculties.TERM_2:
+                                        subjects = this.getResources().getStringArray(R.array.subjects_n_3_2);
+                                        break;
+                                }
+                                break;
+                            case Faculties.Engineering.Grades.GRADE_4:
+                                switch (term) {
+                                    case Faculties.TERM_1:
+                                        break;
+                                    case Faculties.TERM_2:
+                                        subjects = this.getResources().getStringArray(R.array.subjects_n_4_2);
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                    case Faculties.Engineering.Departments.DEPARTMENT_PETROL_ENGINEERING:
+                        break;
+                    case Faculties.Engineering.Departments.DEPARTMENT_ELECTRICAL_ENGINEERING:
+                        break;
+                    case Faculties.Engineering.Departments.DEPARTMENT_ARCHITECTURE_ENGINEERING:
+                        break;
+                    case Faculties.Engineering.Departments.DEPARTMENT_CIVIL_ENGINEERING:
+                        break;
+                    case Faculties.Engineering.Departments.DEPARTMENT_MECHANICAL_ENGINEERING:
+                        break;
+                    case Faculties.Engineering.Departments.DEPARTMENT_URBAN_DESIGN_ENGINEERING:
+                        break;
+                }
+                break;
+        }
+        return subjects;
+    }
+
+
 }
 

@@ -122,7 +122,7 @@ public class SignupActivity extends AppCompatActivity {
                         Toast.makeText(SignupActivity.this, R.string.coming_soon_message, Toast.LENGTH_SHORT).show();
                         break;
                     default:    //error state case.
-                        mDepartment = Faculties.Engineering.Departments.DEPARTMENT_ERROR;
+                        mDepartment = Faculties.ERROR;
                         break;
                 }
             }
@@ -166,7 +166,7 @@ public class SignupActivity extends AppCompatActivity {
                         mGrade = Faculties.Engineering.Grades.GRADE_4;
                         break;
                     default:
-                        mGrade = Faculties.Engineering.Grades.GRADE_ERROR; //error.
+                        mGrade = Faculties.ERROR; //error.
                         break;
                 }
             }
@@ -190,6 +190,12 @@ public class SignupActivity extends AppCompatActivity {
         mEmail = mEmailEditText.getText().toString().trim().toLowerCase();
         mPassword = mPasswordEditText.getText().toString().trim().toLowerCase();
         mPasswordConfirm = mPasswordConfirmEditText.getText().toString().trim().toLowerCase();
+
+        // Note: that case is unexpected to happen, but to make sure that the data that saved to parse is write.
+        if (mFaculty.equals(Faculties.ERROR) || mDepartment.equals(Faculties.ERROR) || mGrade.equals(Faculties.ERROR)) {
+            Toast.makeText(this, R.string.generic_error_message, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         //if user leave any thing empty show him AlertDialog.
         if (mName.isEmpty() || mEmail.isEmpty() || mPassword.isEmpty()) {
