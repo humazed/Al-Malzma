@@ -1,6 +1,7 @@
 package com.example.huma.al_malzma.model.data;
 
-//TODO: try to replace it with Tree
+
+//TODO: replace it with JsonAttributes.java
 public interface Faculties {
     String ERROR = "error";
 

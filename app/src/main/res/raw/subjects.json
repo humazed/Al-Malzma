@@ -1,7 +1,7 @@
 [
-  //universities
+  // universities
   {
-    "name": "Al-Azhar",
+    "name": "Al-Azhar-cairo",
     "faculties": [
       {
         "name": "Engineering",
@@ -10,7 +10,7 @@
             "name": "prep",
             "grades": [
               {
-                "name": "grade_1",
+                "name": 0,
                 "term_1": {
                   "subjects": [
                     "Math",
@@ -37,7 +37,7 @@
             "name": "Systems and computer engineering",
             "grades": [
               {
-                "name": "grade_1",
+                "name": 1,
                 "term_1": {
                   "subjects": [
                     "Programming",
@@ -59,7 +59,7 @@
                 }
               },
               {
-                "name": "grade_2",
+                "name": 2,
                 "term_1": {
                   "subjects": [
                     "Math",
@@ -84,7 +84,7 @@
                 }
               },
               {
-                "name": "grade_3",
+                "name": 3,
                 "term_1": {
                   "subjects": [
                     "Math",
@@ -111,7 +111,7 @@
                 }
               },
               {
-                "name": "grade_4",
+                "name": 4,
                 "term_1": {
                   "subjects": [
                     "Special computer subject",
@@ -140,7 +140,7 @@
             "name": "",
             "grades": [
               {
-                "name": "grade_1",
+                "name": 1,
                 "term_1": {
                   "subjects": [
                   ]
@@ -151,7 +151,7 @@
                 }
               },
               {
-                "name": "grade_2",
+                "name": 2,
                 "term_1": {
                   "subjects": [
                   ]
@@ -162,7 +162,7 @@
                 }
               },
               {
-                "name": "grade_3",
+                "name": 3,
                 "term_1": {
                   "subjects": [
                   ]
@@ -173,7 +173,7 @@
                 }
               },
               {
-                "name": "grade_4",
+                "name": 4,
                 "term_1": {
                   "subjects": [
                   ]
