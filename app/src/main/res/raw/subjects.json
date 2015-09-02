@@ -1,169 +1,192 @@
-{
-  "faculty_engineering": {
-    "name": "Engineering",
-    "department_prep": {
-      "name": "prep",
-      "grade_1": {
-        "term_1": {
-          "subjects": [
-            "Math",
-            "physics",
-            "English",
-            "Realisation",
-            "subject"
-          ]
-        },
-        "term_2": {
-          "subjects": [
-            "chemistry",
-            "Math",
-            "fekh",
-            "Geometry",
-            "Entag",
-            "Mechanics"
-          ]
-        }
+[
+  //universities
+  {
+    "name": "Al-Azhar",
+    "faculties": [
+      {
+        "name": "Engineering",
+        "departments": [
+          {
+            "name": "prep",
+            "grades": [
+              {
+                "name": "grade_1",
+                "term_1": {
+                  "subjects": [
+                    "Math",
+                    "physics",
+                    "English",
+                    "Realisation",
+                    "subject"
+                  ]
+                },
+                "term_2": {
+                  "subjects": [
+                    "chemistry",
+                    "Math",
+                    "fekh",
+                    "Geometry",
+                    "Entag",
+                    "Mechanics"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "name": "Systems and computer engineering",
+            "grades": [
+              {
+                "name": "grade_1",
+                "term_1": {
+                  "subjects": [
+                    "Programming",
+                    "Electronics",
+                    "Math",
+                    "Circuits",
+                    "Measure",
+                    "English"
+                  ]
+                },
+                "term_2": {
+                  "subjects": [
+                    "Algorithms",
+                    "Electronics",
+                    "Math",
+                    "Fields",
+                    "Religious subject"
+                  ]
+                }
+              },
+              {
+                "name": "grade_2",
+                "term_1": {
+                  "subjects": [
+                    "Math",
+                    "Integrated circuits",
+                    "Systems and signals",
+                    "machines  VHDL",
+                    "Numerical Analysis",
+                    "Object-oriented programming",
+                    "Tests",
+                    "Realisation subject"
+                  ]
+                },
+                "term_2": {
+                  "subjects": [
+                    "Math",
+                    "Logical circuits",
+                    "Automatic Control",
+                    "Electric machines",
+                    "Religious subjects",
+                    "Realisation subject"
+                  ]
+                }
+              },
+              {
+                "name": "grade_3",
+                "term_1": {
+                  "subjects": [
+                    "Math",
+                    "Communications systems",
+                    "Electronics",
+                    "Religious subjects",
+                    "Operating system",
+                    "Digital Control",
+                    "Tests ",
+                    "Transition systems and mechanisms ",
+                    "Power electric systems ",
+                    "Realisation subject"
+                  ]
+                },
+                "term_2": {
+                  "subjects": [
+                    "Databases",
+                    "Microprocessors",
+                    "Administration and engineering projects",
+                    "Sensors of adapters",
+                    "Religious subjects",
+                    "Realisation subject"
+                  ]
+                }
+              },
+              {
+                "name": "grade_4",
+                "term_1": {
+                  "subjects": [
+                    "Special computer subject",
+                    "Tests",
+                    "Engineering programming",
+                    "Intelligent Systems",
+                    "Computer architecture",
+                    "Interpreters",
+                    "Advanced software",
+                    "Realisation subject"
+                  ]
+                },
+                "term_2": {
+                  "subjects": [
+                    "Algorithms",
+                    "Advanced software",
+                    "Computer architecture",
+                    "Interpreters",
+                    "Realisation subject"
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "name": "",
+            "grades": [
+              {
+                "name": "grade_1",
+                "term_1": {
+                  "subjects": [
+                  ]
+                },
+                "term_2": {
+                  "subjects": [
+                  ]
+                }
+              },
+              {
+                "name": "grade_2",
+                "term_1": {
+                  "subjects": [
+                  ]
+                },
+                "term_2": {
+                  "subjects": [
+                  ]
+                }
+              },
+              {
+                "name": "grade_3",
+                "term_1": {
+                  "subjects": [
+                  ]
+                },
+                "term_2": {
+                  "subjects": [
+                  ]
+                }
+              },
+              {
+                "name": "grade_4",
+                "term_1": {
+                  "subjects": [
+                  ]
+                },
+                "term_2": {
+                  "subjects": [
+                  ]
+                }
+              }
+            ]
+          }
+        ]
       }
-    },
-    "department_systems_and_computer_engineering": {
-      "name": "Systems and computer engineering",
-      "grade_1": {
-        "term_1": {
-          "subjects": [
-            "Programming",
-            "Electronics",
-            "Math",
-            "Circuits",
-            "Measure",
-            "English"
-          ]
-        },
-        "term_2": {
-          "subjects": [
-            "Algorithms",
-            "Electronics",
-            "Math",
-            "Fields",
-            "Religious subject"
-          ]
-        }
-      },
-      "grade_2": {
-        "term_1": {
-          "subjects": [
-            "Math",
-            "Integrated circuits",
-            "Systems and signals",
-            "machines  VHDL",
-            "Numerical Analysis",
-            "Object-oriented programming",
-            "Tests",
-            "Realisation subject"
-          ]
-        },
-        "term_2": {
-          "subjects": [
-            "Math",
-            "Logical circuits",
-            "Automatic Control",
-            "Electric machines",
-            "Religious subjects",
-            "Realisation subject"
-          ]
-        }
-      },
-      "grade_3": {
-        "term_1": {
-          "subjects": [
-            "Math",
-            "Communications systems",
-            "Electronics",
-            "Religious subjects",
-            "Operating system",
-            "Digital Control",
-            "Tests ",
-            "Transition systems and mechanisms ",
-            "Power electric systems ",
-            "Realisation subject"
-          ]
-        },
-        "term_2": {
-          "subjects": [
-            "Databases",
-            "Microprocessors",
-            "Administration and engineering projects",
-            "Sensors of adapters",
-            "Religious subjects",
-            "Realisation subject"
-          ]
-        }
-      },
-      "grade_4": {
-        "term_1": {
-          "subjects": [
-            "Special computer subject",
-            "Tests",
-            "Engineering programming",
-            "Intelligent Systems",
-            "Computer architecture",
-            "Interpreters",
-            "Advanced software",
-            "Realisation subject"
-          ]
-        },
-        "term_2": {
-          "subjects": [
-            "Algorithms",
-            "Advanced software",
-            "Computer architecture",
-            "Interpreters",
-            "Realisation subject"
-          ]
-        }
-      }
-    },
-    "department_": {
-      "name": "",
-      "grade_1": {
-        "term_1": {
-          "subjects": [
-          ]
-        },
-        "term_2": {
-          "subjects": [
-          ]
-        }
-      },
-      "grade_2": {
-        "term_1": {
-          "subjects": [
-          ]
-        },
-        "term_2": {
-          "subjects": [
-          ]
-        }
-      },
-      "grade_3": {
-        "term_1": {
-          "subjects": [
-          ]
-        },
-        "term_2": {
-          "subjects": [
-          ]
-        }
-      },
-      "grade_4": {
-        "term_1": {
-          "subjects": [
-          ]
-        },
-        "term_2": {
-          "subjects": [
-          ]
-        }
-      }
-    }
+    ]
   }
-}
+]

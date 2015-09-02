@@ -78,7 +78,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        //Let the user choose his Department.
+        //Let the user choose his DepartmentTable.
         mDepartmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

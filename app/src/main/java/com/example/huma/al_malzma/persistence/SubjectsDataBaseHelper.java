@@ -18,11 +18,11 @@ public class SubjectsDataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(University.CREATE_UNIVERSITY);
-        db.execSQL(Faculty.CREATE_FACULTY);
-        db.execSQL(Department.CREATE_DEPARTMENT);
-        db.execSQL(Grade.CREATE_GRADE);
-        db.execSQL(TermSubjects.CREATE_TERM_SUBLETS);
+        db.execSQL(UniversityTable.CREATE_UNIVERSITY);
+        db.execSQL(FacultyTable.CREATE_FACULTY);
+        db.execSQL(DepartmentTable.CREATE_DEPARTMENT);
+        db.execSQL(GradeTable.CREATE_GRADE);
+        db.execSQL(TermSubjectsTable.CREATE_TERM_SUBLETS);
     }
 
     @Override

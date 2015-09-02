@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // do stuff with the user
         else {
-            //get the user Faculty, Department and Grade to show him the right subjects.
+            //get the user FacultyTable, DepartmentTable and GradeTable to show him the right subjects.
             mFaculty = mCurrentUser.getString(ParseConstants.KEY_FACULTY);
             mDepartment = mCurrentUser.getString(ParseConstants.KEY_DEPARTMENT);
             mGrade = mCurrentUser.getString(ParseConstants.KEY_GRADE);
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
     // Get Subjects array by search in: Faculties >> Departments >> Grades >> Terms. and then get it from xml.
     private String[] getSubjectsArr(String faculty, String department, String grade, String term) {
         String[] subjects = new String[0];
-        //switch the user Faculty, Department and Grade to show him the right subjects.
+        //switch the user FacultyTable, DepartmentTable and GradeTable to show him the right subjects.
         switch (faculty) {
             case Faculties.Engineering.FACULTY_ENGINEERING:
                 switch (department) {
