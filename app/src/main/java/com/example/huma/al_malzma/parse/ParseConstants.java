@@ -1,31 +1,31 @@
 package com.example.huma.al_malzma.parse;
 
-public final class ParseConstants {
+public interface ParseConstants {
 
     //ParseObjects names.
-    public static final String OBJECT_LECTURES = "lectures";
-    public static final String OBJECT_SECTIONS = "sections";
-    public static final String OBJECT_ANNOUNCEMENTS = "announcements";
+    String OBJECT_LECTURES = "lectures";
+    String OBJECT_SECTIONS = "sections";
+    String OBJECT_ANNOUNCEMENTS = "announcements";
 
 
     ///////////////////////////////////////////////////////////////////////////
     // KEYs
     ///////////////////////////////////////////////////////////////////////////
     // User keys
-    public static final String KEY_FACULTY = "faculty";
-    public static final String KEY_DEPARTMENT = "department";
-    public static final String KEY_GRADE = "grade";
+    String KEY_FACULTY = "faculty";
+    String KEY_DEPARTMENT = "department";
+    String KEY_GRADE = "grade";
 
-    public static final String KEY_CREATED_AT = "createdAt";
-    public static final String KEY_CURRENT_USER = "currentUser";
-    public static final String KEY_SUBJECT_NAME = "subject";
-    public static final String KEY_QUOTE = "quote";
-    public static final String KEY_QUOTE_TEXT = "text";
-    public static final String KEY_TYPE = "type";
-    public static final String KEY_LECTURE_LINK = "lecture_link";
+    String KEY_CREATED_AT = "createdAt";
+    String KEY_CURRENT_USER = "currentUser";
+    String KEY_SUBJECT_NAME = "subject";
+    String KEY_QUOTE = "quote";
+    String KEY_QUOTE_TEXT = "text";
+    String KEY_TYPE = "type";
+    String KEY_LECTURE_LINK = "lecture_link";
 
-    public static final String KEY_IMPORTANT_LINK = "important_link";
-    public static final String KEY_IMPORTANT_LINK_DESCRIPTION = "important_link_description";
+    String KEY_IMPORTANT_LINK = "important_link";
+    String KEY_IMPORTANT_LINK_DESCRIPTION = "important_link_description";
 
 
 }
