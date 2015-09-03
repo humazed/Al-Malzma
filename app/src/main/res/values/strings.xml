@@ -83,6 +83,7 @@
 
 
     <string name="generic_error_message">Sorry some thing went wrong try again later…</string>
+    <string name="title_activity_db">DbActivity</string>
 
 
 </resources>

@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.huma.al_malzma.R;
+import com.example.huma.al_malzma.helper.JsonHelper;
 import com.example.huma.al_malzma.model.data.JsonAttributes;
 
 import org.json.JSONArray;
@@ -43,7 +44,6 @@ public class SubjectsDataBaseHelper extends SQLiteOpenHelper {
         return mInstance;
     }
 
-
     private void preFillDatabase(SQLiteDatabase db) {
         try {
             db.beginTransaction();
@@ -59,15 +59,14 @@ public class SubjectsDataBaseHelper extends SQLiteOpenHelper {
     }
 
     private void fillAll(SQLiteDatabase db) throws JSONException, IOException {
-        ContentValues values = new ContentValues(); // reduce, reuse
-        JSONArray jsonArray = new JSONArray(readCategoriesFromResources());
+        JSONArray universities = new JSONArray(readCategoriesFromResources());
         JSONObject university;
-        for (int i = 0; i < jsonArray.length(); i++) {
-            university = jsonArray.getJSONObject(i);
-            final String universityName = university.getString(JsonAttributes.NAME);
-            fillCategory(db, values, university, universityName);
-            final JSONArray quizzes = university.getJSONArray(JsonAttributes.QUIZZES);
-            fillQuizzesForCategory(db, values, quizzes, universityName);
+        for (int i = 0; i < universities.length(); i++) {
+            university = universities.getJSONObject(i);
+            String universityName = university.getString(JsonAttributes.NAME);
+            JSONArray faculties = university.getJSONArray(JsonAttributes.FACULTIES);
+
+            getFaculties(db, faculties, universityName);
         }
     }
 
@@ -83,53 +82,88 @@ public class SubjectsDataBaseHelper extends SQLiteOpenHelper {
         return categoriesJson.toString();
     }
 
-    private void fillCategory(SQLiteDatabase db, ContentValues values, JSONObject category,
-                              String categoryId) throws JSONException {
-        values.clear();
-        values.put(CategoryTable.COLUMN_ID, categoryId);
-        values.put(CategoryTable.COLUMN_NAME, category.getString(JsonAttributes.NAME));
-        values.put(CategoryTable.COLUMN_THEME, category.getString(JsonAttributes.THEME));
-        values.put(CategoryTable.COLUMN_SOLVED, category.getString(JsonAttributes.SOLVED));
-        values.put(CategoryTable.COLUMN_SCORES, category.getString(JsonAttributes.SCORES));
-        db.insert(CategoryTable.NAME, null, values);
-    }
+    private void getFaculties(SQLiteDatabase db, JSONArray faculties, String universityName) throws JSONException {
+        JSONObject faculty;
+        for (int i = 0; i < faculties.length(); i++) {
+            faculty = faculties.getJSONObject(i);
+            String facultyName = faculty.getString(JsonAttributes.NAME);
+            JSONArray departments = faculty.getJSONArray(JsonAttributes.DEPARTMENTS);
 
-    private void fillQuizzesForCategory(SQLiteDatabase db, ContentValues values, JSONArray quizzes,
-                                        String categoryId) throws JSONException {
-        JSONObject quiz;
-        for (int i = 0; i < quizzes.length(); i++) {
-            quiz = quizzes.getJSONObject(i);
-            values.clear();
-            values.put(QuizTable.FK_CATEGORY, categoryId);
-            values.put(QuizTable.COLUMN_TYPE, quiz.getString(JsonAttributes.TYPE));
-            values.put(QuizTable.COLUMN_QUESTION, quiz.getString(JsonAttributes.QUESTION));
-            values.put(QuizTable.COLUMN_ANSWER, quiz.getString(JsonAttributes.ANSWER));
-            db.insert(QuizTable.NAME, null, values);
+            getDepartments(db, departments, universityName, facultyName);
         }
     }
 
-    /**
-     * Resets the contents of Topeka's database to it's initial state.
-     *
-     * @param context The context this is running in.
-     */
-    public static void reset(Context context) {
-        SQLiteDatabase writableDatabase = getWritableDatabase(context);
-        writableDatabase.delete(CategoryTable.NAME, null, null);
-        writableDatabase.delete(QuizTable.NAME, null, null);
-        getInstance(context).preFillDatabase(writableDatabase);
+    private void getDepartments(SQLiteDatabase db, JSONArray departments, String universityName,
+                                String facultyName) throws JSONException {
+        JSONObject department;
+        for (int i = 0; i < departments.length(); i++) {
+            department = departments.getJSONObject(i);
+            String departmentName = department.getString(JsonAttributes.NAME);
+            JSONArray grades = department.getJSONArray(JsonAttributes.GRADES);
+
+            getGrades(db, grades, universityName, facultyName, departmentName);
+        }
+
     }
+
+    private void getGrades(SQLiteDatabase db, JSONArray grades, String universityName, String facultyName,
+                           String departmentName) throws JSONException {
+        JSONObject grade;
+        for (int i = 0; i < grades.length(); i++) {
+            grade = grades.getJSONObject(i);
+            int gradeName = grade.getInt(JsonAttributes.NAME);
+            JSONArray t1Subjects = grade.getJSONArray(JsonAttributes.TERM_1);
+            JSONArray t2Subjects = grade.getJSONArray(JsonAttributes.TERM_2);
+
+            getT1Subjects(db, t1Subjects, universityName, facultyName, departmentName, gradeName);
+            getT2Subjects(db, t2Subjects, universityName, facultyName, departmentName, gradeName);
+        }
+    }
+
+    private void getT1Subjects(SQLiteDatabase db, JSONArray t1Subjects, String university, String faculty,
+                               String department, int grade) throws JSONException {
+        String[] T1Subjects = JsonHelper.jsonArrayToStringArray(t1Subjects.toString());
+
+        for (String subject : T1Subjects) {
+            Log.d(TAG, "getT1Subjects " + university + faculty + department + grade + subject);
+
+            ContentValues values = new ContentValues();
+            values.put(SubjectsTable.COLUMN_UNIVERSITY, university);
+            values.put(SubjectsTable.COLUMN_FACULTY, faculty);
+            values.put(SubjectsTable.COLUMN_DEPARTMENT, department);
+            values.put(SubjectsTable.COLUMN_GRADE, grade);
+            values.put(SubjectsTable.COLUMN_TERM, 1);
+            values.put(SubjectsTable.COLUMN_SUBJECT, subject);
+
+            db.insert(SubjectsTable.NAME, null, values);
+        }
+    }
+
+    private void getT2Subjects(SQLiteDatabase db, JSONArray t2Subjects, String university, String faculty,
+                               String department, int grade) throws JSONException {
+        String[] T2Subjects = JsonHelper.jsonArrayToStringArray(t2Subjects.toString());
+
+        for (String subject : T2Subjects) {
+            Log.d(TAG, "getT1Subjects " + university + faculty + department + grade + subject);
+
+            ContentValues values = new ContentValues();
+            values.put(SubjectsTable.COLUMN_UNIVERSITY, university);
+            values.put(SubjectsTable.COLUMN_FACULTY, faculty);
+            values.put(SubjectsTable.COLUMN_DEPARTMENT, department);
+            values.put(SubjectsTable.COLUMN_GRADE, grade);
+            values.put(SubjectsTable.COLUMN_TERM, 2);
+            values.put(SubjectsTable.COLUMN_SUBJECT, subject);
+
+            db.insert(SubjectsTable.NAME, null, values);
+        }
+    }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(UniversityTable.CREATE_UNIVERSITY);
-        db.execSQL(FacultyTable.CREATE_FACULTY);
-        db.execSQL(DepartmentTable.CREATE_DEPARTMENT);
-        db.execSQL(GradeTable.CREATE_GRADE);
-        db.execSQL(TermSubjectsTable.CREATE_TERM_SUBLETS);
+        db.execSQL(SubjectsTable.CREATE);
 
-        preFillDatabase(db);
-
+        preFillDatabase(db); //this will be called once when Database is first created.
     }
 
     @Override
