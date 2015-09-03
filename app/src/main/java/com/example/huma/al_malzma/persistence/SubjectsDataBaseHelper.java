@@ -112,11 +112,32 @@ public class SubjectsDataBaseHelper extends SQLiteOpenHelper {
         for (int i = 0; i < grades.length(); i++) {
             grade = grades.getJSONObject(i);
             int gradeName = grade.getInt(JsonAttributes.NAME);
+            JSONArray t0Subjects = grade.getJSONArray(JsonAttributes.TERM_0);
             JSONArray t1Subjects = grade.getJSONArray(JsonAttributes.TERM_1);
             JSONArray t2Subjects = grade.getJSONArray(JsonAttributes.TERM_2);
 
+            getT0Subjects(db, t0Subjects, universityName, facultyName, departmentName, gradeName);
             getT1Subjects(db, t1Subjects, universityName, facultyName, departmentName, gradeName);
             getT2Subjects(db, t2Subjects, universityName, facultyName, departmentName, gradeName);
+        }
+    }
+
+    private void getT0Subjects(SQLiteDatabase db, JSONArray t1Subjects, String university, String faculty,
+                               String department, int grade) throws JSONException {
+        String[] T0Subjects = JsonHelper.jsonArrayToStringArray(t1Subjects.toString());
+
+        for (String subject : T0Subjects) {
+            Log.d(TAG, "getT1Subjects " + university + faculty + department + grade + subject);
+
+            ContentValues values = new ContentValues();
+            values.put(SubjectsTable.COLUMN_UNIVERSITY, university);
+            values.put(SubjectsTable.COLUMN_FACULTY, faculty);
+            values.put(SubjectsTable.COLUMN_DEPARTMENT, department);
+            values.put(SubjectsTable.COLUMN_GRADE, grade);
+            values.put(SubjectsTable.COLUMN_TERM, 0);
+            values.put(SubjectsTable.COLUMN_SUBJECT, subject);
+
+            db.insert(SubjectsTable.NAME, null, values);
         }
     }
 
