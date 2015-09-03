@@ -1,4 +1,4 @@
-package com.example.huma.al_malzma.model.data;
+package com.example.huma.al_malzma.persistence;
 
 
 public interface JsonAttributes {

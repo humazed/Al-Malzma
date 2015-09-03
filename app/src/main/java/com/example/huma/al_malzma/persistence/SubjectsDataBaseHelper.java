@@ -10,7 +10,6 @@ import android.util.Log;
 
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.JsonHelper;
-import com.example.huma.al_malzma.model.data.JsonAttributes;
 
 import org.json.JSONArray;
 import org.json.JSONException;
