@@ -27,8 +27,6 @@ public class DbActivity extends AppCompatActivity {
 
     @OnClick(R.id.save_button)
     void save() {
-        mSubjectDataSource = new SubjectDataSource(this);
-
         String[] subjects = mSubjectDataSource.getSubjects(JsonAttributes.Universities.AlAzharCairo.UNIVERSITY_AL_AZHAR_CAIRO,
                 JsonAttributes.Universities.AlAzharCairo.Faculties.Engineering.FACULTY_ENGINEERING,
                 JsonAttributes.Universities.AlAzharCairo.Faculties.Engineering.Departments.DEPARTMENT_SYSTEMS_AND_COMPUTER_ENGINEERING,
@@ -43,6 +41,21 @@ public class DbActivity extends AppCompatActivity {
 
     @OnClick(R.id.query_button)
     void query() {
+        String[] strings = mSubjectDataSource.getGrades(JsonAttributes.Universities.AlAzharCairo.UNIVERSITY_AL_AZHAR_CAIRO,
+                JsonAttributes.Universities.AlAzharCairo.Faculties.Engineering.FACULTY_ENGINEERING,
+                JsonAttributes.Universities.AlAzharCairo.Faculties.Engineering.Departments.DEPARTMENT_SYSTEMS_AND_COMPUTER_ENGINEERING
+        );
 
+//        String[] string = mSubjectDataSource.getDepartments(JsonAttributes.Universities.AlAzharCairo.UNIVERSITY_AL_AZHAR_CAIRO,
+//                JsonAttributes.Universities.AlAzharCairo.Faculties.Engineering.FACULTY_ENGINEERING
+//        );
+
+//        String[] strings = mSubjectDataSource.getFaculties(JsonAttributes.Universities.AlAzharCairo.UNIVERSITY_AL_AZHAR_CAIRO);
+
+//        String[] strings = mSubjectDataSource.getUniversities();
+
+        for (String s : strings) {
+            Log.d(TAG, "query " + s);
+        }
     }
 }

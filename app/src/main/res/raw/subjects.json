@@ -9,7 +9,7 @@
             "name": "prep",
             "grades": [
               {
-                "name": 0,
+                "name": "0",
                 "1": [
                   "Math",
                   "physics",
@@ -32,7 +32,7 @@
             "name": "Systems and computer engineering",
             "grades": [
               {
-                "name": 1,
+                "name": "1",
                 "1": [
                   "Programming",
                   "Electronics",
@@ -50,7 +50,7 @@
                 ]
               },
               {
-                "name": 2,
+                "name": "2",
                 "1": [
                   "Math",
                   "Integrated circuits",
@@ -71,7 +71,7 @@
                 ]
               },
               {
-                "name": 3,
+                "name": "3",
                 "1": [
                   "Math",
                   "Communications systems",
@@ -94,7 +94,7 @@
                 ]
               },
               {
-                "name": 4,
+                "name": "4",
                 "1": [
                   "Special computer subject",
                   "Tests",
@@ -119,28 +119,28 @@
             "name": "",
             "grades": [
               {
-                "name": 1,
+                "name": "1",
                 "1": [
                 ],
                 "2": [
                 ]
               },
               {
-                "name": 2,
+                "name": "2",
                 "1": [
                 ],
                 "2": [
                 ]
               },
               {
-                "name": 3,
+                "name": "3",
                 "1": [
                 ],
                 "2": [
                 ]
               },
               {
-                "name": 4,
+                "name": "4",
                 "1": [
                 ],
                 "2": [

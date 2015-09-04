@@ -41,14 +41,14 @@ public interface JsonAttributes {
     }
 
     interface Grades {
-        int GRADE_0 = 0; //no grades
-        int GRADE_1 = 1;
-        int GRADE_2 = 2;
-        int GRADE_3 = 3;
-        int GRADE_4 = 4;
-        int GRADE_5 = 5;
-        int GRADE_6 = 6;
-        int GRADE_7 = 7;
+        String GRADE_0 = "0"; //no grades
+        String GRADE_1 = "1";
+        String GRADE_2 = "2";
+        String GRADE_3 = "3";
+        String GRADE_4 = "4";
+        String GRADE_5 = "5";
+        String GRADE_6 = "6";
+        String GRADE_7 = "7";
     }
 
 
