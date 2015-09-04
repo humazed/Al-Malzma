@@ -7,9 +7,11 @@ public interface JsonAttributes {
     String FACULTIES = "faculties";
     String DEPARTMENTS = "departments";
     String GRADES = "grades";
-    String TERM_0 = "term_0";
-    String TERM_1 = "term_1";
-    String TERM_2 = "term_2";
+
+    String TERM_0 = "0";
+    String TERM_1 = "1";
+    String TERM_2 = "2";
+
     String SUBJECTS = "subjects";
 
     interface Universities {

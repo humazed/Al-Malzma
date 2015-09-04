@@ -9,11 +9,19 @@
                 tools:context="com.example.huma.al_malzma.persistence.DbActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ok"
+        android:text="save"
         android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="quary"
+        android:id="@+id/query_button"
+        android:layout_below="@+id/save_button"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

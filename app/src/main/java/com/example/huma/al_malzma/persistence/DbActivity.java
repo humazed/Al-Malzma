@@ -2,10 +2,10 @@ package com.example.huma.al_malzma.persistence;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 
 import com.example.huma.al_malzma.R;
+import com.example.huma.al_malzma.model.data.JsonAttributes;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -13,38 +13,36 @@ import butterknife.OnClick;
 public class DbActivity extends AppCompatActivity {
     public static final String TAG = DbActivity.class.getSimpleName();
 
+    SubjectDataSource mSubjectDataSource;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_db);
         ButterKnife.bind(this);
+
+        mSubjectDataSource = new SubjectDataSource(this);
     }
 
-    @OnClick(R.id.button)
+    @OnClick(R.id.save_button)
     void save() {
-        SubjectDataSource subjectDataSource = new SubjectDataSource(this);
-    }
+        mSubjectDataSource = new SubjectDataSource(this);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_db, menu);
-        return true;
-    }
+        String[] subjects = mSubjectDataSource.getSubjects(JsonAttributes.Universities.AlAzharCairo.UNIVERSITY_AL_AZHAR_CAIRO,
+                JsonAttributes.Universities.AlAzharCairo.Faculties.Engineering.FACULTY_ENGINEERING,
+                JsonAttributes.Universities.AlAzharCairo.Faculties.Engineering.Departments.DEPARTMENT_SYSTEMS_AND_COMPUTER_ENGINEERING,
+                JsonAttributes.Grades.GRADE_1,
+                JsonAttributes.TERM_1);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        for (String subject : subjects) {
+            Log.d(TAG, "save " + subject);
         }
 
-        return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.query_button)
+    void query() {
+
     }
 }

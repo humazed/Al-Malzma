@@ -10,14 +10,14 @@
             "grades": [
               {
                 "name": 0,
-                "term_1": [
+                "1": [
                   "Math",
                   "physics",
                   "English",
                   "Realisation",
                   "subject"
                 ],
-                "term_2": [
+                "2": [
                   "chemistry",
                   "Math",
                   "fekh",
@@ -33,7 +33,7 @@
             "grades": [
               {
                 "name": 1,
-                "term_1": [
+                "1": [
                   "Programming",
                   "Electronics",
                   "Math",
@@ -41,7 +41,7 @@
                   "Measure",
                   "English"
                 ],
-                "term_2": [
+                "2": [
                   "Algorithms",
                   "Electronics",
                   "Math",
@@ -51,7 +51,7 @@
               },
               {
                 "name": 2,
-                "term_1": [
+                "1": [
                   "Math",
                   "Integrated circuits",
                   "Systems and signals",
@@ -61,7 +61,7 @@
                   "Tests",
                   "Realisation subject"
                 ],
-                "term_2": [
+                "2": [
                   "Math",
                   "Logical circuits",
                   "Automatic Control",
@@ -72,7 +72,7 @@
               },
               {
                 "name": 3,
-                "term_1": [
+                "1": [
                   "Math",
                   "Communications systems",
                   "Electronics",
@@ -84,7 +84,7 @@
                   "Power electric systems ",
                   "Realisation subject"
                 ],
-                "term_2": [
+                "2": [
                   "Databases",
                   "Microprocessors",
                   "Administration and engineering projects",
@@ -95,7 +95,7 @@
               },
               {
                 "name": 4,
-                "term_1": [
+                "1": [
                   "Special computer subject",
                   "Tests",
                   "Engineering programming",
@@ -105,7 +105,7 @@
                   "Advanced software",
                   "Realisation subject"
                 ],
-                "term_2": [
+                "2": [
                   "Algorithms",
                   "Advanced software",
                   "Computer architecture",
@@ -120,30 +120,30 @@
             "grades": [
               {
                 "name": 1,
-                "term_1": [
+                "1": [
                 ],
-                "term_2": [
+                "2": [
                 ]
               },
               {
                 "name": 2,
-                "term_1": [
+                "1": [
                 ],
-                "term_2": [
+                "2": [
                 ]
               },
               {
                 "name": 3,
-                "term_1": [
+                "1": [
                 ],
-                "term_2": [
+                "2": [
                 ]
               },
               {
                 "name": 4,
-                "term_1": [
+                "1": [
                 ],
-                "term_2": [
+                "2": [
                 ]
               }
             ]

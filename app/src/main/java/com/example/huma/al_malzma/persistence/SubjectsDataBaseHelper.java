@@ -112,6 +112,7 @@ public class SubjectsDataBaseHelper extends SQLiteOpenHelper {
         for (int i = 0; i < grades.length(); i++) {
             grade = grades.getJSONObject(i);
             int gradeName = grade.getInt(JsonAttributes.NAME);
+
             JSONArray t0Subjects = grade.getJSONArray(JsonAttributes.TERM_0);
             JSONArray t1Subjects = grade.getJSONArray(JsonAttributes.TERM_1);
             JSONArray t2Subjects = grade.getJSONArray(JsonAttributes.TERM_2);
