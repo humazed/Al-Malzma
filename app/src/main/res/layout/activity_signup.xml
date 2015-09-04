@@ -59,33 +59,70 @@
         android:hint="@string/password_confirm"
         android:inputType="textPassword"/>
 
-    <TextView
-        android:id="@+id/faculty_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/progress_view"
-        android:layout_alignStart="@+id/progress_view"
-        android:layout_below="@+id/password_confirm_edit_text"
-        android:text="@string/faculty_select_message"/>
 
-    <Spinner
-        android:id="@+id/faculty_spinner"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/text_view_linearLayout1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/faculty_text_view"
-        android:layout_marginBottom="5dp"
-        android:entries="@array/faculties"
-        android:spinnerMode="dropdown"/>
+        android:layout_below="@+id/password_confirm_edit_text"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/university_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="@string/university_select_message"/>
+
+        <TextView
+            android:id="@+id/faculty_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="@string/faculty_select_message"
+            android:visibility="invisible"
+            tools:visibility="visible"/>
+    </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/text_view_linearLayout"
+        android:id="@+id/spinners_linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/text_view_linearLayout1"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <Spinner
+            android:id="@+id/university_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="5"
+            android:spinnerMode="dropdown"/>
+
+        <Spinner
+            android:id="@+id/faculty_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="5"
+            android:spinnerMode="dropdown"
+            android:visibility="invisible"
+            tools:visibility="visible"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/text_view_linearLayout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/faculty_spinner"
+        android:layout_below="@+id/spinners_linearLayout1"
         android:orientation="horizontal"
         android:weightSum="10">
 
@@ -95,7 +132,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:text="@string/department_select_message"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            tools:visibility="visible"/>
 
         <TextView
             android:id="@+id/grade_text_view"
@@ -103,16 +141,17 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:text="@string/grade_select_message"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            tools:visibility="visible"/>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/spinners_linearLayout"
+        android:id="@+id/spinners_linearLayout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/text_view_linearLayout"
+        android:layout_below="@+id/text_view_linearLayout2"
         android:orientation="horizontal"
         android:weightSum="10">
 
@@ -121,30 +160,28 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:entries="@array/departments"
             android:prompt="@string/department_select_message"
-            android:spinnerMode="dropdown"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            tools:visibility="visible"/>
 
         <Spinner
             android:id="@+id/grade_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:entries="@array/grades"
             android:prompt="@string/grade_select_message"
             android:spinnerMode="dropdown"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            tools:visibility="visible"/>
     </LinearLayout>
 
     <Button
         android:id="@+id/signup_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/spinners_linearLayout"
-        android:layout_marginTop="40dp"
         android:text="@string/signup"/>
 
     <com.rey.material.widget.ProgressView
@@ -158,6 +195,15 @@
         app:pv_circular="true"
         app:pv_progressMode="indeterminate"
         app:pv_progressStyle="@style/Material.Drawable.CircularProgress"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test"
+        android:id="@+id/test_button"
+        android:layout_above="@+id/signup_button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 
 
 </RelativeLayout>

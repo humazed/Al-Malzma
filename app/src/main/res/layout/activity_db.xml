@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:text="save"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_alignLeft="@+id/query_button"
+        android:layout_alignStart="@+id/query_button"/>
 
     <Button
         android:layout_width="wrap_content"

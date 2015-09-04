@@ -19,9 +19,10 @@
     <string name="signup">Sign up</string>
 
 
-    <string name="faculty_select_message">Please choose your Faculty</string>
-    <string name="department_select_message">Please choose your Department</string>
-    <string name="grade_select_message">Please choose your grade</string>
+    <string name="university_select_message">Choose your University</string>
+    <string name="faculty_select_message">Choose your Faculty</string>
+    <string name="department_select_message">Choose your Department</string>
+    <string name="grade_select_message">Choose your grade</string>
 
     <string name="logout">Log out</string>
     <string name="password_not_match_error_message">Password not matching</string>
