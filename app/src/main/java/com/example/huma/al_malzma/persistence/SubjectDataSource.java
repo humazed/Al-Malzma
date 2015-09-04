@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.huma.al_malzma.persistence.tables.SubjectsTable;
+
 import java.util.ArrayList;
 
 public class SubjectDataSource {

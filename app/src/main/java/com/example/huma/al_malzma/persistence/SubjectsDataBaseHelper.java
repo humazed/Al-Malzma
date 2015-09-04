@@ -11,6 +11,7 @@ import android.util.Log;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.JsonHelper;
 import com.example.huma.al_malzma.model.data.JsonAttributes;
+import com.example.huma.al_malzma.persistence.tables.SubjectsTable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
