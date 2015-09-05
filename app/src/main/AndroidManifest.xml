@@ -32,6 +32,14 @@
             android:name=".persistence.DbActivity"
             android:label="@string/title_activity_db" >
         </activity>
+        <activity
+            android:name=".ui.SubjectActivity"
+            android:label="@string/title_activity_subject"
+            android:parentActivityName=".ui.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.huma.al_malzma.ui.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

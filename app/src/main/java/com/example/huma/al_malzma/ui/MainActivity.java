@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Set the adapter with subjects.
             mSubjectsListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mSubjects));
+            mSubjectsListView.setEmptyView(mEmptyTextView);
             mSubjectsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
