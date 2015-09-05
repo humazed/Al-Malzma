@@ -12,6 +12,7 @@ public interface ParseConstants {
     // KEYs
     ///////////////////////////////////////////////////////////////////////////
     // User keys
+    String KEY_UNIVERSITY = "university";
     String KEY_FACULTY = "faculty";
     String KEY_DEPARTMENT = "department";
     String KEY_GRADE = "grade";

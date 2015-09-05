@@ -3,7 +3,6 @@ package com.example.huma.al_malzma.model.data;
 
 //TODO: replace it with JsonAttributes.java
 public interface Faculties {
-    String ERROR = "error";
 
     String TERM_1 = "1";
     String TERM_2 = "2";
