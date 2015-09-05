@@ -129,7 +129,7 @@ public class SubjectsDataBaseHelper extends SQLiteOpenHelper {
         String[] T0Subjects = JsonHelper.jsonArrayToStringArray(t1Subjects.toString());
 
         for (String subject : T0Subjects) {
-            Log.d(TAG, "getT1Subjects " + university + faculty + department + grade + subject);
+            Log.d(TAG, "getT0Subjects " + university + faculty + department + grade + subject);
 
             ContentValues values = new ContentValues();
             values.put(SubjectsTable.COLUMN_UNIVERSITY, university);
@@ -167,7 +167,7 @@ public class SubjectsDataBaseHelper extends SQLiteOpenHelper {
         String[] T2Subjects = JsonHelper.jsonArrayToStringArray(t2Subjects.toString());
 
         for (String subject : T2Subjects) {
-            Log.d(TAG, "getT1Subjects " + university + faculty + department + grade + subject);
+            Log.d(TAG, "getT2Subjects " + university + faculty + department + grade + subject);
 
             ContentValues values = new ContentValues();
             values.put(SubjectsTable.COLUMN_UNIVERSITY, university);

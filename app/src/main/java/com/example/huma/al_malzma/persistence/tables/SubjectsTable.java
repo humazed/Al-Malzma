@@ -24,6 +24,6 @@ public interface SubjectsTable {
             COLUMN_DEPARTMENT + " VARCHAR NOT NULL, " +
             COLUMN_GRADE + " VARCHAR NOT NULL, " +
             COLUMN_TERM + " VARCHAR NOT NULL, " +
-            COLUMN_SUBJECT + " VARCHAR NOT NULL, " +
-            ")";
+            COLUMN_SUBJECT + " VARCHAR NOT NULL " +
+            ");";
 }
