@@ -196,7 +196,7 @@ public class SignupActivity extends AppCompatActivity {
                         mProgressView.setVisibility(View.INVISIBLE);
 
                         if (e == null) {
-                            // Hooray! Let them use the app now.
+                            // Hooray! Let th   em use the app now.
                             Intent intent = new Intent(SignupActivity.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);

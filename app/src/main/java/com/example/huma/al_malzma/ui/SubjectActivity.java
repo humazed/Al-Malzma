@@ -1,5 +1,6 @@
 package com.example.huma.al_malzma.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -39,6 +40,14 @@ public class SubjectActivity extends AppCompatActivity implements ActionBar.TabL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject);
+
+        Intent intent = getIntent();
+        String university = intent.getStringExtra(MainActivity.KEY_UNIVERSITY);
+        String faculty = intent.getStringExtra(MainActivity.KEY_FACULTY);
+        String department = intent.getStringExtra(MainActivity.KEY_DEPARTMENT);
+        String grade = intent.getStringExtra(MainActivity.KEY_GRADE);
+        String term = intent.getStringExtra(MainActivity.KEY_TERM);
+        String subjectName = intent.getStringExtra(MainActivity.KEY_SUBJECT_NAME);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();

@@ -20,6 +20,8 @@ import com.example.huma.al_malzma.persistence.SubjectDataSource;
 import com.github.clans.fab.FloatingActionButton;
 import com.parse.ParseUser;
 
+import java.util.Calendar;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -30,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.empty_text_view) TextView mEmptyTextView;
     @Bind(R.id.fab) FloatingActionButton mFab;
 
+    public static final String KEY_UNIVERSITY = "university";
+    public static final String KEY_FACULTY = "faculty";
+    public static final String KEY_DEPARTMENT = "department";
+    public static final String KEY_GRADE = "grade";
+    public static final String KEY_TERM = "term";
+    public static final String KEY_SUBJECT_NAME = "subjectName";
 
     private int mPreviousVisibleItem;
 
@@ -76,10 +84,14 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //pass the subject name and Grades to the SubjectActivity to use it making ParseObject.
-//                    Intent intent = new Intent(MainActivity.this, SubjectActivity.class);
-//                    intent.putExtra(Constants.KET_GRADE, mGrade);
-//                    intent.putExtra(Constants.KEY_SUBJECT_NAME, mSubjects[position]);
-//                    startActivity(intent);
+                    Intent intent = new Intent(MainActivity.this, SubjectActivity.class);
+                    intent.putExtra(KEY_UNIVERSITY, mUniversity);
+                    intent.putExtra(KEY_FACULTY, mFaculty);
+                    intent.putExtra(KEY_DEPARTMENT, mDepartment);
+                    intent.putExtra(KEY_GRADE, mGrade);
+                    intent.putExtra(KEY_TERM, mTerm);
+                    intent.putExtra(KEY_SUBJECT_NAME, mSubjects[position]);
+                    startActivity(intent);
                 }
             });
         }
@@ -88,8 +100,12 @@ public class MainActivity extends AppCompatActivity {
 
     @NonNull
     private String getCurrentTerm() {
-        //TODO: replace it with dynamic code that know the current term using the data.
-        return JsonAttributes.TERM_1;
+        int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
+        if (Calendar.SEPTEMBER <= currentMonth || currentMonth <= Calendar.FEBRUARY) {
+            return JsonAttributes.TERM_1;
+        } else {
+            return JsonAttributes.TERM_2;
+        }
     }
 
     @Override
