@@ -14,9 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.huma.al_malzma.R;
-import com.example.huma.al_malzma.ui.subject.AnnouncementsFragment;
-import com.example.huma.al_malzma.ui.subject.LecturesFragment;
-import com.example.huma.al_malzma.ui.subject.SectionsFragment;
+import com.example.huma.al_malzma.ui.subject_fragments.AnnouncementsFragment;
+import com.example.huma.al_malzma.ui.subject_fragments.LecturesFragment;
+import com.example.huma.al_malzma.ui.subject_fragments.SectionsFragment;
 
 import java.util.Locale;
 
