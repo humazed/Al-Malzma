@@ -77,14 +77,13 @@ public class MainActivity extends AppCompatActivity {
 
             mSubjects = mSubjectDataSource.getSubjects(mUniversity, mFaculty, mDepartment, mGrade, mTerm);
 
-            // Set the adapter with subjects.
-            mSubjectsListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mSubjects));
             mSubjectsListView.setEmptyView(mEmptyTextView);
+            mSubjectsListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mSubjects));
             mSubjectsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    //pass the subject name and Grades to the SubjectActivity to use it making ParseObject.
-                    Intent intent = new Intent(MainActivity.this, SubjectActivity.class);
+                    //pass the subject name and Grades to WeeksActivity to let the user choose week.
+                    Intent intent = new Intent(MainActivity.this, WeeksActivity.class);
                     intent.putExtra(KEY_UNIVERSITY, mUniversity);
                     intent.putExtra(KEY_FACULTY, mFaculty);
                     intent.putExtra(KEY_DEPARTMENT, mDepartment);

@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -20,6 +21,7 @@ import com.example.huma.al_malzma.ui.subject.SectionsFragment;
 import java.util.Locale;
 
 public class SubjectActivity extends AppCompatActivity implements ActionBar.TabListener {
+    public static final String TAG = SubjectActivity.class.getSimpleName();
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -41,13 +43,17 @@ public class SubjectActivity extends AppCompatActivity implements ActionBar.TabL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject);
 
-        Intent intent = getIntent();
-        String university = intent.getStringExtra(MainActivity.KEY_UNIVERSITY);
-        String faculty = intent.getStringExtra(MainActivity.KEY_FACULTY);
-        String department = intent.getStringExtra(MainActivity.KEY_DEPARTMENT);
-        String grade = intent.getStringExtra(MainActivity.KEY_GRADE);
-        String term = intent.getStringExtra(MainActivity.KEY_TERM);
-        String subjectName = intent.getStringExtra(MainActivity.KEY_SUBJECT_NAME);
+        Intent mainIntent = getIntent().getParcelableExtra(WeeksActivity.KEY_MAIN_INTENT);
+        String university = mainIntent.getStringExtra(MainActivity.KEY_UNIVERSITY);
+        String faculty = mainIntent.getStringExtra(MainActivity.KEY_FACULTY);
+        String department = mainIntent.getStringExtra(MainActivity.KEY_DEPARTMENT);
+        String grade = mainIntent.getStringExtra(MainActivity.KEY_GRADE);
+        String term = mainIntent.getStringExtra(MainActivity.KEY_TERM);
+        String subjectName = mainIntent.getStringExtra(MainActivity.KEY_SUBJECT_NAME);
+
+        String week = getIntent().getStringExtra(WeeksActivity.KEY_WEEK);
+
+        Log.d(TAG, "onCreate " + university + faculty + department + grade + term + subjectName + week);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();

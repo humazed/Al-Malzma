@@ -40,6 +40,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.huma.al_malzma.ui.MainActivity" />
         </activity>
+        <activity
+            android:name=".ui.WeeksActivity"
+            android:label="@string/title_activity_weeks" >
+        </activity>
     </application>
 
 </manifest>
