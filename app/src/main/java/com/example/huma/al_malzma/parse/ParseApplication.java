@@ -2,9 +2,7 @@ package com.example.huma.al_malzma.parse;
 
 import android.app.Application;
 
-import com.example.huma.al_malzma.model.Lecture;
 import com.parse.Parse;
-import com.parse.ParseObject;
 
 
 public class ParseApplication extends Application {
@@ -13,7 +11,7 @@ public class ParseApplication extends Application {
         super.onCreate();
 
         // Add subclass.
-        ParseObject.registerSubclass(Lecture.class);
+//        ParseObject.registerSubclass(Lecture.class);
 
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);

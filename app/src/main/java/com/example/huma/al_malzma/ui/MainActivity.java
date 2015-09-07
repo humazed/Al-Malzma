@@ -2,7 +2,6 @@ package com.example.huma.al_malzma.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -14,13 +13,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.huma.al_malzma.R;
-import com.example.huma.al_malzma.model.data.JsonAttributes;
+import com.example.huma.al_malzma.model.BaseDataItem;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.persistence.SubjectDataSource;
 import com.github.clans.fab.FloatingActionButton;
 import com.parse.ParseUser;
-
-import java.util.Calendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -71,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             mFaculty = mCurrentUser.getString(ParseConstants.KEY_FACULTY);
             mDepartment = mCurrentUser.getString(ParseConstants.KEY_DEPARTMENT);
             mGrade = mCurrentUser.getString(ParseConstants.KEY_GRADE);
-            mTerm = getCurrentTerm();
+            mTerm = BaseDataItem.getCurrentTerm();
 
             Log.d(TAG, "onCreate " + mUniversity + mFaculty + mDepartment + mGrade + mTerm);
 
@@ -95,16 +92,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-    }
-
-    @NonNull
-    private String getCurrentTerm() {
-        int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
-        if (Calendar.SEPTEMBER <= currentMonth || currentMonth <= Calendar.FEBRUARY) {
-            return JsonAttributes.TERM_1;
-        } else {
-            return JsonAttributes.TERM_2;
-        }
     }
 
     @Override
