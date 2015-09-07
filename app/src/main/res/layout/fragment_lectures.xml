@@ -31,28 +31,38 @@
         fab:menu_labels_ellipsize="end"
         fab:menu_labels_singleLine="true">
 
+
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab1"
+            android:id="@+id/camera_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_edit"
-            fab:fab_label="Menu item 1"
+            android:src="@drawable/ic_photo_camera_white_24dp"
+            fab:fab_label="@string/fab_label_camera"
             fab:fab_size="mini"/>
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab2"
+            android:id="@+id/choose_image_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_edit"
-            fab:fab_label="Menu item 2"
+            android:src="@drawable/ic_image_white_24dp"
+            fab:fab_label="@string/fab_label_choose_image"
+            fab:fab_size="mini"/>
+
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/link_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_insert_link_white_24dp"
+            fab:fab_label="@string/fab_label_add_link"
             fab:fab_size="mini"/>
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab3"
+            android:id="@+id/pdf_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_edit"
-            fab:fab_label="@string/hello_world"
+            android:src="@drawable/ic_insert_drive_file_white_24dp"
+            fab:fab_label="@string/fab_label_add_pdf_file"
             fab:fab_size="mini"/>
 
     </com.github.clans.fab.FloatingActionMenu>

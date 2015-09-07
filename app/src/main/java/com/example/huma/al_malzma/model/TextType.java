@@ -4,7 +4,7 @@ package com.example.huma.al_malzma.model;
 public class TextType extends BaseDataItem {
 
     private String title;
-    private String data;
+    private String text;
 
 
     @Override
@@ -20,12 +20,12 @@ public class TextType extends BaseDataItem {
         this.title = title;
     }
 
-    public String getData() {
-        return data;
+    public String getText() {
+        return text;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setText(String text) {
+        this.text = text;
     }
 
 }

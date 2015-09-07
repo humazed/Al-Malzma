@@ -87,6 +87,10 @@
     <string name="title_activity_db">DbActivity</string>
     <string name="title_activity_subject">SubjectActivity</string>
     <string name="title_activity_weeks">Choose a week</string>
+    <string name="fab_label_camera">Camera</string>
+    <string name="fab_label_choose_image">Choose image</string>
+    <string name="fab_label_add_link">Add link</string>
+    <string name="fab_label_add_pdf_file">Add pdf file</string>
 
 
 </resources>

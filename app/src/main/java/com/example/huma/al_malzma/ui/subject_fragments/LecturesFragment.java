@@ -26,9 +26,9 @@ public class LecturesFragment extends Fragment {
 
     @Bind(R.id.empty_text_view) TextView mEmptyTextView;
     @Bind(R.id.subjects_list_view) ListView mSubjectsListView;
-    @Bind(R.id.fab1) FloatingActionButton mFab1;
-    @Bind(R.id.fab2) FloatingActionButton mFab2;
-    @Bind(R.id.fab3) FloatingActionButton mFab3;
+    @Bind(R.id.link_fab) FloatingActionButton mFab1;
+    @Bind(R.id.pdf_fab) FloatingActionButton mFab2;
+    @Bind(R.id.choose_image_fab) FloatingActionButton mFab3;
     @Bind(R.id.menu) FloatingActionMenu mMenu;
 
     public LecturesFragment() {
