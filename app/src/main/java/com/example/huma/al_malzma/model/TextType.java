@@ -1,6 +1,11 @@
 package com.example.huma.al_malzma.model;
 
 
+import android.content.Context;
+
+import com.parse.ParseClassName;
+
+@ParseClassName("Text")
 public class TextType extends BaseDataItem {
 
     private String title;
@@ -8,7 +13,7 @@ public class TextType extends BaseDataItem {
 
 
     @Override
-    public void create() {
+    public void saveToParse(Context context) {
 
     }
 

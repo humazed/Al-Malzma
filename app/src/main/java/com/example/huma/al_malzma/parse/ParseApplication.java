@@ -2,7 +2,12 @@ package com.example.huma.al_malzma.parse;
 
 import android.app.Application;
 
+import com.example.huma.al_malzma.model.ImageType;
+import com.example.huma.al_malzma.model.LinkType;
+import com.example.huma.al_malzma.model.PdfType;
+import com.example.huma.al_malzma.model.TextType;
 import com.parse.Parse;
+import com.parse.ParseObject;
 
 
 public class ParseApplication extends Application {
@@ -11,7 +16,10 @@ public class ParseApplication extends Application {
         super.onCreate();
 
         // Add subclass.
-//        ParseObject.registerSubclass(Lecture.class);
+        ParseObject.registerSubclass(ImageType.class);
+        ParseObject.registerSubclass(PdfType.class);
+        ParseObject.registerSubclass(LinkType.class);
+        ParseObject.registerSubclass(TextType.class);
 
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);

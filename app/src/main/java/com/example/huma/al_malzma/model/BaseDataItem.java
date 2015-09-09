@@ -1,16 +1,33 @@
 package com.example.huma.al_malzma.model;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
+import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.model.data.JsonAttributes;
 import com.example.huma.al_malzma.parse.ParseConstants;
+import com.example.huma.al_malzma.ui.SubjectActivity;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.Calendar;
 
 
 public abstract class BaseDataItem extends ParseObject {
+    public static final String TAG = BaseDataItem.class.getSimpleName();
+
+    /**
+     * in this class the member variables getters and setters are normal noe's because all of them
+     * can be got without user direct input and save them to parse in the constructor.
+     * <p/>
+     * but in the classes that inherit from him getters and setters will deal with parse directly
+     * because as they say in there site this is the recommenced approach.
+     * https://www.parse.com/docs/android/guide#objects-accessors-mutators-and-methods
+     */
 
     private ParseUser creator = ParseUser.getCurrentUser();
 
@@ -22,12 +39,43 @@ public abstract class BaseDataItem extends ParseObject {
 
     private String term = getCurrentTerm();
 
-    private String subject;
-    private String week;
+    public String subject = SubjectActivity.subjectName;
+    public String week = SubjectActivity.week;
 
     private String FragmentSource; //ie: lecture,section or announcement. get it from SourceTypes.java
 
-    public abstract void create();
+    //put the identifiers that can be got easily.
+    public BaseDataItem() {
+        put(ParseConstants.KEY_CREATOR, creator);
+        put(ParseConstants.KEY_UNIVERSITY, university);
+        put(ParseConstants.KEY_FACULTY, faculty);
+        put(ParseConstants.KEY_DEPARTMENT, department);
+        put(ParseConstants.KEY_GRADE, grade);
+        put(ParseConstants.KEY_TERM, term);
+        put(ParseConstants.KEY_SUBJECT, subject);
+        put(ParseConstants.KEY_WEEK, week);
+    }
+
+
+    public abstract void saveToParse(Context context);
+
+    protected void saveInBackgroundWithAlertDialog(final Context context) {
+        saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle(context.getString(R.string.generic_error_title))
+                            .setMessage(R.string.connection_error)
+                            .setPositiveButton(android.R.string.ok, null)
+                            .create().show();
+                } else {
+                    Log.d(TAG, "done");
+                }
+            }
+        });
+    }
+
 
     public boolean add() {
         return true;

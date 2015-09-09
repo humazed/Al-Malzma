@@ -38,20 +38,30 @@ public class SubjectActivity extends AppCompatActivity implements ActionBar.TabL
      */
     ViewPager mViewPager;
 
+    public static String university;
+    public static String faculty;
+    public static String department;
+    public static String grade;
+    public static String term;
+    public static String subjectName;
+    public static String week;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject);
 
+        // TODO: 9/9/2015 I didn't use any of that things except subjectName an week. so  try delete them when you finish.
         Intent mainIntent = getIntent().getParcelableExtra(WeeksActivity.KEY_MAIN_INTENT);
-        String university = mainIntent.getStringExtra(MainActivity.KEY_UNIVERSITY);
-        String faculty = mainIntent.getStringExtra(MainActivity.KEY_FACULTY);
-        String department = mainIntent.getStringExtra(MainActivity.KEY_DEPARTMENT);
-        String grade = mainIntent.getStringExtra(MainActivity.KEY_GRADE);
-        String term = mainIntent.getStringExtra(MainActivity.KEY_TERM);
-        String subjectName = mainIntent.getStringExtra(MainActivity.KEY_SUBJECT_NAME);
 
-        String week = getIntent().getStringExtra(WeeksActivity.KEY_WEEK);
+        university = mainIntent.getStringExtra(MainActivity.KEY_UNIVERSITY);
+        faculty = mainIntent.getStringExtra(MainActivity.KEY_FACULTY);
+        department = mainIntent.getStringExtra(MainActivity.KEY_DEPARTMENT);
+        grade = mainIntent.getStringExtra(MainActivity.KEY_GRADE);
+        term = mainIntent.getStringExtra(MainActivity.KEY_TERM);
+        subjectName = mainIntent.getStringExtra(MainActivity.KEY_SUBJECT_NAME);
+
+        week = getIntent().getStringExtra(WeeksActivity.KEY_WEEK);
 
         Log.d(TAG, "onCreate " + university + faculty + department + grade + term + subjectName + week);
 

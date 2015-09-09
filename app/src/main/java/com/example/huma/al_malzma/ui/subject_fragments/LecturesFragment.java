@@ -1,8 +1,8 @@
 package com.example.huma.al_malzma.ui.subject_fragments;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,26 +10,29 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.FabAnimationHelper;
+import com.example.huma.al_malzma.model.LinkType;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class LecturesFragment extends Fragment {
-
+    public static final String TAG = LecturesFragment.class.getSimpleName();
 
     @Bind(R.id.empty_text_view) TextView mEmptyTextView;
     @Bind(R.id.subjects_list_view) ListView mSubjectsListView;
-    @Bind(R.id.link_fab) FloatingActionButton mFab1;
-    @Bind(R.id.pdf_fab) FloatingActionButton mFab2;
-    @Bind(R.id.choose_image_fab) FloatingActionButton mFab3;
     @Bind(R.id.menu) FloatingActionMenu mMenu;
+    @Bind(R.id.camera_fab) FloatingActionButton mCameraFab;
+    @Bind(R.id.choose_image_fab) FloatingActionButton mChooseImageFab;
+    @Bind(R.id.pdf_fab) FloatingActionButton mPdfFab;
+    @Bind(R.id.link_fab) FloatingActionButton mLinkFab;
+
 
     public LecturesFragment() {
         // Required empty public constructor
@@ -51,6 +54,48 @@ public class LecturesFragment extends Fragment {
         return rootView;
     }
 
+    @OnClick(R.id.camera_fab)
+    void takePic() {
+        LinkType linkType = new LinkType();
+        linkType.setLink("google.com");
+        linkType.saveToParse(getActivity());
+    }
+
+    @OnClick(R.id.choose_image_fab)
+    void chooseImage() {
+
+    }
+
+    @OnClick(R.id.pdf_fab)
+    void picPDF() {
+
+    }
+
+    @OnClick(R.id.link_fab)
+    void addLink() {
+        showInputDialog();
+    }
+
+    private void showInputDialog() {
+        new MaterialDialog.Builder(getActivity())
+                .title(R.string.lecture_link_dialog_input)
+                .content(R.string.lecture_link_dialog_content)
+                .inputType(InputType.TYPE_CLASS_TEXT |
+                        InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
+                        InputType.TYPE_TEXT_FLAG_CAP_WORDS)
+                .input(R.string.lecture_link_dialog_hint, 0, false, new MaterialDialog.InputCallback() {
+
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        String link = input.toString();
+                        if (LinkType.validateLinkWithAlderDialog(link, getActivity()) != null) {
+                            link = LinkType.validateLinkWithAlderDialog(link, getActivity());
+
+
+                        }
+                    }
+                }).show();
+    }
 
     @Override
     public void onDestroyView() {

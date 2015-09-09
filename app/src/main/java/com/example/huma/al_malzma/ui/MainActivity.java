@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             //Logout and take the use to LoginActivity
-            ParseUser.logOut();
+            ParseUser.logOutInBackground();
             mCurrentUser = ParseUser.getCurrentUser(); // this will now be null
             startActivity(new Intent(this, LoginActivity.class));
         }

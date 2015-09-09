@@ -42,7 +42,7 @@ public class WeeksActivity extends AppCompatActivity {
         mWeeksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //go to SubjectActivity carrying all information needed to create or retrieve write thing.
+                //go to SubjectActivity carrying all information needed to saveToParse or retrieve write thing.
                 Intent intent = new Intent(WeeksActivity.this, SubjectActivity.class);
                 intent.putExtra(KEY_WEEK, weeks[position]);
                 //pass intent that come from MainActivity that contain every thing.

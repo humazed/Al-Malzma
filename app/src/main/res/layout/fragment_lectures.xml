@@ -50,19 +50,19 @@
 
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/link_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_insert_link_white_24dp"
-            fab:fab_label="@string/fab_label_add_link"
-            fab:fab_size="mini"/>
-
-        <com.github.clans.fab.FloatingActionButton
             android:id="@+id/pdf_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_insert_drive_file_white_24dp"
             fab:fab_label="@string/fab_label_add_pdf_file"
+            fab:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/link_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_insert_link_white_24dp"
+            fab:fab_label="@string/fab_label_add_link"
             fab:fab_size="mini"/>
 
     </com.github.clans.fab.FloatingActionMenu>

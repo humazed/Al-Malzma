@@ -6,15 +6,20 @@ import android.support.v7.app.AlertDialog;
 import android.util.Patterns;
 
 import com.example.huma.al_malzma.R;
+import com.example.huma.al_malzma.parse.ParseConstants;
+import com.parse.ParseClassName;
 
+@ParseClassName("Link")
 public class LinkType extends BaseDataItem {
+    public static final String TAG = LinkType.class.getSimpleName();
 
-    private String description;
-    private String link;
+
+    public LinkType() {
+    }
 
     @Override
-    public void create() {
-
+    public void saveToParse(Context context) {
+        saveInBackgroundWithAlertDialog(context);
     }
 
     //make sure the user has enter wright Uri >> and add http:// to it if it don't.
@@ -39,24 +44,23 @@ public class LinkType extends BaseDataItem {
             if (!link.startsWith("http://") && !link.startsWith("https://"))
                 link = "http://" + link;
             return link;
-
         }
         return null;
     }
 
     public String getDescription() {
-        return description;
+        return getString(ParseConstants.KEY_LINK_DESCRIPTION);
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        put(ParseConstants.KEY_LINK_DESCRIPTION, description);
     }
 
     public String getLink() {
-        return link;
+        return getString(ParseConstants.KEY_LINK);
     }
 
     public void setLink(String link) {
-        this.link = link;
+        put(ParseConstants.KEY_LINK, link);
     }
 }
