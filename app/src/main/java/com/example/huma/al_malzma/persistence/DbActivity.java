@@ -1,12 +1,13 @@
 package com.example.huma.al_malzma.persistence;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.model.data.JsonAttributes;
-import com.example.huma.al_malzma.ui.SubjectActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -60,6 +61,9 @@ public class DbActivity extends AppCompatActivity {
 //        }
 
 
+        Snackbar.make(findViewById(android.R.id.content), "Had a snack at Snackbar", Snackbar.LENGTH_LONG)
+                .setActionTextColor(Color.RED)
+                .show();
 
     }
 }

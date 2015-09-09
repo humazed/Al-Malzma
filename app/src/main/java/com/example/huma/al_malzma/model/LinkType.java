@@ -61,6 +61,7 @@ public class LinkType extends BaseDataItem {
     }
 
     public void setLink(String link) {
+        link = validateLink(link);
         put(ParseConstants.KEY_LINK, link);
     }
 }

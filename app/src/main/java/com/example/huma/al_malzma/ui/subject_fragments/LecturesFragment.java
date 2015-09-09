@@ -2,7 +2,8 @@ package com.example.huma.al_malzma.ui.subject_fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.InputType;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.FabAnimationHelper;
 import com.example.huma.al_malzma.model.LinkType;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.rey.material.widget.EditText;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,11 +36,14 @@ public class LecturesFragment extends Fragment {
     @Bind(R.id.pdf_fab) FloatingActionButton mPdfFab;
     @Bind(R.id.link_fab) FloatingActionButton mLinkFab;
 
+    EditText mLinkEditText;
+    EditText mLinkDescriptionEditText;
+
+
 
     public LecturesFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,9 +62,7 @@ public class LecturesFragment extends Fragment {
 
     @OnClick(R.id.camera_fab)
     void takePic() {
-        LinkType linkType = new LinkType();
-        linkType.setLink("google.com");
-        linkType.saveToParse(getActivity());
+
     }
 
     @OnClick(R.id.choose_image_fab)
@@ -73,29 +77,89 @@ public class LecturesFragment extends Fragment {
 
     @OnClick(R.id.link_fab)
     void addLink() {
-        showInputDialog();
+        showLinkDialog();
     }
 
-    private void showInputDialog() {
-        new MaterialDialog.Builder(getActivity())
-                .title(R.string.lecture_link_dialog_input)
-                .content(R.string.lecture_link_dialog_content)
-                .inputType(InputType.TYPE_CLASS_TEXT |
-                        InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
-                        InputType.TYPE_TEXT_FLAG_CAP_WORDS)
-                .input(R.string.lecture_link_dialog_hint, 0, false, new MaterialDialog.InputCallback() {
+
+    // TODO: 9/9/2015 it's very long method and will be use a lot so try to make dialogFragment and but them in.
+    boolean linkFlag, descriptionFlag;
+
+    private void showLinkDialog() {
+        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                .title(R.string.important_link_dialog_title)
+                .customView(R.layout.add_link_dialog, true)
+                .positiveText(R.string.add)
+                .negativeText(android.R.string.cancel)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        //save link and description to parse.
+                        LinkType link = new LinkType();
+                        link.setLink(mLinkEditText.getText().toString());
+                        link.setDescription(mLinkDescriptionEditText.getText().toString());
+                        link.saveToParse(getActivity());
+                    }
 
                     @Override
-                    public void onInput(MaterialDialog dialog, CharSequence input) {
-                        String link = input.toString();
-                        if (LinkType.validateLinkWithAlderDialog(link, getActivity()) != null) {
-                            link = LinkType.validateLinkWithAlderDialog(link, getActivity());
-
-
-                        }
+                    public void onNegative(MaterialDialog dialog) {
                     }
-                }).show();
+                }).build();
+
+        final View positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
+        mLinkEditText = (EditText) dialog.findViewById(R.id.link_edit_text);
+        mLinkDescriptionEditText = (EditText) dialog.findViewById(R.id.link_description_edit_text);
+
+        //it's only faction is to enable and disable the input Button.
+        mLinkEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //check the link.
+                if (LinkType.validateLink(mLinkEditText.getText().toString()) == null) {
+                    linkFlag = false;
+                    mLinkEditText.setError(getActivity().getString(R.string.wrong_link_error_message));
+                } else {
+                    linkFlag = true;
+                    mLinkEditText.setError(null);
+                }
+
+                //check if the link is correct and there is description.
+                if (linkFlag && descriptionFlag) positiveAction.setEnabled(true);
+                else positiveAction.setEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+        });
+
+        mLinkDescriptionEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //check if the text field is Empty or not.
+                descriptionFlag = (s.toString().trim().length() > 0);
+                //check if the link is correct and there is description.
+                if (linkFlag && descriptionFlag) positiveAction.setEnabled(true);
+                else positiveAction.setEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        dialog.show();
+        positiveAction.setEnabled(false); // disabled by default
     }
+
 
     @Override
     public void onDestroyView() {

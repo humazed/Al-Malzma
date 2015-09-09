@@ -3,7 +3,7 @@ package com.example.huma.al_malzma.model;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.model.data.JsonAttributes;
@@ -70,7 +70,7 @@ public abstract class BaseDataItem extends ParseObject {
                             .setPositiveButton(android.R.string.ok, null)
                             .create().show();
                 } else {
-                    Log.d(TAG, "done");
+                    Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
                 }
             }
         });

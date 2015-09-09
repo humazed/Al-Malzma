@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <com.rey.material.widget.EditText
+        android:id="@+id/link_edit_text"
+        style="@style/Material.Widget.EditText.Light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:hint="@string/important_link_dialog_hint"
+        android:inputType="text"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+        android:textColor="#FF000000"
+        android:textCursorDrawable="@null"
+        app:et_dividerErrorColor="#FFFF0000"
+        app:et_inputId="@+id/textfield_et_label_input"
+        app:et_supportMode="helper"
+        app:et_supportTextErrorColor="#FFFF0000"/>
+
+    <com.rey.material.widget.EditText
+        android:id="@+id/link_description_edit_text"
+        style="@style/Material.Widget.EditText.Light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/description"
+        android:inputType="text"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+        android:textColor="#FF000000"
+        android:textCursorDrawable="@null"
+        app:et_inputId="@+id/textfield_et_label_input"/>
+
+</LinearLayout>
