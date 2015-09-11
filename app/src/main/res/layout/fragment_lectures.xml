@@ -15,7 +15,7 @@
     <ListView
         android:id="@+id/subjects_list_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:layout_gravity="start|top"/>
 
 
@@ -66,5 +66,11 @@
             fab:fab_size="mini"/>
 
     </com.github.clans.fab.FloatingActionMenu>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/image_view"
+        android:layout_gravity="left|bottom"/>
 
 </FrameLayout>

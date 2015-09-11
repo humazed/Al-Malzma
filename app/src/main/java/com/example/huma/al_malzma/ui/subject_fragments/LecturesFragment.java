@@ -1,20 +1,27 @@
 package com.example.huma.al_malzma.ui.subject_fragments;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.FabAnimationHelper;
+import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -35,10 +42,10 @@ public class LecturesFragment extends Fragment {
     @Bind(R.id.choose_image_fab) FloatingActionButton mChooseImageFab;
     @Bind(R.id.pdf_fab) FloatingActionButton mPdfFab;
     @Bind(R.id.link_fab) FloatingActionButton mLinkFab;
+    @Bind(R.id.image_view) ImageView mImageView;
 
     EditText mLinkEditText;
     EditText mLinkDescriptionEditText;
-
 
 
     public LecturesFragment() {
@@ -62,16 +69,39 @@ public class LecturesFragment extends Fragment {
 
     @OnClick(R.id.camera_fab)
     void takePic() {
-
+        startActivityForResult(ImageType.getCapturePhotoIntent(getActivity()),
+                ImageType.REQUEST_CAPTURE_PHOTO);
     }
+
 
     @OnClick(R.id.choose_image_fab)
     void chooseImage() {
+        startActivityForResult(ImageType.getChoosePhotoIntent(), ImageType.REQUEST_CHOOSE_PHOTO);
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case ImageType.REQUEST_CAPTURE_PHOTO:
+                    ImageType.refreshGallery(getActivity());
+                    break;
+                case ImageType.REQUEST_CHOOSE_PHOTO:
+                    Uri dir = data.getData();
+                    Log.d(TAG, "onActivityResult " + dir);
+                    //show it in Glide just to make sure Uri is correct then will upload it to parse.
+                    Glide.with(this).load(dir).asBitmap().into(mImageView);
+                    break;
+            }
+        }
     }
 
     @OnClick(R.id.pdf_fab)
     void picPDF() {
+        Uri uri = ImageType.getImageUri(getActivity());
+
+        Log.d(TAG, "picPDF " + (uri != null ? uri.toString() : null));
 
     }
 
