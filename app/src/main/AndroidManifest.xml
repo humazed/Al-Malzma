@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.example.huma.al_malzma"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    package="com.example.huma.al_malzma"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 
     <uses-feature
@@ -39,17 +40,20 @@
             android:label="@string/title_activity_db">
         </activity>
         <activity
-            android:name=".ui.SubjectActivity"
-            android:label="@string/title_activity_subject"
-            android:parentActivityName=".ui.MainActivity">
+            android:name=".ui.WeeksActivity"
+            android:label="@string/title_activity_weeks">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.huma.al_malzma.ui.MainActivity"/>
         </activity>
         <activity
-            android:name=".ui.WeeksActivity"
-            android:label="@string/title_activity_weeks">
+            android:name=".ui.SubjectActivity"
+            android:label="@string/title_activity_subject">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.huma.al_malzma.ui.WeeksActivity"/>
         </activity>
+
     </application>
 
 </manifest>

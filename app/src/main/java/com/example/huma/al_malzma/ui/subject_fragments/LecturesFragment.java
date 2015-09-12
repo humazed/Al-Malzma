@@ -23,6 +23,7 @@ import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.FabAnimationHelper;
 import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
+import com.example.huma.al_malzma.model.PdfType;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.rey.material.widget.EditText;
@@ -73,11 +74,21 @@ public class LecturesFragment extends Fragment {
                 ImageType.REQUEST_CAPTURE_PHOTO);
     }
 
-
     @OnClick(R.id.choose_image_fab)
     void chooseImage() {
         startActivityForResult(ImageType.getChoosePhotoIntent(), ImageType.REQUEST_CHOOSE_PHOTO);
     }
+
+    @OnClick(R.id.pdf_fab)
+    void picPDF() {
+
+    }
+
+    @OnClick(R.id.link_fab)
+    void addLink() {
+        showLinkDialog();
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -93,21 +104,11 @@ public class LecturesFragment extends Fragment {
                     //show it in Glide just to make sure Uri is correct then will upload it to parse.
                     Glide.with(this).load(dir).asBitmap().into(mImageView);
                     break;
+                case PdfType.REQUEST_CHOOSE_PDF:
+                    //do staff
+                    break;
             }
         }
-    }
-
-    @OnClick(R.id.pdf_fab)
-    void picPDF() {
-        Uri uri = ImageType.getImageUri(getActivity());
-
-        Log.d(TAG, "picPDF " + (uri != null ? uri.toString() : null));
-
-    }
-
-    @OnClick(R.id.link_fab)
-    void addLink() {
-        showLinkDialog();
     }
 
 

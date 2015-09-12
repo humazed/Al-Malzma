@@ -63,6 +63,8 @@ public class SubjectActivity extends AppCompatActivity implements ActionBar.TabL
 
         week = getIntent().getStringExtra(WeeksActivity.KEY_WEEK);
 
+        // TODO: 9/12/2015 change the Activity title to be the name of subject
+
         Log.d(TAG, "onCreate " + university + faculty + department + grade + term + subjectName + week);
 
         // Set up the action bar.
@@ -85,7 +87,7 @@ public class SubjectActivity extends AppCompatActivity implements ActionBar.TabL
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
+                if (actionBar != null) actionBar.setSelectedNavigationItem(position);
             }
         });
 
@@ -95,7 +97,7 @@ public class SubjectActivity extends AppCompatActivity implements ActionBar.TabL
             // the adapter. Also specify this Activity object, which implements
             // the TabListener interface, as the callback (listener) for when
             // this tab is selected.
-            actionBar.addTab(
+            if (actionBar != null) actionBar.addTab(
                     actionBar.newTab()
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));

@@ -44,14 +44,14 @@ public class ImageType extends BaseDataItem {
 
     /**
      * that method will make folder with subjectName into Al-Malzma folder
-     * and inside that file will create the Image file and return Uri of that file.
+     * and inside that file will CREATE the Image file and return Uri of that file.
      * the Image file name will consist of "Week + timeStamp + + .jpg"
      */
     public static Uri getImageUri(Context context) {
         if (isExternalStorageAvailable()) {
             String appName = context.getString(R.string.app_name);
             String subjectName = SubjectActivity.subjectName;
-            //must remove spaces as it used for file name.
+            //must remove spaces as it used for Image file name.
             String week = SubjectActivity.week.replaceAll("\\s+", "");
 
             //directory where images will be saved.
@@ -81,6 +81,7 @@ public class ImageType extends BaseDataItem {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
+    /* refresh the gallery with the taken Image  */
     public static void refreshGallery(Context context) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         mediaScanIntent.setData(imageUri);
