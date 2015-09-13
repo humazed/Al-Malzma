@@ -48,6 +48,7 @@ public class LecturesFragment extends Fragment {
     EditText mLinkEditText;
     EditText mLinkDescriptionEditText;
 
+    ImageType image;
 
     public LecturesFragment() {
         // Required empty public constructor
@@ -68,20 +69,26 @@ public class LecturesFragment extends Fragment {
         return rootView;
     }
 
+
     @OnClick(R.id.camera_fab)
     void takePic() {
-        startActivityForResult(ImageType.getCapturePhotoIntent(getActivity()),
-                ImageType.REQUEST_CAPTURE_PHOTO);
+        image = new ImageType(getActivity(), ImageType.REQUEST_CAPTURE_PHOTO);
+        startActivityForResult(image.getActionIntent(), ImageType.REQUEST_CAPTURE_PHOTO);
     }
 
     @OnClick(R.id.choose_image_fab)
     void chooseImage() {
-        startActivityForResult(ImageType.getChoosePhotoIntent(), ImageType.REQUEST_CHOOSE_PHOTO);
+        image = new ImageType(getActivity(), ImageType.REQUEST_CHOOSE_PHOTO);
+        startActivityForResult(image.getActionIntent(), ImageType.REQUEST_CHOOSE_PHOTO);
     }
 
     @OnClick(R.id.pdf_fab)
     void picPDF() {
+        Intent choosePhotoIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        choosePhotoIntent.setType("pdf/*");
 
+        startActivityForResult(Intent.createChooser(choosePhotoIntent, "Open file"),
+                PdfType.REQUEST_CHOOSE_PDF);
     }
 
     @OnClick(R.id.link_fab)
@@ -94,18 +101,21 @@ public class LecturesFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
+            Uri dir;
             switch (requestCode) {
                 case ImageType.REQUEST_CAPTURE_PHOTO:
                     ImageType.refreshGallery(getActivity());
                     break;
                 case ImageType.REQUEST_CHOOSE_PHOTO:
-                    Uri dir = data.getData();
+                    dir = data.getData();
                     Log.d(TAG, "onActivityResult " + dir);
                     //show it in Glide just to make sure Uri is correct then will upload it to parse.
                     Glide.with(this).load(dir).asBitmap().into(mImageView);
                     break;
                 case PdfType.REQUEST_CHOOSE_PDF:
                     //do staff
+                    dir = data.getData();
+                    Log.d(TAG, "onActivityResult " + dir);
                     break;
             }
         }

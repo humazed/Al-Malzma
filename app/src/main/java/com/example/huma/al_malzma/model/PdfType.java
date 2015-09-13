@@ -1,6 +1,5 @@
 package com.example.huma.al_malzma.model;
 
-
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +11,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 
 import java.io.File;
+
 
 @ParseClassName("PDF")
 public class PdfType extends BaseDataItem {
@@ -32,9 +32,8 @@ public class PdfType extends BaseDataItem {
             target.setDataAndType(Uri.fromFile(file), "application/pdf");
             target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
-            Intent intent = Intent.createChooser(target, "Open File");
             try {
-                context.startActivity(intent);
+                context.startActivity(Intent.createChooser(target, "Open File"));
             } catch (ActivityNotFoundException e) {
                 // Instruct the user to install a PDF reader here, or something
                 Toast.makeText(context, "there is no program PDF", Toast.LENGTH_SHORT).show();

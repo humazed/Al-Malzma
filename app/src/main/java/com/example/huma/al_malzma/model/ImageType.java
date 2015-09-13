@@ -1,42 +1,66 @@
 package com.example.huma.al_malzma.model;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.IntDef;
 import android.util.Log;
 
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.ui.SubjectActivity;
 import com.parse.ParseClassName;
-import com.parse.ParseFile;
 
 import java.io.File;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+
 @ParseClassName("Image")
 public class ImageType extends BaseDataItem {
 
+    @IntDef({REQUEST_CAPTURE_PHOTO, REQUEST_CHOOSE_PHOTO})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Type {
+    }
+
     public static final int REQUEST_CAPTURE_PHOTO = 1;
     public static final int REQUEST_CHOOSE_PHOTO = 2;
+
+    private Context mContext;
+    private int mType;
+
     private String description;
 
     private static Uri imageUri;
 
-    ParseFile PDF;
+    public ImageType() {/*Default constructor required by parse */}
 
-    public static Intent getCapturePhotoIntent(Context context) {
+    public ImageType(Context context, @Type int type) {
+        mContext = context;
+        mType = type;
+    }
+
+    public Intent getActionIntent() {
+        if (mType == REQUEST_CAPTURE_PHOTO) {
+            return getCapturePhotoIntent();
+        } else {
+            return getChoosePhotoIntent();
+        }
+    }
+
+    private Intent getCapturePhotoIntent() {
         Intent capturePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        imageUri = getImageUri(context);
+        imageUri = getImageUri(mContext);
         capturePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         return capturePhotoIntent;
     }
 
-    public static Intent getChoosePhotoIntent() {
+    private Intent getChoosePhotoIntent() {
         Intent choosePhotoIntent = new Intent(Intent.ACTION_GET_CONTENT);
         choosePhotoIntent.setType("image/*");
         return choosePhotoIntent;
@@ -81,6 +105,7 @@ public class ImageType extends BaseDataItem {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
+    // FIXME: 9/13/2015 did't works on my sony phone
     /* refresh the gallery with the taken Image  */
     public static void refreshGallery(Context context) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
