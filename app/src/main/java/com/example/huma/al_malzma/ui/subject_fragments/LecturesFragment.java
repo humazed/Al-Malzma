@@ -84,10 +84,9 @@ public class LecturesFragment extends Fragment {
 
     @OnClick(R.id.pdf_fab)
     void picPDF() {
-        Intent choosePhotoIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        choosePhotoIntent.setType("pdf/*");
+        PdfType pdf = new PdfType(getActivity());
 
-        startActivityForResult(Intent.createChooser(choosePhotoIntent, "Open file"),
+        startActivityForResult(Intent.createChooser(pdf.getPicPdfIntent(), "Open file"),
                 PdfType.REQUEST_CHOOSE_PDF);
     }
 
@@ -116,6 +115,7 @@ public class LecturesFragment extends Fragment {
                     //do staff
                     dir = data.getData();
                     Log.d(TAG, "onActivityResult " + dir);
+                    PdfType.displayPdf(getActivity(), dir);
                     break;
             }
         }

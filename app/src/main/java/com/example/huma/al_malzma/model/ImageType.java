@@ -11,6 +11,7 @@ import android.util.Log;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.ui.SubjectActivity;
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 
 import java.io.File;
 import java.lang.annotation.Retention;
@@ -34,6 +35,7 @@ public class ImageType extends BaseDataItem {
     private Context mContext;
     private int mType;
 
+    private ParseFile image;
     private String description;
 
     private static Uri imageUri;

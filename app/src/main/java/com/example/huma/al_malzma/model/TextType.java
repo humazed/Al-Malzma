@@ -11,6 +11,7 @@ public class TextType extends BaseDataItem {
     private String title;
     private String text;
 
+    public TextType() {/*Default constructor required by parse */}
 
     @Override
     public void saveToParse(Context context) {

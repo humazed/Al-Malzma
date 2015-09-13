@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
 import android.widget.Toast;
 
 import com.parse.ParseClassName;
@@ -12,19 +11,37 @@ import com.parse.ParseFile;
 
 import java.io.File;
 
-
+/**
+ * PdfType pdf = new PdfType(context);
+ * startActivityForResult(getPicPdfIntent());
+ * //onActivityResult
+ * displayPdf(pdfDir);
+ */
 @ParseClassName("PDF")
 public class PdfType extends BaseDataItem {
 
     public static final int REQUEST_CHOOSE_PDF = 3;
 
+    private Context mContext;
+
     private String description;
 
     ParseFile PDF;
 
-    public void displayPdf(Context context) {
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOWNLOADS) + "/Mind Map.pdf");
+    public PdfType() {/*Default constructor required by parse */}
+
+    public PdfType(Context context) {
+        mContext = context;
+    }
+
+    public Intent getPicPdfIntent() {
+        Intent choosePhotoIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        choosePhotoIntent.setType("pdf/*");
+        return choosePhotoIntent;
+    }
+
+    public static void displayPdf(Context context, Uri pdfDir) {
+        File file = new File(pdfDir.getPath());
 
         Toast.makeText(context, file.toString(), Toast.LENGTH_LONG).show();
         if (file.exists()) {

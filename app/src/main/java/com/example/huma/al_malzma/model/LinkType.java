@@ -14,8 +14,7 @@ public class LinkType extends BaseDataItem {
     public static final String TAG = LinkType.class.getSimpleName();
 
 
-    public LinkType() {
-    }
+    public LinkType() {/*Default constructor required by parse */}
 
     @Override
     public void saveToParse(Context context) {
