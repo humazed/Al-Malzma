@@ -9,6 +9,8 @@ import android.support.annotation.IntDef;
 import android.util.Log;
 
 import com.example.huma.al_malzma.R;
+import com.example.huma.al_malzma.helper.FileHelper;
+import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.ui.SubjectActivity;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
@@ -35,10 +37,8 @@ public class ImageType extends BaseDataItem {
     private Context mContext;
     private int mType;
 
-    private ParseFile image;
-    private String description;
+    private static Uri imageUri; //must be deleted.
 
-    private static Uri imageUri;
 
     public ImageType() {/*Default constructor required by parse */}
 
@@ -107,7 +107,7 @@ public class ImageType extends BaseDataItem {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
-    // FIXME: 9/13/2015 did't works on my sony phone
+    // FIXME: 9/13/2015 didn't works on my sony phone
     /* refresh the gallery with the taken Image  */
     public static void refreshGallery(Context context) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
@@ -117,15 +117,32 @@ public class ImageType extends BaseDataItem {
 
     @Override
     public void saveToParse(Context context) {
+        saveInBackgroundWithAlertDialog(context);
+    }
 
+
+    public ParseFile getImage() {
+        return getParseFile(ParseConstants.KEY_IMAGE);
+    }
+
+    public void setImage(Uri imageUri) {
+        byte[] fileBytes = FileHelper.getByteArrayFromFile(mContext, imageUri);
+        String fileName = imageUri.getLastPathSegment();
+
+        Log.d(TAG, "setImage uri: " + imageUri);
+
+        Log.d(TAG, "setImage fileName: " + fileName);
+
+        ParseFile parseFile = new ParseFile(fileName, fileBytes, "image");
+        put(ParseConstants.KEY_IMAGE, parseFile);
     }
 
 
     public String getDescription() {
-        return description;
+        return getString(ParseConstants.KEY_IMAGE_DESCRIPTION);
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        put(ParseConstants.KEY_IMAGE_DESCRIPTION, description);
     }
 }

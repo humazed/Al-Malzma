@@ -62,7 +62,7 @@ public class PdfType extends BaseDataItem {
 
     @Override
     public void saveToParse(Context context) {
-
+        saveInBackgroundWithAlertDialog(context);
     }
 
     public String getDescription() {

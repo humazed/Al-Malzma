@@ -16,11 +16,6 @@ public class LinkType extends BaseDataItem {
 
     public LinkType() {/*Default constructor required by parse */}
 
-    @Override
-    public void saveToParse(Context context) {
-        saveInBackgroundWithAlertDialog(context);
-    }
-
     //make sure the user has enter wright Uri >> and add http:// to it if it don't.
     public static String validateLinkWithAlderDialog(String link, Context context) {
         if (Patterns.WEB_URL.matcher(link).matches()) {
@@ -46,6 +41,12 @@ public class LinkType extends BaseDataItem {
         }
         return null;
     }
+
+    @Override
+    public void saveToParse(Context context) {
+        saveInBackgroundWithAlertDialog(context);
+    }
+
 
     public String getDescription() {
         return getString(ParseConstants.KEY_LINK_DESCRIPTION);

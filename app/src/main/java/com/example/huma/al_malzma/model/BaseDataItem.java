@@ -3,6 +3,7 @@ package com.example.huma.al_malzma.model;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.huma.al_malzma.R;
@@ -23,7 +24,7 @@ public abstract class BaseDataItem extends ParseObject {
     /**
      * in this class the member variables getters and setters are normal noe's because all of them
      * can be got without user direct input and save them to parse in the constructor.
-     * <p/>
+     * <p>
      * but in the classes that inherit from him getters and setters will deal with parse directly
      * because as they say in there site this is the recommenced approach.
      * https://www.parse.com/docs/android/guide#objects-accessors-mutators-and-methods
@@ -69,8 +70,10 @@ public abstract class BaseDataItem extends ParseObject {
                             .setMessage(R.string.connection_error)
                             .setPositiveButton(android.R.string.ok, null)
                             .create().show();
+                    Log.d(TAG, "Fail: ", e);
                 } else {
                     Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "done ");
                 }
             }
         });

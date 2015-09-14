@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -103,22 +104,49 @@ public class LecturesFragment extends Fragment {
             Uri dir;
             switch (requestCode) {
                 case ImageType.REQUEST_CAPTURE_PHOTO:
+                    dir = data.getData();
+                    image.setImage(dir);
+
+                    showImageDescriptionDialog();
+
+
                     ImageType.refreshGallery(getActivity());
                     break;
                 case ImageType.REQUEST_CHOOSE_PHOTO:
                     dir = data.getData();
+                    image.setImage(dir);
+
+                    showImageDescriptionDialog();
+
+
                     Log.d(TAG, "onActivityResult " + dir);
-                    //show it in Glide just to make sure Uri is correct then will upload it to parse.
                     Glide.with(this).load(dir).asBitmap().into(mImageView);
                     break;
                 case PdfType.REQUEST_CHOOSE_PDF:
-                    //do staff
                     dir = data.getData();
+
                     Log.d(TAG, "onActivityResult " + dir);
-                    PdfType.displayPdf(getActivity(), dir);
+                    PdfType.displayPdf(getActivity(), dir); //for test only.
                     break;
             }
         }
+    }
+
+
+    private void showImageDescriptionDialog() {
+        new MaterialDialog.Builder(getActivity())
+                .title("Description")
+                .content("Enter some description!")
+                .inputType(InputType.TYPE_CLASS_TEXT)
+                .positiveText(android.R.string.ok)
+                .input("the Description", "", false, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        image.setDescription(input.toString());
+
+                        image.saveToParse(getActivity());
+                    }
+                }).show();
     }
 
 

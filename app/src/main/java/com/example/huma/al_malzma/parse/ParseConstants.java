@@ -1,5 +1,10 @@
 package com.example.huma.al_malzma.parse;
 
+import android.support.annotation.StringDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 public interface ParseConstants {
 
     //ParseObjects names.
@@ -21,6 +26,12 @@ public interface ParseConstants {
     String KEY_WEEK = "week";
     String KEY_SUBJECT = "subject";
 
+    //Image
+    String KEY_IMAGE = "image";
+    String KEY_IMAGE_DESCRIPTION = "description";
+
+    //Pdf
+
     //link
     String KEY_LINK = "link";
     String KEY_LINK_DESCRIPTION = "description";
@@ -33,5 +44,14 @@ public interface ParseConstants {
     String KEY_QUOTE_TEXT = "text";
     String KEY_TYPE = "type";
     String KEY_LECTURE_LINK = "lecture_link";
+
+
+    @StringDef({TYPE_IMAGE, TYPE_PDF})
+    @Retention(RetentionPolicy.SOURCE) @interface FileType {
+    }
+
+    String TYPE_IMAGE = "image";
+    String  TYPE_PDF = "pdf";
+
 
 }
