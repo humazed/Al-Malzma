@@ -50,6 +50,7 @@ public class LecturesFragment extends Fragment {
     EditText mLinkDescriptionEditText;
 
     ImageType image;
+    PdfType pdf;
 
     private Thread mThread;
 
@@ -87,7 +88,7 @@ public class LecturesFragment extends Fragment {
 
     @OnClick(R.id.pdf_fab)
     void picPDF() {
-        PdfType pdf = new PdfType(getActivity());
+        pdf = new PdfType(getActivity());
 
         startActivityForResult(Intent.createChooser(pdf.getPicPdfIntent(), "Open file"),
                 PdfType.REQUEST_CHOOSE_PDF);
@@ -123,9 +124,12 @@ public class LecturesFragment extends Fragment {
                     break;
                 case PdfType.REQUEST_CHOOSE_PDF:
                     dir = data.getData();
+                    pdf.setPDF(dir);
+
+                    showPdfDescriptionDialog();
 
                     Log.d(TAG, "onActivityResult " + dir);
-                    PdfType.displayPdf(getActivity(), dir); //for test only.
+//                    PdfType.displayPdf(getActivity(), dir); //for test only.
                     break;
             }
         }
@@ -144,6 +148,22 @@ public class LecturesFragment extends Fragment {
                         image.setDescription(input.toString());
 
                         image.saveToParse(getActivity());
+                    }
+                }).show();
+    }
+
+    private void showPdfDescriptionDialog() {
+        new MaterialDialog.Builder(getActivity())
+                .title("Description")
+                .content("Enter some description!")
+                .inputType(InputType.TYPE_CLASS_TEXT)
+                .positiveText(android.R.string.ok)
+                .input("the Description", "", false, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        pdf.setDescription(input.toString());
+
+                        pdf.saveToParse(getActivity());
                     }
                 }).show();
     }

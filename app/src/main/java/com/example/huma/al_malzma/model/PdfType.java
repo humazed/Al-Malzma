@@ -4,8 +4,11 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.example.huma.al_malzma.helper.FileHelper;
+import com.example.huma.al_malzma.parse.ParseConstants;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 
@@ -65,11 +68,30 @@ public class PdfType extends BaseDataItem {
         saveInBackgroundWithAlertDialog(context);
     }
 
+
+    public ParseFile getPDF() {
+        return PDF;
+    }
+
+    public void setPDF(Uri pdfUri) {
+        byte[] fileBytes = FileHelper.getByteArrayFromFile(mContext, pdfUri);
+        //replace spaces with "_" because parse don't   accept file name with spaces.
+        String fileName = pdfUri.getLastPathSegment().replaceAll("\\s+", "_");
+
+        Log.d(TAG, "pdf uri: " + pdfUri);
+
+        Log.d(TAG, "pdf fileName: " + fileName);
+
+        ParseFile parseFile = new ParseFile(fileName, fileBytes, "pdf");
+        saveInBackgroundWithAlertDialogAndProgressDialog(mContext, parseFile);
+        put(ParseConstants.KEY_PDF, parseFile);
+    }
+
     public String getDescription() {
-        return description;
+        return getString(ParseConstants.KEY_PDF_DESCRIPTION);
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        put(ParseConstants.KEY_PDF_DESCRIPTION, description);
     }
 }

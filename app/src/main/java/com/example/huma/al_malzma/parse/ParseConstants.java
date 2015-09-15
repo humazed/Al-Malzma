@@ -31,6 +31,8 @@ public interface ParseConstants {
     String KEY_IMAGE_DESCRIPTION = "description";
 
     //Pdf
+    String KEY_PDF = "pdf";
+    String KEY_PDF_DESCRIPTION = "description";
 
     //link
     String KEY_LINK = "link";
