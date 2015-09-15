@@ -52,7 +52,6 @@
     <string name="description">The description</string>
     <string name="add">ADD</string>
 
-
     <string name="label_lecture_link">Lecture Link</string>
     <string name="lecture_link">Lecture link</string>
     <string name="lecture_link_dialog_input">Lecture link</string>
@@ -63,8 +62,11 @@
 
     <string name="choose">CHOOSE</string>
 
-
     <string name="add_success_message">Add success</string>
+
+    <string name="please_wait">Please wait…</string>
+    <string name="uploading">Uploading</string>
+    <string name="done">Done!</string>
 
 
     <!--Empty and error messages-->

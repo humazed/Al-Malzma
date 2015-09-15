@@ -1,18 +1,23 @@
 package com.example.huma.al_malzma.model;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.model.data.JsonAttributes;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.ui.SubjectActivity;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.ProgressCallback;
 import com.parse.SaveCallback;
 
 import java.util.Calendar;
@@ -20,6 +25,8 @@ import java.util.Calendar;
 
 public abstract class BaseDataItem extends ParseObject {
     public static final String TAG = BaseDataItem.class.getSimpleName();
+
+    private Thread mThread;
 
     /**
      * in this class the member variables getters and setters are normal noe's because all of them
@@ -79,6 +86,46 @@ public abstract class BaseDataItem extends ParseObject {
         });
     }
 
+
+    MaterialDialog dialog = null;
+
+    protected void saveInBackgroundWithAlertDialogAndProgressDialog(final Context context, ParseFile parseFile) {
+        new MaterialDialog.Builder(context)
+                .title(R.string.uploading)
+                .content(R.string.please_wait)
+                .contentGravity(GravityEnum.CENTER)
+                .progress(false, 100, true)
+                .cancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                    }
+                })
+                .showListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        dialog = (MaterialDialog) dialogInterface;
+                    }
+                }).show();
+        parseFile.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    //fail
+                    Log.d(TAG, "fail ", e);
+                } else {
+                    //succeed
+                    Log.d(TAG, "done ");
+                    dialog.setContent(context.getString(R.string.done));
+                }
+            }
+        }, new ProgressCallback() {
+            @Override
+            public void done(final Integer percentDone) {
+                // Update your progress spinner here. percentDone will be between 0 and 100.
+                dialog.setProgress(percentDone);
+            }
+        });
+    }
 
     public boolean add() {
         return true;

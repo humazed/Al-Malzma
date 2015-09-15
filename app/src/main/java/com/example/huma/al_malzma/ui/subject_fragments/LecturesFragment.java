@@ -51,6 +51,8 @@ public class LecturesFragment extends Fragment {
 
     ImageType image;
 
+    private Thread mThread;
+
     public LecturesFragment() {
         // Required empty public constructor
     }
@@ -96,7 +98,6 @@ public class LecturesFragment extends Fragment {
         showLinkDialog();
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -109,7 +110,6 @@ public class LecturesFragment extends Fragment {
 
                     showImageDescriptionDialog();
 
-
                     ImageType.refreshGallery(getActivity());
                     break;
                 case ImageType.REQUEST_CHOOSE_PHOTO:
@@ -117,7 +117,6 @@ public class LecturesFragment extends Fragment {
                     image.setImage(dir);
 
                     showImageDescriptionDialog();
-
 
                     Log.d(TAG, "onActivityResult " + dir);
                     Glide.with(this).load(dir).asBitmap().into(mImageView);

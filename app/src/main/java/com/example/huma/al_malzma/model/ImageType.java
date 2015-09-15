@@ -134,6 +134,7 @@ public class ImageType extends BaseDataItem {
         Log.d(TAG, "setImage fileName: " + fileName);
 
         ParseFile parseFile = new ParseFile(fileName, fileBytes, "image");
+        saveInBackgroundWithAlertDialogAndProgressDialog(mContext, parseFile);
         put(ParseConstants.KEY_IMAGE, parseFile);
     }
 
