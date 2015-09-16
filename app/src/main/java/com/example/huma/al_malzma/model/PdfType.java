@@ -14,12 +14,7 @@ import com.parse.ParseFile;
 
 import java.io.File;
 
-/**
- * PdfType pdf = new PdfType(context);
- * startActivityForResult(getPicPdfIntent());
- * //onActivityResult
- * displayPdf(pdfDir);
- */
+
 @ParseClassName("PDF")
 public class PdfType extends BaseDataItem {
 

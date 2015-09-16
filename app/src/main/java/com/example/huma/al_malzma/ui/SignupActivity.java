@@ -66,7 +66,7 @@ public class SignupActivity extends AppCompatActivity {
         mSubjectDataSource = new SubjectDataSource(this);
 
         /*
-        *the construct of grade which passed to parse.com is as following
+        * the construct of grade which passed to parse.com is as following
         * department_grade_  and then at main add the term
         * so the full grade will be department_grade_term
         * for prep I used "0"
