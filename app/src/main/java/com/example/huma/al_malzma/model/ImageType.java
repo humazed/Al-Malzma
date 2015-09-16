@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.FileHelper;
+import com.example.huma.al_malzma.helper.Utility;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.ui.SubjectActivity;
 import com.parse.ParseClassName;
@@ -127,14 +128,17 @@ public class ImageType extends BaseDataItem {
 
     public void setImage(Uri imageUri) {
         byte[] fileBytes = FileHelper.getByteArrayFromFile(mContext, imageUri);
-        String fileName = imageUri.getLastPathSegment();
+        String fileName = imageUri.getLastPathSegment()
+                .replaceAll("\\s+", "_").replaceAll(":", "_") + ".jpg";
 
         Log.d(TAG, "setImage uri: " + imageUri);
-
         Log.d(TAG, "setImage fileName: " + fileName);
 
         ParseFile parseFile = new ParseFile(fileName, fileBytes, "image");
-        saveInBackgroundWithAlertDialogAndProgressDialog(mContext, parseFile);
+
+        if (Utility.isNetworkAvailableWithToast(mContext))
+            saveFileInBackgroundWithProgressDialog(mContext, parseFile);
+
         put(ParseConstants.KEY_IMAGE, parseFile);
     }
 

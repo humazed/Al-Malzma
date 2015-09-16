@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String KEY_TERM = "term";
     public static final String KEY_SUBJECT_NAME = "subjectName";
 
-    private int mPreviousVisibleItem;
-
     public static ParseUser mCurrentUser;
 
     SubjectDataSource mSubjectDataSource;

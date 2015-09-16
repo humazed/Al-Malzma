@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.huma.al_malzma.helper.FileHelper;
+import com.example.huma.al_malzma.helper.Utility;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
@@ -74,11 +75,13 @@ public class PdfType extends BaseDataItem {
         String fileName = pdfUri.getLastPathSegment().replaceAll("\\s+", "_");
 
         Log.d(TAG, "pdf uri: " + pdfUri);
-
         Log.d(TAG, "pdf fileName: " + fileName);
 
         ParseFile parseFile = new ParseFile(fileName, fileBytes, "pdf");
-        saveInBackgroundWithAlertDialogAndProgressDialog(mContext, parseFile);
+
+        if (Utility.isNetworkAvailableWithToast(mContext))
+            saveFileInBackgroundWithProgressDialog(mContext, parseFile);
+
         put(ParseConstants.KEY_PDF, parseFile);
     }
 

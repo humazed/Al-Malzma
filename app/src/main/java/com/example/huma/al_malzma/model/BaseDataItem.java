@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.huma.al_malzma.R;
+import com.example.huma.al_malzma.helper.Utility;
 import com.example.huma.al_malzma.model.data.JsonAttributes;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.ui.SubjectActivity;
@@ -68,28 +69,38 @@ public abstract class BaseDataItem extends ParseObject {
     public abstract void saveToParse(Context context);
 
     protected void saveInBackgroundWithAlertDialog(final Context context) {
-        saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle(context.getString(R.string.generic_error_title))
-                            .setMessage(R.string.connection_error)
-                            .setPositiveButton(android.R.string.ok, null)
-                            .create().show();
-                    Log.d(TAG, "Fail: ", e);
-                } else {
-                    Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "done ");
+        if (Utility.isNetworkAvailableWithToast(context)) {
+            saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle(context.getString(R.string.generic_error_title))
+                                .setMessage(R.string.connection_error)
+                                .setPositiveButton(android.R.string.ok, null)
+                                .create().show();
+                        Log.e(TAG, "Fail: ", e);
+                    } else {
+                        Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "done ");
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            //no network.
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(R.string.generic_error_title)
+                    .setMessage(R.string.connection_error)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .create().show();
+
+        }
     }
 
 
     MaterialDialog dialog = null;
 
-    protected void saveInBackgroundWithAlertDialogAndProgressDialog(final Context context, ParseFile parseFile) {
+    protected void saveFileInBackgroundWithProgressDialog(final Context context, ParseFile parseFile) {
         new MaterialDialog.Builder(context)
                 .title(R.string.uploading)
                 .content(R.string.please_wait)
@@ -106,12 +117,13 @@ public abstract class BaseDataItem extends ParseObject {
                         dialog = (MaterialDialog) dialogInterface;
                     }
                 }).show();
+
         parseFile.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e != null) {
                     //fail
-                    Log.d(TAG, "fail ", e);
+                    Log.e(TAG, "fail ", e);
                 } else {
                     //succeed
                     Log.d(TAG, "done ");

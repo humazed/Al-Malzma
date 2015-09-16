@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.huma.al_malzma.R;
+import com.example.huma.al_malzma.helper.Utility;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.persistence.SubjectDataSource;
 import com.parse.ParseException;
@@ -178,39 +179,49 @@ public class SignupActivity extends AppCompatActivity {
         else {
             //confirm password
             if (mPassword.equals(mPasswordConfirm)) {
-                mProgressView.setVisibility(View.VISIBLE);
+                if (Utility.isNetworkAvailable(this)) {
+                    mProgressView.setVisibility(View.VISIBLE);
 
-                //pass user data to parse.
-                ParseUser user = new ParseUser();
-                user.setUsername(mName);
-                user.setPassword(mPassword);
-                user.setEmail(mEmail);
-                user.put("pass", mPassword);
-                user.put(ParseConstants.KEY_UNIVERSITY, mSelectedUniversity);
-                user.put(ParseConstants.KEY_FACULTY, mSelectedFaculty);
-                user.put(ParseConstants.KEY_DEPARTMENT, mSelectedDepartment);
-                user.put(ParseConstants.KEY_GRADE, mSelectedGrade);
+                    //pass user data to parse.
+                    ParseUser user = new ParseUser();
+                    user.setUsername(mName);
+                    user.setPassword(mPassword);
+                    user.setEmail(mEmail);
+                    user.put("pass", mPassword);
+                    user.put(ParseConstants.KEY_UNIVERSITY, mSelectedUniversity);
+                    user.put(ParseConstants.KEY_FACULTY, mSelectedFaculty);
+                    user.put(ParseConstants.KEY_DEPARTMENT, mSelectedDepartment);
+                    user.put(ParseConstants.KEY_GRADE, mSelectedGrade);
 
-                user.signUpInBackground(new SignUpCallback() {
-                    public void done(ParseException e) {
-                        mProgressView.setVisibility(View.INVISIBLE);
+                    user.signUpInBackground(new SignUpCallback() {
+                        public void done(ParseException e) {
+                            mProgressView.setVisibility(View.INVISIBLE);
 
-                        if (e == null) {
-                            // Hooray! Let th   em use the app now.
-                            Intent intent = new Intent(SignupActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        } else {
-                            // Sign up didn't succeed. Look at the ParseException to figure out what went wrong.
-                            AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
-                            builder.setTitle(getString(R.string.generic_error_title))
-                                    .setMessage(e.getMessage())
-                                    .setPositiveButton(android.R.string.ok, null)
-                                    .create().show();
+                            if (e == null) {
+                                // Hooray! Let th   em use the app now.
+                                Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            } else {
+                                // Sign up didn't succeed. Look at the ParseException to figure out what went wrong.
+                                AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
+                                builder.setTitle(R.string.generic_error_title)
+                                        .setMessage(e.getMessage())
+                                        .setPositiveButton(android.R.string.ok, null)
+                                        .create().show();
+                            }
                         }
-                    }
-                });
-            } else {
+                    });
+                } else {
+                    //no network.
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
+                    builder.setTitle(R.string.generic_error_title)
+                            .setMessage(R.string.connection_error)
+                            .setPositiveButton(android.R.string.ok, null)
+                            .create().show();
+                }
+            }
+            else {
                 //password not matching >> show the user AlertDialog.
                 AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
                 builder.setTitle(getString(R.string.generic_error_title))

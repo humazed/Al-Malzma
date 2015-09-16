@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.huma.al_malzma.R;
+import com.example.huma.al_malzma.helper.Utility;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -61,27 +62,36 @@ public class LoginActivity extends AppCompatActivity {
                 //send the data to parse. and if Login information is correct
                 //take the user to MainActivity.
                 else {
-                    mProgressView.setVisibility(View.VISIBLE);
+                    if (Utility.isNetworkAvailable(LoginActivity.this)) {
+                        mProgressView.setVisibility(View.VISIBLE);
 
-                    ParseUser.logInInBackground(mName, mPassword, new LogInCallback() {
-                        public void done(ParseUser user, ParseException e) {
-                            mProgressView.setVisibility(View.INVISIBLE);
+                        ParseUser.logInInBackground(mName, mPassword, new LogInCallback() {
+                            public void done(ParseUser user, ParseException e) {
+                                mProgressView.setVisibility(View.INVISIBLE);
 
-                            if (e == null) {
-                                // Hooray! Let them use the app now.
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                            } else {
-                                // Sign up didn't succeed. Look at the ParseException to figure out what went wrong
-                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                                builder.setTitle(getString(R.string.generic_error_title))
-                                        .setMessage(e.getMessage())
-                                        .setPositiveButton(android.R.string.ok, null)
-                                        .create().show();
+                                if (e == null) {
+                                    // Hooray! Let them use the app now.
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                } else {
+                                    // Sign up didn't succeed. Look at the ParseException to figure out what went wrong
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                                    builder.setTitle(getString(R.string.generic_error_title))
+                                            .setMessage(e.getMessage())
+                                            .setPositiveButton(android.R.string.ok, null)
+                                            .create().show();
+                                }
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        //no network.
+                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                        builder.setTitle(getString(R.string.generic_error_title))
+                                .setMessage(getString(R.string.connection_error))
+                                .setPositiveButton(android.R.string.ok, null)
+                                .create().show();
+                    }
                 }
             }
         });
