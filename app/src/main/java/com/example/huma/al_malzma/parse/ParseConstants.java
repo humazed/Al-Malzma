@@ -39,13 +39,23 @@ public interface ParseConstants {
     String KEY_LINK_DESCRIPTION = "description";
 
 
-    String KEY_CREATED_AT = "createdAt";
-    String KEY_CURRENT_USER = "currentUser";
-    String KEY_SUBJECT_NAME = "subject";
-    String KEY_QUOTE = "quote";
-    String KEY_QUOTE_TEXT = "text";
-    String KEY_TYPE = "type";
-    String KEY_LECTURE_LINK = "lecture_link";
+    @StringDef({KEY_LECTURES, KEY_SECTIONS, KEY_ANNOUNCEMENTS})
+    @Retention(RetentionPolicy.SOURCE) @interface FragmentSource {
+    }
+
+    String KEY_FRAGMENT_SOURCE = "fragmentSource";
+    String KEY_LECTURES = "lectures";
+    String KEY_SECTIONS = "sections";
+    String KEY_ANNOUNCEMENTS = "announcements";
+
+    @StringDef({KEY_TYPE_IMAGE, KEY_TYPE_PDF, KEY_TYPE_LINK})
+    @Retention(RetentionPolicy.SOURCE) @interface DataType {
+    }
+
+    String KEY_DATA_TYPE = "dataType";
+    String KEY_TYPE_IMAGE = "image";
+    String KEY_TYPE_PDF = "pdf";
+    String KEY_TYPE_LINK = "link";
 
 
     @StringDef({TYPE_IMAGE, TYPE_PDF})
@@ -53,7 +63,10 @@ public interface ParseConstants {
     }
 
     String TYPE_IMAGE = "image";
-    String  TYPE_PDF = "pdf";
+    String TYPE_PDF = "pdf";
 
+
+    String KEY_CREATED_AT = "createdAt";
+    String KEY_CURRENT_USER = "currentUser";
 
 }

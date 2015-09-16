@@ -4,11 +4,12 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.InputType;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.huma.al_malzma.helper.FileHelper;
-import com.example.huma.al_malzma.helper.Utility;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
@@ -29,8 +30,10 @@ public class PdfType extends BaseDataItem {
 
     public PdfType() {/*Default constructor required by parse */}
 
-    public PdfType(Context context) {
+    public PdfType(Context context, @ParseConstants.FragmentSource String fragmentSource) {
         mContext = context;
+        setDataType(ParseConstants.KEY_TYPE_PDF);
+        setFragmentSource(fragmentSource);
     }
 
     public Intent getPicPdfIntent() {
@@ -58,6 +61,22 @@ public class PdfType extends BaseDataItem {
             Toast.makeText(context, "File path is incorrect.", Toast.LENGTH_LONG).show();
     }
 
+    public static void showPdfDescriptionDialog(final Context context,final PdfType pdf) {
+        new MaterialDialog.Builder(context)
+                .title("Description")
+                .content("Enter some description!")
+                .inputType(InputType.TYPE_CLASS_TEXT)
+                .positiveText(android.R.string.ok)
+                .input("the Description", "", false, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        pdf.setDescription(input.toString());
+
+                        pdf.saveToParse(context);
+                    }
+                }).show();
+    }
+
 
     @Override
     public void saveToParse(Context context) {
@@ -79,8 +98,7 @@ public class PdfType extends BaseDataItem {
 
         ParseFile parseFile = new ParseFile(fileName, fileBytes, "pdf");
 
-        if (Utility.isNetworkAvailableWithToast(mContext))
-            saveFileInBackgroundWithProgressDialog(mContext, parseFile);
+        saveFileInBackgroundWithProgressDialog(mContext, parseFile);
 
         put(ParseConstants.KEY_PDF, parseFile);
     }

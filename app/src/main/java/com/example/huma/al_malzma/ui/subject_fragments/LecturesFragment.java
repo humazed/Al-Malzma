@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,17 +14,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.FabAnimationHelper;
 import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
 import com.example.huma.al_malzma.model.PdfType;
+import com.example.huma.al_malzma.parse.ParseConstants;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.rey.material.widget.EditText;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,13 +41,10 @@ public class LecturesFragment extends Fragment {
     @Bind(R.id.link_fab) FloatingActionButton mLinkFab;
     @Bind(R.id.image_view) ImageView mImageView;
 
-    EditText mLinkEditText;
-    EditText mLinkDescriptionEditText;
 
     ImageType image;
     PdfType pdf;
 
-    private Thread mThread;
 
     public LecturesFragment() {
         // Required empty public constructor
@@ -76,19 +68,19 @@ public class LecturesFragment extends Fragment {
 
     @OnClick(R.id.camera_fab)
     void takePic() {
-        image = new ImageType(getActivity(), ImageType.REQUEST_CAPTURE_PHOTO);
+        image = new ImageType(getActivity(), ImageType.REQUEST_CAPTURE_PHOTO, ParseConstants.KEY_LECTURES);
         startActivityForResult(image.getActionIntent(), ImageType.REQUEST_CAPTURE_PHOTO);
     }
 
     @OnClick(R.id.choose_image_fab)
     void chooseImage() {
-        image = new ImageType(getActivity(), ImageType.REQUEST_CHOOSE_PHOTO);
+        image = new ImageType(getActivity(), ImageType.REQUEST_CHOOSE_PHOTO, ParseConstants.KEY_LECTURES);
         startActivityForResult(image.getActionIntent(), ImageType.REQUEST_CHOOSE_PHOTO);
     }
 
     @OnClick(R.id.pdf_fab)
     void picPDF() {
-        pdf = new PdfType(getActivity());
+        pdf = new PdfType(getActivity(), ParseConstants.KEY_LECTURES);
 
         startActivityForResult(Intent.createChooser(pdf.getPicPdfIntent(), "Open file"),
                 PdfType.REQUEST_CHOOSE_PDF);
@@ -96,7 +88,7 @@ public class LecturesFragment extends Fragment {
 
     @OnClick(R.id.link_fab)
     void addLink() {
-        showLinkDialog();
+        LinkType.showLinkDialog(getActivity(), ParseConstants.KEY_LECTURES);
     }
 
     @Override
@@ -109,7 +101,7 @@ public class LecturesFragment extends Fragment {
                     dir = data.getData();
                     image.setImage(dir);
 
-                    showImageDescriptionDialog();
+                    ImageType.showImageDescriptionDialog(getActivity(), image);
 
                     ImageType.refreshGallery(getActivity());
                     break;
@@ -117,7 +109,7 @@ public class LecturesFragment extends Fragment {
                     dir = data.getData();
                     image.setImage(dir);
 
-                    showImageDescriptionDialog();
+                    ImageType.showImageDescriptionDialog(getActivity(), image);
 
                     Log.d(TAG, "onActivityResult " + dir);
                     Glide.with(this).load(dir).asBitmap().into(mImageView);
@@ -126,126 +118,12 @@ public class LecturesFragment extends Fragment {
                     dir = data.getData();
                     pdf.setPDF(dir);
 
-                    showPdfDescriptionDialog();
+                    PdfType.showPdfDescriptionDialog(getActivity(),pdf);
 
                     Log.d(TAG, "onActivityResult " + dir);
-//                    PdfType.displayPdf(getActivity(), dir); //for test only.
                     break;
             }
         }
-    }
-
-
-    private void showImageDescriptionDialog() {
-        new MaterialDialog.Builder(getActivity())
-                .title("Description")
-                .content("Enter some description!")
-                .inputType(InputType.TYPE_CLASS_TEXT)
-                .positiveText(android.R.string.ok)
-                .input("the Description", "", false, new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(MaterialDialog dialog, CharSequence input) {
-                        image.setDescription(input.toString());
-
-                        image.saveToParse(getActivity());
-                    }
-                }).show();
-    }
-
-    private void showPdfDescriptionDialog() {
-        new MaterialDialog.Builder(getActivity())
-                .title("Description")
-                .content("Enter some description!")
-                .inputType(InputType.TYPE_CLASS_TEXT)
-                .positiveText(android.R.string.ok)
-                .input("the Description", "", false, new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(MaterialDialog dialog, CharSequence input) {
-                        pdf.setDescription(input.toString());
-
-                        pdf.saveToParse(getActivity());
-                    }
-                }).show();
-    }
-
-
-    // TODO: 9/9/2015 it's very long method and will be use a lot so try to make dialogFragment and but them in.
-    boolean linkFlag, descriptionFlag;
-
-    private void showLinkDialog() {
-        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-                .title(R.string.important_link_dialog_title)
-                .customView(R.layout.add_link_dialog, true)
-                .positiveText(R.string.add)
-                .negativeText(android.R.string.cancel)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        //save link and description to parse.
-                        LinkType link = new LinkType();
-                        link.setLink(mLinkEditText.getText().toString());
-                        link.setDescription(mLinkDescriptionEditText.getText().toString());
-                        link.saveToParse(getActivity());
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                    }
-                }).build();
-
-        final View positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
-        mLinkEditText = (EditText) dialog.findViewById(R.id.link_edit_text);
-        mLinkDescriptionEditText = (EditText) dialog.findViewById(R.id.link_description_edit_text);
-
-        //it's only faction is to enable and disable the input Button.
-        mLinkEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //check the link.
-                if (LinkType.validateLink(mLinkEditText.getText().toString()) == null) {
-                    linkFlag = false;
-                    mLinkEditText.setError(getActivity().getString(R.string.wrong_link_error_message));
-                } else {
-                    linkFlag = true;
-                    mLinkEditText.setError(null);
-                }
-
-                //check if the link is correct and there is description.
-                if (linkFlag && descriptionFlag) positiveAction.setEnabled(true);
-                else positiveAction.setEnabled(false);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-
-        });
-
-        mLinkDescriptionEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //check if the text field is Empty or not.
-                descriptionFlag = (s.toString().trim().length() > 0);
-                //check if the link is correct and there is description.
-                if (linkFlag && descriptionFlag) positiveAction.setEnabled(true);
-                else positiveAction.setEnabled(false);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
-        dialog.show();
-        positiveAction.setEnabled(false); // disabled by default
     }
 
 

@@ -6,11 +6,12 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.IntDef;
+import android.text.InputType;
 import android.util.Log;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.FileHelper;
-import com.example.huma.al_malzma.helper.Utility;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.ui.SubjectActivity;
 import com.parse.ParseClassName;
@@ -29,7 +30,7 @@ public class ImageType extends BaseDataItem {
 
     @IntDef({REQUEST_CAPTURE_PHOTO, REQUEST_CHOOSE_PHOTO})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface Type {
+    public @interface RequestType {
     }
 
     public static final int REQUEST_CAPTURE_PHOTO = 1;
@@ -43,9 +44,12 @@ public class ImageType extends BaseDataItem {
 
     public ImageType() {/*Default constructor required by parse */}
 
-    public ImageType(Context context, @Type int type) {
+    public ImageType(Context context, @RequestType int requestType,
+                     @ParseConstants.FragmentSource String fragmentSource) {
         mContext = context;
-        mType = type;
+        mType = requestType;
+        setDataType(ParseConstants.KEY_TYPE_IMAGE);
+        setFragmentSource(fragmentSource);
     }
 
     public Intent getActionIntent() {
@@ -116,6 +120,23 @@ public class ImageType extends BaseDataItem {
         context.sendBroadcast(mediaScanIntent);
     }
 
+
+    public static void showImageDescriptionDialog(final Context context,final ImageType image) {
+        new MaterialDialog.Builder(context)
+                .title("Description")
+                .content("Enter some description!")
+                .inputType(InputType.TYPE_CLASS_TEXT)
+                .positiveText(android.R.string.ok)
+                .input("the Description", "", false, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        image.setDescription(input.toString());
+
+                        image.saveToParse(context);
+                    }
+                }).show();
+    }
+
     @Override
     public void saveToParse(Context context) {
         saveInBackgroundWithAlertDialog(context);
@@ -136,8 +157,7 @@ public class ImageType extends BaseDataItem {
 
         ParseFile parseFile = new ParseFile(fileName, fileBytes, "image");
 
-        if (Utility.isNetworkAvailableWithToast(mContext))
-            saveFileInBackgroundWithProgressDialog(mContext, parseFile);
+        saveFileInBackgroundWithProgressDialog(mContext, parseFile);
 
         put(ParseConstants.KEY_IMAGE, parseFile);
     }

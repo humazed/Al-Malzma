@@ -27,8 +27,6 @@ import java.util.Calendar;
 public abstract class BaseDataItem extends ParseObject {
     public static final String TAG = BaseDataItem.class.getSimpleName();
 
-    private Thread mThread;
-
     /**
      * in this class the member variables getters and setters are normal noe's because all of them
      * can be got without user direct input and save them to parse in the constructor.
@@ -51,7 +49,9 @@ public abstract class BaseDataItem extends ParseObject {
     public String subject = SubjectActivity.subjectName;
     public String week = SubjectActivity.week;
 
-    private String FragmentSource; //ie: lecture,section or announcement. get it from SourceTypes.java
+    private String FragmentSource; //ie: lecture, section or announcement. get it from ParseConstants.java
+    private String DataType; //ie: PDF, Image or link. get it from ParseConstants.java
+
 
     //put the identifiers that can be got easily.
     public BaseDataItem() {
@@ -101,42 +101,44 @@ public abstract class BaseDataItem extends ParseObject {
     MaterialDialog dialog = null;
 
     protected void saveFileInBackgroundWithProgressDialog(final Context context, ParseFile parseFile) {
-        new MaterialDialog.Builder(context)
-                .title(R.string.uploading)
-                .content(R.string.please_wait)
-                .contentGravity(GravityEnum.CENTER)
-                .progress(false, 100, true)
-                .cancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                    }
-                })
-                .showListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialogInterface) {
-                        dialog = (MaterialDialog) dialogInterface;
-                    }
-                }).show();
+        if (Utility.isNetworkAvailableWithToast(context)) {
+            new MaterialDialog.Builder(context)
+                    .title(R.string.uploading)
+                    .content(R.string.please_wait)
+                    .contentGravity(GravityEnum.CENTER)
+                    .progress(false, 100, true)
+                    .cancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                        }
+                    })
+                    .showListener(new DialogInterface.OnShowListener() {
+                        @Override
+                        public void onShow(DialogInterface dialogInterface) {
+                            dialog = (MaterialDialog) dialogInterface;
+                        }
+                    }).show();
 
-        parseFile.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    //fail
-                    Log.e(TAG, "fail ", e);
-                } else {
-                    //succeed
-                    Log.d(TAG, "done ");
-                    dialog.setContent(context.getString(R.string.done));
+            parseFile.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        //fail
+                        Log.e(TAG, "fail ", e);
+                    } else {
+                        //succeed
+                        Log.d(TAG, "done ");
+                        dialog.setContent(context.getString(R.string.done));
+                    }
                 }
-            }
-        }, new ProgressCallback() {
-            @Override
-            public void done(final Integer percentDone) {
-                // Update your progress spinner here. percentDone will be between 0 and 100.
-                dialog.setProgress(percentDone);
-            }
-        });
+            }, new ProgressCallback() {
+                @Override
+                public void done(final Integer percentDone) {
+                    // Update your progress spinner here. percentDone will be between 0 and 100.
+                    dialog.setProgress(percentDone);
+                }
+            });
+        }
     }
 
     public boolean add() {
@@ -227,10 +229,19 @@ public abstract class BaseDataItem extends ParseObject {
     }
 
     public String getFragmentSource() {
-        return FragmentSource;
+        return getString(ParseConstants.KEY_FRAGMENT_SOURCE);
     }
 
-    public void setFragmentSource(String fragmentSource) {
-        this.FragmentSource = fragmentSource;
+    public void setFragmentSource(@ParseConstants.FragmentSource String fragmentSource) {
+        put(ParseConstants.KEY_FRAGMENT_SOURCE, fragmentSource);
     }
+
+    public String getDataType() {
+        return getString(ParseConstants.KEY_DATA_TYPE);
+    }
+
+    public void setDataType(@ParseConstants.DataType String dataType) {
+        put(ParseConstants.KEY_DATA_TYPE, dataType);
+    }
+
 }
