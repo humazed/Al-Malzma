@@ -67,6 +67,8 @@ public class SubjectActivity extends AppCompatActivity implements ActionBar.TabL
 
         Log.d(TAG, "onCreate " + university + faculty + department + grade + term + subjectName + week);
 
+        setTitle(subjectName);
+
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
