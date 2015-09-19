@@ -3,9 +3,7 @@ package com.example.huma.al_malzma.model;
 
 import android.content.Context;
 
-import com.parse.ParseClassName;
-
-@ParseClassName("Text")
+//@ParseClassName("Text")
 public class TextType extends BaseDataItem {
 
     private String title;

@@ -14,7 +14,6 @@ import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.FileHelper;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.ui.SubjectActivity;
-import com.parse.ParseClassName;
 import com.parse.ParseFile;
 
 import java.io.File;
@@ -25,7 +24,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
-@ParseClassName("Image")
+//@ParseClassName(ParseConstants.CLASS_DATA)
 public class ImageType extends BaseDataItem {
 
     @IntDef({REQUEST_CAPTURE_PHOTO, REQUEST_CHOOSE_PHOTO})
@@ -46,6 +45,7 @@ public class ImageType extends BaseDataItem {
 
     public ImageType(Context context, @RequestType int requestType,
                      @ParseConstants.FragmentSource String fragmentSource) {
+        BaseDataItem.putIdentifiers(this);
         mContext = context;
         mType = requestType;
         setDataType(ParseConstants.KEY_TYPE_IMAGE);
@@ -121,7 +121,7 @@ public class ImageType extends BaseDataItem {
     }
 
 
-    public static void showImageDescriptionDialog(final Context context,final ImageType image) {
+    public static void showImageDescriptionDialog(final Context context, final ImageType image) {
         new MaterialDialog.Builder(context)
                 .title("Description")
                 .content("Enter some description!")

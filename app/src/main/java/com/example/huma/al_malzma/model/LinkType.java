@@ -11,11 +11,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.Utility;
 import com.example.huma.al_malzma.parse.ParseConstants;
-import com.parse.ParseClassName;
 import com.rey.material.widget.EditText;
 
-@ParseClassName("Link")
-public class LinkType extends BaseDataItem {
+//@ParseClassName(ParseConstants.CLASS_DATA)
+public class LinkType extends DataItem {
     public static final String TAG = LinkType.class.getSimpleName();
 
 
@@ -24,17 +23,15 @@ public class LinkType extends BaseDataItem {
 
     private static boolean linkFlag, descriptionFlag;
 
-
-    public LinkType() {/*Default constructor required by parse */}
+    public LinkType() { /*Default constructor required by parse */ }
 
     public LinkType(@ParseConstants.FragmentSource String fragmentSource) {
-        setDataType(ParseConstants.KEY_TYPE_LINK);
-        setFragmentSource(fragmentSource);
+        super(fragmentSource, ParseConstants.KEY_TYPE_LINK);
     }
 
 
     // TODO: 9/9/2015 it's very long method and will be use a lot so try to make dialogFragment and but them in.
-    public static void showLinkDialog(final Context context,@ParseConstants.FragmentSource final String fragmentSource) {
+    public static void showLinkDialog(final Context context, @ParseConstants.FragmentSource final String fragmentSource) {
         MaterialDialog dialog = new MaterialDialog.Builder(context)
                 .title(R.string.important_link_dialog_title)
                 .customView(R.layout.add_link_dialog, true)

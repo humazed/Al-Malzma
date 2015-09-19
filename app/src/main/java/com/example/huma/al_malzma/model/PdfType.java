@@ -11,13 +11,12 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.huma.al_malzma.helper.FileHelper;
 import com.example.huma.al_malzma.parse.ParseConstants;
-import com.parse.ParseClassName;
 import com.parse.ParseFile;
 
 import java.io.File;
 
 
-@ParseClassName("PDF")
+//@ParseClassName(ParseConstants.CLASS_DATA)
 public class PdfType extends BaseDataItem {
 
     public static final int REQUEST_CHOOSE_PDF = 3;
@@ -31,6 +30,7 @@ public class PdfType extends BaseDataItem {
     public PdfType() {/*Default constructor required by parse */}
 
     public PdfType(Context context, @ParseConstants.FragmentSource String fragmentSource) {
+        BaseDataItem.putIdentifiers(this);
         mContext = context;
         setDataType(ParseConstants.KEY_TYPE_PDF);
         setFragmentSource(fragmentSource);

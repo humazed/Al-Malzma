@@ -7,10 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 
 public interface ParseConstants {
 
-    //ParseObjects names.
-    String OBJECT_LECTURES = "lectures";
-    String OBJECT_SECTIONS = "sections";
-    String OBJECT_ANNOUNCEMENTS = "announcements";
+    String CLASS_DATA = "Data";
 
 
     ///////////////////////////////////////////////////////////////////////////

@@ -17,12 +17,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.FabAnimationHelper;
+import com.example.huma.al_malzma.model.BaseDataItem;
 import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
 import com.example.huma.al_malzma.model.PdfType;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.parse.ParseQuery;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -65,6 +67,47 @@ public class LecturesFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+//        refreshList();
+    }
+
+//    private void refreshList() {
+//        Log.d(TAG, "refreshList ");
+//        ParseQuery<LinkType> query = ParseQuery.getQuery(ParseConstants.CLASS_LINK);
+//
+//        setCurrentConstrains(query);
+//
+//        query.findInBackground(new FindCallback<LinkType>() {
+//            public void done(List<LinkType> scoreList, ParseException e) {
+//                if (e == null) {
+//                    for (LinkType link : scoreList) {
+//                        Log.d(TAG, "done " + link.getDescription());
+//                    }
+//
+//                } else {
+//                    Log.d("score", "Error: " + e.getMessage());
+//                }
+//            }
+//        });
+//
+//        mSubjectsListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,
+//                getResources().getStringArray(R.array.weeks)));
+//
+//
+//    }
+
+    private void setCurrentConstrains(ParseQuery<LinkType> query) {
+        query.whereEqualTo(ParseConstants.KEY_UNIVERSITY, BaseDataItem.getUniversity());
+        query.whereEqualTo(ParseConstants.KEY_FACULTY, BaseDataItem.getFaculty());
+        query.whereEqualTo(ParseConstants.KEY_DEPARTMENT, BaseDataItem.getDepartment());
+        query.whereEqualTo(ParseConstants.KEY_GRADE, BaseDataItem.getGrade());
+        query.whereEqualTo(ParseConstants.KEY_TERM, BaseDataItem.getTerm());
+        query.whereEqualTo(ParseConstants.KEY_WEEK, BaseDataItem.getWeek());
+        query.whereEqualTo(ParseConstants.KEY_SUBJECT, BaseDataItem.getSubject());
+    }
 
     @OnClick(R.id.camera_fab)
     void takePic() {
@@ -118,7 +161,7 @@ public class LecturesFragment extends Fragment {
                     dir = data.getData();
                     pdf.setPDF(dir);
 
-                    PdfType.showPdfDescriptionDialog(getActivity(),pdf);
+                    PdfType.showPdfDescriptionDialog(getActivity(), pdf);
 
                     Log.d(TAG, "onActivityResult " + dir);
                     break;

@@ -53,15 +53,17 @@ public class SubjectActivity extends AppCompatActivity implements ActionBar.TabL
 
         // TODO: 9/9/2015 I didn't use any of that things except subjectName an week. so  try delete them when you finish.
         Intent mainIntent = getIntent().getParcelableExtra(WeeksActivity.KEY_MAIN_INTENT);
+        if (mainIntent != null && mainIntent.getStringExtra(MainActivity.KEY_SUBJECT_NAME) != null) {
+            university = mainIntent.getStringExtra(MainActivity.KEY_UNIVERSITY);
+            faculty = mainIntent.getStringExtra(MainActivity.KEY_FACULTY);
+            department = mainIntent.getStringExtra(MainActivity.KEY_DEPARTMENT);
+            grade = mainIntent.getStringExtra(MainActivity.KEY_GRADE);
+            term = mainIntent.getStringExtra(MainActivity.KEY_TERM);
+            subjectName = mainIntent.getStringExtra(MainActivity.KEY_SUBJECT_NAME);
 
-        university = mainIntent.getStringExtra(MainActivity.KEY_UNIVERSITY);
-        faculty = mainIntent.getStringExtra(MainActivity.KEY_FACULTY);
-        department = mainIntent.getStringExtra(MainActivity.KEY_DEPARTMENT);
-        grade = mainIntent.getStringExtra(MainActivity.KEY_GRADE);
-        term = mainIntent.getStringExtra(MainActivity.KEY_TERM);
-        subjectName = mainIntent.getStringExtra(MainActivity.KEY_SUBJECT_NAME);
+            week = getIntent().getStringExtra(WeeksActivity.KEY_WEEK);
+        }
 
-        week = getIntent().getStringExtra(WeeksActivity.KEY_WEEK);
 
         // TODO: 9/12/2015 change the Activity title to be the name of subject
 
