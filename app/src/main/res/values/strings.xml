@@ -67,6 +67,7 @@
     <string name="please_wait">Please wait…</string>
     <string name="uploading">Uploading</string>
     <string name="done">Done!</string>
+    <string name="fail">Fail!</string>
 
 
     <!--Empty and error messages-->

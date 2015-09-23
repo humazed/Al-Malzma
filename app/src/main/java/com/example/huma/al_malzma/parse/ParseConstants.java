@@ -27,7 +27,7 @@ public interface ParseConstants {
     String KEY_IMAGE = "image";
     String KEY_IMAGE_DESCRIPTION = "description";
 
-    //Pdf
+    //PdfData
     String KEY_PDF = "pdf";
     String KEY_PDF_DESCRIPTION = "description";
 
@@ -45,7 +45,7 @@ public interface ParseConstants {
     String KEY_SECTIONS = "sections";
     String KEY_ANNOUNCEMENTS = "announcements";
 
-    @StringDef({KEY_TYPE_IMAGE, KEY_TYPE_PDF, KEY_TYPE_LINK})
+    @StringDef({KEY_TYPE_IMAGE, KEY_TYPE_PDF, KEY_TYPE_LINK, KEY_TYPE_TEXT})
     @Retention(RetentionPolicy.SOURCE) @interface DataType {
     }
 
@@ -53,6 +53,7 @@ public interface ParseConstants {
     String KEY_TYPE_IMAGE = "image";
     String KEY_TYPE_PDF = "pdf";
     String KEY_TYPE_LINK = "link";
+    String KEY_TYPE_TEXT = "text";
 
 
     @StringDef({TYPE_IMAGE, TYPE_PDF})

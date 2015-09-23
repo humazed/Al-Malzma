@@ -1,6 +1,5 @@
 package com.example.huma.al_malzma.model;
 
-
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,7 +12,7 @@ import com.example.huma.al_malzma.helper.Utility;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.rey.material.widget.EditText;
 
-//@ParseClassName(ParseConstants.CLASS_DATA)
+
 public class LinkType extends DataItem {
     public static final String TAG = LinkType.class.getSimpleName();
 

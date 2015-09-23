@@ -25,7 +25,7 @@ import java.util.Calendar;
 
 
 public abstract class BaseDataItem extends ParseObject {
-    public static final String TAG = BaseDataItem.class.getSimpleName();
+    private static final String TAG = BaseDataItem.class.getSimpleName();
 
 
     private static ParseUser creator = ParseUser.getCurrentUser();

@@ -31,11 +31,11 @@ public class FileHelper {
                 inStream = context.getContentResolver().openInputStream(uri);
                 outStream = new ByteArrayOutputStream();
 
-                byte[] bytesFromFile = new byte[1024 * 1024]; // buffer size (1 MB)
-                int bytesRead = inStream.read(bytesFromFile);
+                byte[] bytesFromFile = new byte[1024 * 1024 * 10]; // buffer size (1 MB)
+                int bytesRead = inStream != null ? inStream.read(bytesFromFile) : 0;
                 while (bytesRead != -1) {
                     outStream.write(bytesFromFile, 0, bytesRead);
-                    bytesRead = inStream.read(bytesFromFile);
+                    bytesRead = inStream != null ? inStream.read(bytesFromFile) : 0;
                 }
 
                 fileBytes = outStream.toByteArray();
@@ -75,26 +75,24 @@ public class FileHelper {
         return reducedData;
     }
 
-	public static String getFileName(Context context, Uri uri,@ParseConstants.FileType String fileType) {
-		String fileName = "uploaded_file.";
+    public static String getFileName(Context context, Uri uri, @ParseConstants.FileType String fileType) {
+        String fileName = "uploaded_file.";
 
-		if (fileType.equals(ParseConstants.TYPE_IMAGE)) {
-			fileName += "png";
-		}
-		else {
-			// For video, we want to get the actual file extension
-			if (uri.getScheme().equals("content")) {
-				// do it using the mime type
-				String mimeType = context.getContentResolver().getType(uri);
-				int slashIndex = mimeType.indexOf("/");
-				String fileExtension = mimeType.substring(slashIndex + 1);
-				fileName += fileExtension;
-			}
-			else {
-				fileName = uri.getLastPathSegment();
-			}
-		}
+        if (fileType.equals(ParseConstants.TYPE_IMAGE)) {
+            fileName += "png";
+        } else {
+            // For video, we want to get the actual file extension
+            if (uri.getScheme().equals("content")) {
+                // do it using the mime type
+                String mimeType = context.getContentResolver().getType(uri);
+                int slashIndex = mimeType != null ? mimeType.indexOf("/") : 0;
+                String fileExtension = mimeType != null ? mimeType.substring(slashIndex + 1) : null;
+                fileName += fileExtension;
+            } else {
+                fileName = uri.getLastPathSegment();
+            }
+        }
 
-		return fileName;
-	}
+        return fileName;
+    }
 }

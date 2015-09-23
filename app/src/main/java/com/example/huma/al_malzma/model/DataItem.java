@@ -26,24 +26,24 @@ import java.util.Calendar;
 
 @ParseClassName(ParseConstants.CLASS_DATA)
 public abstract class DataItem extends ParseObject {
-    public static final String TAG = DataItem.class.getSimpleName();
+    private static final String TAG = DataItem.class.getSimpleName();
 
 
-    private static ParseUser creator = ParseUser.getCurrentUser();
+    private ParseUser creator = ParseUser.getCurrentUser();
 
     // Fields that identify the ParseObject and help when retrieving it
-    private static String university = creator.getString(ParseConstants.KEY_UNIVERSITY);
-    private static String faculty = creator.getString(ParseConstants.KEY_FACULTY);
-    private static String department = creator.getString(ParseConstants.KEY_DEPARTMENT);
-    private static String grade = creator.getString(ParseConstants.KEY_GRADE);
-    public static final String className =
+    private String university = creator.getString(ParseConstants.KEY_UNIVERSITY);
+    private String faculty = creator.getString(ParseConstants.KEY_FACULTY);
+    private String department = creator.getString(ParseConstants.KEY_DEPARTMENT);
+    private String grade = creator.getString(ParseConstants.KEY_GRADE);
+    public final String className =
             String.format("%s_%s_%s_%s", university, faculty, department, grade);
 
 
-    private static String term = getCurrentTerm();
+    private String term = getCurrentTerm();
 
-    private static String subject = SubjectActivity.subjectName;
-    private static String week = SubjectActivity.week;
+    private String subject = SubjectActivity.subjectName;
+    private String week = SubjectActivity.week;
 
     private String fragmentSource; //ie: lecture, section or announcement. get it from ParseConstants.java
     private String dataType; //ie: PDF, Image or link. get it from ParseConstants.java
@@ -133,6 +133,7 @@ public abstract class DataItem extends ParseObject {
                     if (e != null) {
                         //fail
                         Log.e(TAG, "fail ", e);
+                        dialog.setContent(context.getString(R.string.fail));
                     } else {
                         //succeed
                         Log.d(TAG, "done ");

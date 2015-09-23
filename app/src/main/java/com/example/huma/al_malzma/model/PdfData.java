@@ -16,9 +16,8 @@ import com.parse.ParseFile;
 import java.io.File;
 
 
-public class PdfType extends DataItem {
-    private static final String TAG = PdfType.class.getSimpleName();
-
+public class PdfData extends DataItem {
+    private static final String TAG = PdfData.class.getSimpleName();
 
     public static final int REQUEST_CHOOSE_PDF = 3;
 
@@ -26,13 +25,14 @@ public class PdfType extends DataItem {
 
     ParseFile PDF;
 
-    public PdfType() {/*Default constructor required by parse */}
+    public PdfData() {/*Default constructor required by parse */}
 
 
-    public PdfType(Context context, @ParseConstants.FragmentSource String fragmentSource) {
+    public PdfData(Context context, @ParseConstants.FragmentSource String fragmentSource) {
         super(fragmentSource, ParseConstants.KEY_TYPE_PDF);
         mContext = context;
     }
+
 
     public static Intent getPicPdfIntent() {
         Intent choosePhotoIntent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -40,7 +40,7 @@ public class PdfType extends DataItem {
         return choosePhotoIntent;
     }
 
-    public static void showPdfDescriptionDialog(final Context context, final PdfType pdf) {
+    public static void showPdfDescriptionDialog(final Context context, final PdfData pdfData) {
         new MaterialDialog.Builder(context)
                 .title("Description")
                 .content("Enter some description!")
@@ -49,9 +49,9 @@ public class PdfType extends DataItem {
                 .input("the Description", "", false, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(MaterialDialog dialog, CharSequence input) {
-                        pdf.setDescription(input.toString());
+                        pdfData.setDescription(input.toString());
 
-                        pdf.saveToParse(context);
+                        pdfData.saveToParse(context);
                     }
                 }).show();
     }
@@ -80,12 +80,11 @@ public class PdfType extends DataItem {
         saveInBackgroundWithAlertDialog(context);
     }
 
-
     public ParseFile getPDF() {
         return PDF;
     }
 
-    public void setPDF(Uri pdfUri) {
+    public void setAndSavePDF(Uri pdfUri) {
         byte[] fileBytes = FileHelper.getByteArrayFromFile(mContext, pdfUri);
         //replace spaces with "_" because parse don't   accept file name with spaces.
         String fileName = pdfUri.getLastPathSegment().replaceAll("\\s+", "_");
@@ -107,4 +106,5 @@ public class PdfType extends DataItem {
     public void setDescription(String description) {
         put(ParseConstants.KEY_PDF_DESCRIPTION, description);
     }
+
 }

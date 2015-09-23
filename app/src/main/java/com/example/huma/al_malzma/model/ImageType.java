@@ -25,7 +25,9 @@ import java.util.Locale;
 
 
 //@ParseClassName(ParseConstants.CLASS_DATA)
-public class ImageType extends BaseDataItem {
+public class ImageType extends DataItem {
+    private static final String TAG = ImageType.class.getSimpleName();
+
 
     @IntDef({REQUEST_CAPTURE_PHOTO, REQUEST_CHOOSE_PHOTO})
     @Retention(RetentionPolicy.SOURCE)
@@ -45,11 +47,10 @@ public class ImageType extends BaseDataItem {
 
     public ImageType(Context context, @RequestType int requestType,
                      @ParseConstants.FragmentSource String fragmentSource) {
-        BaseDataItem.putIdentifiers(this);
         mContext = context;
         mType = requestType;
-        setDataType(ParseConstants.KEY_TYPE_IMAGE);
-        setFragmentSource(fragmentSource);
+//        setDataType(ParseConstants.KEY_TYPE_IMAGE);
+//        setFragmentSource(fragmentSource);
     }
 
     public Intent getActionIntent() {

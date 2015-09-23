@@ -20,7 +20,7 @@ import com.example.huma.al_malzma.helper.FabAnimationHelper;
 import com.example.huma.al_malzma.model.BaseDataItem;
 import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
-import com.example.huma.al_malzma.model.PdfType;
+import com.example.huma.al_malzma.model.PdfData;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -45,7 +45,8 @@ public class LecturesFragment extends Fragment {
 
 
     ImageType image;
-    PdfType pdf;
+    //    PdfType mPdfData;
+    PdfData mPdfData;
 
 
     public LecturesFragment() {
@@ -123,10 +124,9 @@ public class LecturesFragment extends Fragment {
 
     @OnClick(R.id.pdf_fab)
     void picPDF() {
-        pdf = new PdfType(getActivity(), ParseConstants.KEY_LECTURES);
-
-        startActivityForResult(Intent.createChooser(pdf.getPicPdfIntent(), "Open file"),
-                PdfType.REQUEST_CHOOSE_PDF);
+        mPdfData = new PdfData(getActivity(), ParseConstants.KEY_LECTURES);
+        startActivityForResult(Intent.createChooser(PdfData.getPicPdfIntent(), "Open file"),
+                PdfData.REQUEST_CHOOSE_PDF);
     }
 
     @OnClick(R.id.link_fab)
@@ -157,11 +157,11 @@ public class LecturesFragment extends Fragment {
                     Log.d(TAG, "onActivityResult " + dir);
                     Glide.with(this).load(dir).asBitmap().into(mImageView);
                     break;
-                case PdfType.REQUEST_CHOOSE_PDF:
+                case PdfData.REQUEST_CHOOSE_PDF:
                     dir = data.getData();
-                    pdf.setPDF(dir);
+                    mPdfData.setAndSavePDF(dir);
 
-                    PdfType.showPdfDescriptionDialog(getActivity(), pdf);
+                    PdfData.showPdfDescriptionDialog(getActivity(), mPdfData);
 
                     Log.d(TAG, "onActivityResult " + dir);
                     break;
