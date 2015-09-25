@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
-import com.example.huma.al_malzma.model.PdfData;
 import com.example.huma.al_malzma.model.PdfType;
 import com.example.huma.al_malzma.model.TextType;
 import com.parse.Parse;
@@ -17,13 +16,11 @@ public class ParseApplication extends Application {
         super.onCreate();
 
         // Add subclass.
-//        ParseObject.registerSubclass(DataItem.class);
         ParseObject.registerSubclass(ImageType.class);
         ParseObject.registerSubclass(PdfType.class);
         ParseObject.registerSubclass(LinkType.class);
         ParseObject.registerSubclass(TextType.class);
 
-        ParseObject.registerSubclass(PdfData.class);
 
 
 

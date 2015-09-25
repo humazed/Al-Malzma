@@ -4,11 +4,15 @@ package com.example.huma.al_malzma.helper;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Patterns;
 import android.widget.Toast;
 
 import com.example.huma.al_malzma.R;
+import com.example.huma.al_malzma.model.data.JsonAttributes;
+
+import java.util.Calendar;
 
 public class Utility {
 
@@ -51,5 +55,15 @@ public class Utility {
             return link;
         }
         return null;
+    }
+
+    @NonNull
+    public static String getCurrentTerm() {
+        int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
+        if (Calendar.SEPTEMBER <= currentMonth || currentMonth <= Calendar.FEBRUARY) {
+            return JsonAttributes.TERM_1;
+        } else {
+            return JsonAttributes.TERM_2;
+        }
     }
 }

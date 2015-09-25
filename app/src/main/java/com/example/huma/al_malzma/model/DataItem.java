@@ -2,7 +2,6 @@ package com.example.huma.al_malzma.model;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
@@ -11,7 +10,6 @@ import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.Utility;
-import com.example.huma.al_malzma.model.data.JsonAttributes;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.ui.SubjectActivity;
 import com.parse.ParseClassName;
@@ -21,8 +19,6 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.ProgressCallback;
 import com.parse.SaveCallback;
-
-import java.util.Calendar;
 
 @ParseClassName(ParseConstants.CLASS_DATA)
 public abstract class DataItem extends ParseObject {
@@ -40,7 +36,7 @@ public abstract class DataItem extends ParseObject {
             String.format("%s_%s_%s_%s", university, faculty, department, grade);
 
 
-    private String term = getCurrentTerm();
+    private String term = Utility.getCurrentTerm();
 
     private String subject = SubjectActivity.subjectName;
     private String week = SubjectActivity.week;
@@ -147,16 +143,6 @@ public abstract class DataItem extends ParseObject {
                     dialog.setProgress(percentDone);
                 }
             });
-        }
-    }
-
-    @NonNull
-    public static String getCurrentTerm() {
-        int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
-        if (Calendar.SEPTEMBER <= currentMonth || currentMonth <= Calendar.FEBRUARY) {
-            return JsonAttributes.TERM_1;
-        } else {
-            return JsonAttributes.TERM_2;
         }
     }
 

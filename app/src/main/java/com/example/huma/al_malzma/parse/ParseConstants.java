@@ -24,17 +24,22 @@ public interface ParseConstants {
     String KEY_SUBJECT = "subject";
 
     //Image
+    String CLASS_IMAGE = "Image";
     String KEY_IMAGE = "image";
     String KEY_IMAGE_DESCRIPTION = "description";
 
     //PdfData
+    String CLASS_PDF = "PDF";
     String KEY_PDF = "pdf";
     String KEY_PDF_DESCRIPTION = "description";
 
     //link
+    String CLASS_LINK = "Link";
     String KEY_LINK = "link";
     String KEY_LINK_DESCRIPTION = "description";
 
+    //Text
+    String CLASS_TEXT = "Text";
 
     @StringDef({KEY_LECTURES, KEY_SECTIONS, KEY_ANNOUNCEMENTS})
     @Retention(RetentionPolicy.SOURCE) @interface FragmentSource {

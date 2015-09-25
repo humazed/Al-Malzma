@@ -3,8 +3,9 @@ package com.example.huma.al_malzma.model;
 import android.content.Context;
 
 import com.example.huma.al_malzma.parse.ParseConstants;
+import com.parse.ParseClassName;
 
-
+@ParseClassName(ParseConstants.CLASS_TEXT)
 public class TextType extends DataItem {
     private static final String TAG = TextType.class.getSimpleName();
 

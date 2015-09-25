@@ -11,11 +11,12 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.huma.al_malzma.helper.FileHelper;
 import com.example.huma.al_malzma.parse.ParseConstants;
+import com.parse.ParseClassName;
 import com.parse.ParseFile;
 
 import java.io.File;
 
-
+@ParseClassName(ParseConstants.CLASS_PDF)
 public class PdfType extends DataItem {
     private static final String TAG = PdfType.class.getSimpleName();
 

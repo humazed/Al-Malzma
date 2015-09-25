@@ -17,14 +17,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.FabAnimationHelper;
-import com.example.huma.al_malzma.model.BaseDataItem;
 import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
-import com.example.huma.al_malzma.model.PdfData;
+import com.example.huma.al_malzma.model.PdfType;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.parse.ParseQuery;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,7 +44,7 @@ public class LecturesFragment extends Fragment {
 
     ImageType image;
     //    PdfType mPdfData;
-    PdfData mPdfData;
+    PdfType mPdfData;
 
 
     public LecturesFragment() {
@@ -100,15 +98,15 @@ public class LecturesFragment extends Fragment {
 //
 //    }
 
-    private void setCurrentConstrains(ParseQuery<LinkType> query) {
-        query.whereEqualTo(ParseConstants.KEY_UNIVERSITY, BaseDataItem.getUniversity());
-        query.whereEqualTo(ParseConstants.KEY_FACULTY, BaseDataItem.getFaculty());
-        query.whereEqualTo(ParseConstants.KEY_DEPARTMENT, BaseDataItem.getDepartment());
-        query.whereEqualTo(ParseConstants.KEY_GRADE, BaseDataItem.getGrade());
-        query.whereEqualTo(ParseConstants.KEY_TERM, BaseDataItem.getTerm());
-        query.whereEqualTo(ParseConstants.KEY_WEEK, BaseDataItem.getWeek());
-        query.whereEqualTo(ParseConstants.KEY_SUBJECT, BaseDataItem.getSubject());
-    }
+//    private void setCurrentConstrains(ParseQuery<LinkType> query) {
+//        query.whereEqualTo(ParseConstants.KEY_UNIVERSITY, BaseDataItem.getUniversity());
+//        query.whereEqualTo(ParseConstants.KEY_FACULTY, BaseDataItem.getFaculty());
+//        query.whereEqualTo(ParseConstants.KEY_DEPARTMENT, BaseDataItem.getDepartment());
+//        query.whereEqualTo(ParseConstants.KEY_GRADE, BaseDataItem.getGrade());
+//        query.whereEqualTo(ParseConstants.KEY_TERM, BaseDataItem.getTerm());
+//        query.whereEqualTo(ParseConstants.KEY_WEEK, BaseDataItem.getWeek());
+//        query.whereEqualTo(ParseConstants.KEY_SUBJECT, BaseDataItem.getSubject());
+//    }
 
     @OnClick(R.id.camera_fab)
     void takePic() {
@@ -124,9 +122,9 @@ public class LecturesFragment extends Fragment {
 
     @OnClick(R.id.pdf_fab)
     void picPDF() {
-        mPdfData = new PdfData(getActivity(), ParseConstants.KEY_LECTURES);
-        startActivityForResult(Intent.createChooser(PdfData.getPicPdfIntent(), "Open file"),
-                PdfData.REQUEST_CHOOSE_PDF);
+        mPdfData = new PdfType(getActivity(), ParseConstants.KEY_LECTURES);
+        startActivityForResult(Intent.createChooser(PdfType.getPicPdfIntent(), "Open file"),
+                PdfType.REQUEST_CHOOSE_PDF);
     }
 
     @OnClick(R.id.link_fab)
@@ -157,11 +155,11 @@ public class LecturesFragment extends Fragment {
                     Log.d(TAG, "onActivityResult " + dir);
                     Glide.with(this).load(dir).asBitmap().into(mImageView);
                     break;
-                case PdfData.REQUEST_CHOOSE_PDF:
+                case PdfType.REQUEST_CHOOSE_PDF:
                     dir = data.getData();
-                    mPdfData.setAndSavePDF(dir);
+                    mPdfData.setPDF(dir);
 
-                    PdfData.showPdfDescriptionDialog(getActivity(), mPdfData);
+                    PdfType.showPdfDescriptionDialog(getActivity(), mPdfData);
 
                     Log.d(TAG, "onActivityResult " + dir);
                     break;

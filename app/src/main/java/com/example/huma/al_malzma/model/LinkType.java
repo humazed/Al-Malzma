@@ -10,9 +10,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.Utility;
 import com.example.huma.al_malzma.parse.ParseConstants;
+import com.parse.ParseClassName;
 import com.rey.material.widget.EditText;
 
-
+@ParseClassName(ParseConstants.CLASS_LINK)
 public class LinkType extends DataItem {
     public static final String TAG = LinkType.class.getSimpleName();
 

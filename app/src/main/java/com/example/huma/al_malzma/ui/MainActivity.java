@@ -13,7 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.huma.al_malzma.R;
-import com.example.huma.al_malzma.model.BaseDataItem;
+import com.example.huma.al_malzma.helper.Utility;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.persistence.SubjectDataSource;
 import com.github.clans.fab.FloatingActionButton;
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             mFaculty = mCurrentUser.getString(ParseConstants.KEY_FACULTY);
             mDepartment = mCurrentUser.getString(ParseConstants.KEY_DEPARTMENT);
             mGrade = mCurrentUser.getString(ParseConstants.KEY_GRADE);
-            mTerm = BaseDataItem.getCurrentTerm();
+            mTerm = Utility.getCurrentTerm();
 
             Log.d(TAG, "onCreate " + mUniversity + mFaculty + mDepartment + mGrade + mTerm);
 

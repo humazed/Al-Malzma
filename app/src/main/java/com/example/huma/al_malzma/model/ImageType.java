@@ -14,6 +14,7 @@ import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.FileHelper;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.ui.SubjectActivity;
+import com.parse.ParseClassName;
 import com.parse.ParseFile;
 
 import java.io.File;
@@ -24,7 +25,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
-//@ParseClassName(ParseConstants.CLASS_DATA)
+@ParseClassName(ParseConstants.CLASS_IMAGE)
 public class ImageType extends DataItem {
     private static final String TAG = ImageType.class.getSimpleName();
 

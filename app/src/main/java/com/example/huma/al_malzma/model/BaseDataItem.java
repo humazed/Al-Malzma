@@ -2,7 +2,6 @@ package com.example.huma.al_malzma.model;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
@@ -11,7 +10,6 @@ import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.Utility;
-import com.example.huma.al_malzma.model.data.JsonAttributes;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.ui.SubjectActivity;
 import com.parse.ParseException;
@@ -21,46 +19,52 @@ import com.parse.ParseUser;
 import com.parse.ProgressCallback;
 import com.parse.SaveCallback;
 
-import java.util.Calendar;
-
 
 public abstract class BaseDataItem extends ParseObject {
-    private static final String TAG = BaseDataItem.class.getSimpleName();
+    private static final String TAG = DataItem.class.getSimpleName();
 
 
-    private static ParseUser creator = ParseUser.getCurrentUser();
+    private ParseUser creator = ParseUser.getCurrentUser();
 
     // Fields that identify the ParseObject and help when retrieving it
-    private static String university = getCreator().getString(ParseConstants.KEY_UNIVERSITY);
-    private static String faculty = getCreator().getString(ParseConstants.KEY_FACULTY);
-    private static String department = getCreator().getString(ParseConstants.KEY_DEPARTMENT);
-    private static String grade = getCreator().getString(ParseConstants.KEY_GRADE);
+    private String university = creator.getString(ParseConstants.KEY_UNIVERSITY);
+    private String faculty = creator.getString(ParseConstants.KEY_FACULTY);
+    private String department = creator.getString(ParseConstants.KEY_DEPARTMENT);
+    private String grade = creator.getString(ParseConstants.KEY_GRADE);
 
-    private static String term = getCurrentTerm();
+    private String term = Utility.getCurrentTerm();
 
-    private static String subject;
-    private static String week;
+    private String subject = SubjectActivity.subjectName;
+    private String week = SubjectActivity.week;
 
-    private String FragmentSource; //ie: lecture, section or announcement. get it from ParseConstants.java
-    private String DataType; //ie: PDF, Image or link. get it from ParseConstants.java
+    private String fragmentSource; //ie: lecture, section or announcement. get it from ParseConstants.java
+    private String dataType; //ie: PDF, Image or link. get it from ParseConstants.java
+
+    private int positiveVotes = 0;
+    private int negativeVotes = 0;
 
 
-    //put the identifiers that can be got easily.
-    public BaseDataItem() {
-        setSubject(SubjectActivity.subjectName);
-        setWeek(SubjectActivity.week);
+    public BaseDataItem() { /*Default constructor required by parse */ }
+
+    public BaseDataItem(@ParseConstants.FragmentSource String fragmentSource,
+                    @ParseConstants.DataType String dataType) {
+        put(ParseConstants.KEY_FRAGMENT_SOURCE, fragmentSource);
+        put(ParseConstants.KEY_DATA_TYPE, dataType);
+
+        putIdentifiers();
     }
 
-    public static void putIdentifiers(BaseDataItem parseObject) {
-        parseObject.put(ParseConstants.KEY_CREATOR, getCreator());
-        parseObject.put(ParseConstants.KEY_UNIVERSITY, getUniversity());
-        parseObject.put(ParseConstants.KEY_FACULTY, getFaculty());
-        parseObject.put(ParseConstants.KEY_DEPARTMENT, getDepartment());
-        parseObject.put(ParseConstants.KEY_GRADE, getGrade());
-        parseObject.put(ParseConstants.KEY_TERM, getTerm());
-        parseObject.put(ParseConstants.KEY_SUBJECT, getSubject());
-        parseObject.put(ParseConstants.KEY_WEEK, getWeek());
+    private void putIdentifiers() {
+        put(ParseConstants.KEY_CREATOR, creator);
+        put(ParseConstants.KEY_UNIVERSITY, university);
+        put(ParseConstants.KEY_FACULTY, faculty);
+        put(ParseConstants.KEY_DEPARTMENT, department);
+        put(ParseConstants.KEY_GRADE, grade);
+        put(ParseConstants.KEY_TERM, term);
+        put(ParseConstants.KEY_SUBJECT, subject);
+        put(ParseConstants.KEY_WEEK, week);
     }
+
 
     /**
      * in this class the member variables getters and setters are normal noe's because all of them
@@ -155,83 +159,7 @@ public abstract class BaseDataItem extends ParseObject {
 
     }
 
-    public void edit() {
-
-    }
-
-    @NonNull
-    public static String getCurrentTerm() {
-        int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
-        if (Calendar.SEPTEMBER <= currentMonth || currentMonth <= Calendar.FEBRUARY) {
-            return JsonAttributes.TERM_1;
-        } else {
-            return JsonAttributes.TERM_2;
-        }
-    }
-
-    public static ParseUser getCreator() {
-        return creator;
-    }
-
-    public static void setCreator(ParseUser creator) {
-        BaseDataItem.creator = creator;
-    }
-
-    public static String getUniversity() {
-        return university;
-    }
-
-    public static void setUniversity(String university) {
-        BaseDataItem.university = university;
-    }
-
-    public static String getFaculty() {
-        return faculty;
-    }
-
-    public static void setFaculty(String faculty) {
-        BaseDataItem.faculty = faculty;
-    }
-
-    public static String getDepartment() {
-        return department;
-    }
-
-    public static void setDepartment(String department) {
-        BaseDataItem.department = department;
-    }
-
-    public static String getGrade() {
-        return grade;
-    }
-
-    public static void setGrade(String grade) {
-        BaseDataItem.grade = grade;
-    }
-
-    public static String getTerm() {
-        return term;
-    }
-
-    public static void setTerm(String term) {
-        BaseDataItem.term = term;
-    }
-
-    public static String getSubject() {
-        return subject;
-    }
-
-    public static void setSubject(String subject) {
-        BaseDataItem.subject = subject;
-    }
-
-    public static String getWeek() {
-        return week;
-    }
-
-    public static void setWeek(String week) {
-        BaseDataItem.week = week;
-    }
+    public void edit() {}
 
 
     public String getFragmentSource() {
@@ -248,6 +176,37 @@ public abstract class BaseDataItem extends ParseObject {
 
     public void setDataType(@ParseConstants.DataType String dataType) {
         put(ParseConstants.KEY_DATA_TYPE, dataType);
+    }
+
+
+
+    public int getPositiveVotes() {
+        return positiveVotes;
+    }
+
+    public void setPositiveVotes(int positiveVotes) {
+        this.positiveVotes = positiveVotes;
+    }
+
+    public int getNegativeVotes() {
+        return negativeVotes;
+    }
+
+    public void setNegativeVotes(int negativeVotes) {
+        this.negativeVotes = negativeVotes;
+    }
+
+
+    public String getTerm() {
+        return term;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public String getWeek() {
+        return week;
     }
 
 }
