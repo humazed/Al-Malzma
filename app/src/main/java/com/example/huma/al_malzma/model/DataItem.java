@@ -1,190 +1,82 @@
 package com.example.huma.al_malzma.model;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.afollestad.materialdialogs.GravityEnum;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.Utility;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.ui.SubjectActivity;
-import com.parse.ParseClassName;
-import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.ProgressCallback;
-import com.parse.SaveCallback;
 
-@ParseClassName(ParseConstants.CLASS_DATA)
 public abstract class DataItem extends ParseObject {
     private static final String TAG = DataItem.class.getSimpleName();
 
 
-    private ParseUser creator = ParseUser.getCurrentUser();
+    private static ParseUser creator = ParseUser.getCurrentUser();
 
     // Fields that identify the ParseObject and help when retrieving it
-    private String university = creator.getString(ParseConstants.KEY_UNIVERSITY);
-    private String faculty = creator.getString(ParseConstants.KEY_FACULTY);
-    private String department = creator.getString(ParseConstants.KEY_DEPARTMENT);
-    private String grade = creator.getString(ParseConstants.KEY_GRADE);
-    public final String className =
-            String.format("%s_%s_%s_%s", university, faculty, department, grade);
+    private static String university = creator.getString(ParseConstants.KEY_UNIVERSITY);
+    private static String faculty = creator.getString(ParseConstants.KEY_FACULTY);
+    private static String department = creator.getString(ParseConstants.KEY_DEPARTMENT);
+    private static String grade = creator.getString(ParseConstants.KEY_GRADE);
+
+    private static String term = Utility.getCurrentTerm();
+
+    private static String subject = SubjectActivity.subjectName;
+    private static String week = SubjectActivity.week;
 
 
-    private String term = Utility.getCurrentTerm();
-
-    private String subject = SubjectActivity.subjectName;
-    private String week = SubjectActivity.week;
-
-    private String fragmentSource; //ie: lecture, section or announcement. get it from ParseConstants.java
-    private String dataType; //ie: PDF, Image or link. get it from ParseConstants.java
-
-    private int positiveVotes = 0;
-    private int negativeVotes = 0;
-
-
-    public DataItem() { /*Default constructor required by parse */ }
-
-    public DataItem(@ParseConstants.FragmentSource String fragmentSource,
-                    @ParseConstants.DataType String dataType) {
-        put(ParseConstants.KEY_FRAGMENT_SOURCE, fragmentSource);
-        put(ParseConstants.KEY_DATA_TYPE, dataType);
-
-        putIdentifiers();
+    public static String getUniversity() {
+        return university;
     }
 
-    private void putIdentifiers() {
-        put(ParseConstants.KEY_CREATOR, creator);
-        put(ParseConstants.KEY_UNIVERSITY, university);
-        put(ParseConstants.KEY_FACULTY, faculty);
-        put(ParseConstants.KEY_DEPARTMENT, department);
-        put(ParseConstants.KEY_GRADE, grade);
-        put(ParseConstants.KEY_TERM, term);
-        put(ParseConstants.KEY_SUBJECT, subject);
-        put(ParseConstants.KEY_WEEK, week);
+    public static void setUniversity(String university) {
+        DataItem.university = university;
     }
 
-    public abstract void saveToParse(Context context);
-
-
-    protected void saveInBackgroundWithAlertDialog(final Context context) {
-        if (Utility.isNetworkAvailableWithToast(context)) {
-            saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e != null) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle(context.getString(R.string.generic_error_title))
-                                .setMessage(R.string.connection_error)
-                                .setPositiveButton(android.R.string.ok, null)
-                                .create().show();
-                        Log.e(TAG, "Fail: ", e);
-                    } else {
-                        Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "done ");
-                    }
-                }
-            });
-        } else {
-            //no network.
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle(R.string.generic_error_title)
-                    .setMessage(R.string.connection_error)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .create().show();
-
-        }
+    public static String getFaculty() {
+        return faculty;
     }
 
-
-    MaterialDialog dialog = null;
-
-    protected void saveFileInBackgroundWithProgressDialog(final Context context, ParseFile parseFile) {
-        if (Utility.isNetworkAvailableWithToast(context)) {
-            new MaterialDialog.Builder(context)
-                    .title(R.string.uploading)
-                    .content(R.string.please_wait)
-                    .contentGravity(GravityEnum.CENTER)
-                    .progress(false, 100, true)
-                    .cancelListener(new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialog) {
-                        }
-                    })
-                    .showListener(new DialogInterface.OnShowListener() {
-                        @Override
-                        public void onShow(DialogInterface dialogInterface) {
-                            dialog = (MaterialDialog) dialogInterface;
-                        }
-                    }).show();
-
-            parseFile.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e != null) {
-                        //fail
-                        Log.e(TAG, "fail ", e);
-                        dialog.setContent(context.getString(R.string.fail));
-                    } else {
-                        //succeed
-                        Log.d(TAG, "done ");
-                        dialog.setContent(context.getString(R.string.done));
-                    }
-                }
-            }, new ProgressCallback() {
-                @Override
-                public void done(final Integer percentDone) {
-                    // Update your progress spinner here. percentDone will be between 0 and 100.
-                    dialog.setProgress(percentDone);
-                }
-            });
-        }
+    public static void setFaculty(String faculty) {
+        DataItem.faculty = faculty;
     }
 
-
-    public int getPositiveVotes() {
-        return positiveVotes;
+    public static String getDepartment() {
+        return department;
     }
 
-    public void setPositiveVotes(int positiveVotes) {
-        this.positiveVotes = positiveVotes;
+    public static void setDepartment(String department) {
+        DataItem.department = department;
     }
 
-    public int getNegativeVotes() {
-        return negativeVotes;
+    public static String getGrade() {
+        return grade;
     }
 
-    public void setNegativeVotes(int negativeVotes) {
-        this.negativeVotes = negativeVotes;
+    public static void setGrade(String grade) {
+        DataItem.grade = grade;
     }
 
-    public ParseUser getCreator() {
-        return creator;
-    }
-
-    public String getTerm() {
+    public static String getTerm() {
         return term;
     }
 
-    public String getSubject() {
+    public static void setTerm(String term) {
+        DataItem.term = term;
+    }
+
+    public static String getSubject() {
         return subject;
     }
 
-    public String getWeek() {
+    public static void setSubject(String subject) {
+        DataItem.subject = subject;
+    }
+
+    public static String getWeek() {
         return week;
     }
 
-    public String getFragmentSource() {
-        return fragmentSource;
+    public static void setWeek(String week) {
+        DataItem.week = week;
     }
-
-    public String getDataType() {
-        return dataType;
-    }
-
 }

@@ -6,7 +6,7 @@ import com.example.huma.al_malzma.parse.ParseConstants;
 import com.parse.ParseClassName;
 
 @ParseClassName(ParseConstants.CLASS_TEXT)
-public class TextType extends DataItem {
+public class TextType extends BaseDataItem {
     private static final String TAG = TextType.class.getSimpleName();
 
     private String title;

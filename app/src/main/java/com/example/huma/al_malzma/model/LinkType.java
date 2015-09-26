@@ -14,7 +14,7 @@ import com.parse.ParseClassName;
 import com.rey.material.widget.EditText;
 
 @ParseClassName(ParseConstants.CLASS_LINK)
-public class LinkType extends DataItem {
+public class LinkType extends BaseDataItem {
     public static final String TAG = LinkType.class.getSimpleName();
 
 

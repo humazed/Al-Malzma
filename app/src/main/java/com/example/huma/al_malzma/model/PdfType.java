@@ -17,7 +17,7 @@ import com.parse.ParseFile;
 import java.io.File;
 
 @ParseClassName(ParseConstants.CLASS_PDF)
-public class PdfType extends DataItem {
+public class PdfType extends BaseDataItem {
     private static final String TAG = PdfType.class.getSimpleName();
 
 

@@ -26,7 +26,7 @@ import java.util.Locale;
 
 
 @ParseClassName(ParseConstants.CLASS_IMAGE)
-public class ImageType extends DataItem {
+public class ImageType extends BaseDataItem {
     private static final String TAG = ImageType.class.getSimpleName();
 
 

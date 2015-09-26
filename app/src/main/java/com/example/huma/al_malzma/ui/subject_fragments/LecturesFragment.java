@@ -17,12 +17,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.helper.FabAnimationHelper;
+import com.example.huma.al_malzma.model.DataItem;
 import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
 import com.example.huma.al_malzma.model.PdfType;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -47,6 +54,10 @@ public class LecturesFragment extends Fragment {
     PdfType mPdfData;
 
 
+    List<LinkType> mLinks;
+    List<PdfType> mPDFs;
+    List<ImageType> mImages;
+
     public LecturesFragment() {
         // Required empty public constructor
     }
@@ -70,43 +81,71 @@ public class LecturesFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-//        refreshList();
+        refreshList();
     }
 
-//    private void refreshList() {
-//        Log.d(TAG, "refreshList ");
-//        ParseQuery<LinkType> query = ParseQuery.getQuery(ParseConstants.CLASS_LINK);
-//
-//        setCurrentConstrains(query);
-//
-//        query.findInBackground(new FindCallback<LinkType>() {
-//            public void done(List<LinkType> scoreList, ParseException e) {
-//                if (e == null) {
-//                    for (LinkType link : scoreList) {
-//                        Log.d(TAG, "done " + link.getDescription());
-//                    }
-//
-//                } else {
-//                    Log.d("score", "Error: " + e.getMessage());
-//                }
-//            }
-//        });
-//
+
+    private void refreshList() {
+        Log.d(TAG, "refreshList ");
+        ParseQuery<LinkType> linkQuery = ParseQuery.getQuery(ParseConstants.CLASS_LINK);
+        ParseQuery<PdfType> pdfQuery = ParseQuery.getQuery(ParseConstants.CLASS_PDF);
+        ParseQuery<ImageType> ImageQuery = ParseQuery.getQuery(ParseConstants.CLASS_IMAGE);
+
+        setLinkCurrentConstrains(linkQuery);
+        setPdfCurrentConstrains(pdfQuery);
+        setImageCurrentConstrains(ImageQuery);
+
+        //List is fill now.
+        linkQuery.findInBackground(new FindCallback<LinkType>() {
+            public void done(List<LinkType> links, ParseException e) {
+                if (e == null) {
+                    mLinks = links;
+                    ArrayList<String> descriptions = new ArrayList<>();
+                    for (LinkType link : links) descriptions.add(link.getDescription());
+
+                    mSubjectsListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,
+                            descriptions));
+
+                    Log.d(TAG, "done " + links.toString());
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+        pdfQuery.findInBackground(new FindCallback<PdfType>() {
+            public void done(List<PdfType> pdfs, ParseException e) {
+                if (e == null) {
+                    mPDFs = pdfs;
+                    Log.d(TAG, "done " + pdfs.toString());
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+
+        ImageQuery.findInBackground(new FindCallback<ImageType>() {
+            public void done(List<ImageType> images, ParseException e) {
+                if (e == null) {
+                    mImages = images;
+                    Log.d(TAG, "done " + images.toString());
+
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+
+
+        if (mLinks == null) {
+            Log.d(TAG, "refreshList " + "null");
+        }
+
+
 //        mSubjectsListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,
 //                getResources().getStringArray(R.array.weeks)));
-//
-//
-//    }
 
-//    private void setCurrentConstrains(ParseQuery<LinkType> query) {
-//        query.whereEqualTo(ParseConstants.KEY_UNIVERSITY, BaseDataItem.getUniversity());
-//        query.whereEqualTo(ParseConstants.KEY_FACULTY, BaseDataItem.getFaculty());
-//        query.whereEqualTo(ParseConstants.KEY_DEPARTMENT, BaseDataItem.getDepartment());
-//        query.whereEqualTo(ParseConstants.KEY_GRADE, BaseDataItem.getGrade());
-//        query.whereEqualTo(ParseConstants.KEY_TERM, BaseDataItem.getTerm());
-//        query.whereEqualTo(ParseConstants.KEY_WEEK, BaseDataItem.getWeek());
-//        query.whereEqualTo(ParseConstants.KEY_SUBJECT, BaseDataItem.getSubject());
-//    }
+    }
+
 
     @OnClick(R.id.camera_fab)
     void takePic() {
@@ -165,6 +204,72 @@ public class LecturesFragment extends Fragment {
                     break;
             }
         }
+    }
+
+    private void fillLinksList(ParseQuery<LinkType> linkQuery) {
+        linkQuery.findInBackground(new FindCallback<LinkType>() {
+            public void done(List<LinkType> links, ParseException e) {
+                if (e == null) {
+                    mLinks = links;
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void fillPDFsList(ParseQuery<PdfType> linkQuery) {
+        linkQuery.findInBackground(new FindCallback<PdfType>() {
+            public void done(List<PdfType> pdfs, ParseException e) {
+                if (e == null) {
+                    mPDFs = pdfs;
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void fillImagesList(ParseQuery<ImageType> linkQuery) {
+        linkQuery.findInBackground(new FindCallback<ImageType>() {
+            public void done(List<ImageType> images, ParseException e) {
+                if (e == null) {
+                    mImages = images;
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void setImageCurrentConstrains(ParseQuery<ImageType> imageQuery) {
+        imageQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, DataItem.getUniversity());
+        imageQuery.whereEqualTo(ParseConstants.KEY_FACULTY, DataItem.getFaculty());
+        imageQuery.whereEqualTo(ParseConstants.KEY_DEPARTMENT, DataItem.getDepartment());
+        imageQuery.whereEqualTo(ParseConstants.KEY_GRADE, DataItem.getGrade());
+        imageQuery.whereEqualTo(ParseConstants.KEY_TERM, DataItem.getTerm());
+        imageQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, DataItem.getSubject());
+        imageQuery.whereEqualTo(ParseConstants.KEY_WEEK, DataItem.getWeek());
+    }
+
+    private void setPdfCurrentConstrains(ParseQuery<PdfType> pdfQuery) {
+        pdfQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, DataItem.getUniversity());
+        pdfQuery.whereEqualTo(ParseConstants.KEY_FACULTY, DataItem.getFaculty());
+        pdfQuery.whereEqualTo(ParseConstants.KEY_DEPARTMENT, DataItem.getDepartment());
+        pdfQuery.whereEqualTo(ParseConstants.KEY_GRADE, DataItem.getGrade());
+        pdfQuery.whereEqualTo(ParseConstants.KEY_TERM, DataItem.getTerm());
+        pdfQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, DataItem.getSubject());
+        pdfQuery.whereEqualTo(ParseConstants.KEY_WEEK, DataItem.getWeek());
+    }
+
+    private void setLinkCurrentConstrains(ParseQuery<LinkType> linkQuery) {
+        linkQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, DataItem.getUniversity());
+        linkQuery.whereEqualTo(ParseConstants.KEY_FACULTY, DataItem.getFaculty());
+        linkQuery.whereEqualTo(ParseConstants.KEY_DEPARTMENT, DataItem.getDepartment());
+        linkQuery.whereEqualTo(ParseConstants.KEY_GRADE, DataItem.getGrade());
+        linkQuery.whereEqualTo(ParseConstants.KEY_TERM, DataItem.getTerm());
+        linkQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, DataItem.getSubject());
+        linkQuery.whereEqualTo(ParseConstants.KEY_WEEK, DataItem.getWeek());
     }
 
 

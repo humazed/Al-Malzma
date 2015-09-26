@@ -22,8 +22,6 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(TextType.class);
 
 
-
-
         // Enable Local Datastore.
 //        Parse.enableLocalDatastore(this);
 
