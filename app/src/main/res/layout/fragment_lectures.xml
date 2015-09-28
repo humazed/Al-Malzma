@@ -7,16 +7,15 @@
     tools:context="com.example.huma.al_malzma.ui.subject_fragments.LecturesFragment">
 
     <TextView
-        android:id="@+id/empty_text_view"
+        android:id="@+id/empty_loading_text_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:visibility="gone"/>
 
-    <ListView
-        android:id="@+id/subjects_list_view"
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
-        android:layout_gravity="start|top"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lectures_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
     <com.github.clans.fab.FloatingActionMenu
@@ -66,11 +65,5 @@
             fab:fab_size="mini"/>
 
     </com.github.clans.fab.FloatingActionMenu>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/image_view"
-        android:layout_gravity="left|bottom"/>
 
 </FrameLayout>

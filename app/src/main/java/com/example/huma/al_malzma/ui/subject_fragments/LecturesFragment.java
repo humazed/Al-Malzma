@@ -5,17 +5,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.huma.al_malzma.R;
+import com.example.huma.al_malzma.adapters.LecturesAdapter;
 import com.example.huma.al_malzma.helper.FabAnimationHelper;
 import com.example.huma.al_malzma.model.DataItem;
 import com.example.huma.al_malzma.model.ImageType;
@@ -28,7 +27,6 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -39,24 +37,24 @@ import butterknife.OnClick;
 public class LecturesFragment extends Fragment {
     public static final String TAG = LecturesFragment.class.getSimpleName();
 
-    @Bind(R.id.empty_text_view) TextView mEmptyTextView;
-    @Bind(R.id.subjects_list_view) ListView mSubjectsListView;
     @Bind(R.id.menu) FloatingActionMenu mMenu;
     @Bind(R.id.camera_fab) FloatingActionButton mCameraFab;
     @Bind(R.id.choose_image_fab) FloatingActionButton mChooseImageFab;
     @Bind(R.id.pdf_fab) FloatingActionButton mPdfFab;
     @Bind(R.id.link_fab) FloatingActionButton mLinkFab;
-    @Bind(R.id.image_view) ImageView mImageView;
-
+    @Bind(R.id.lectures_recyclerView) RecyclerView mLecturesRecyclerView;
+    @Bind(R.id.empty_loading_text_view) TextView mEmptyLoadingTextView;
 
     ImageType image;
-    //    PdfType mPdfData;
     PdfType mPdfData;
 
+    public static List<LinkType> mLinks;
+    public static List<PdfType> mPDFs;
+    public static List<ImageType> mImages;
 
-    List<LinkType> mLinks;
-    List<PdfType> mPDFs;
-    List<ImageType> mImages;
+    private boolean linkFlag = false;
+    private boolean imageFlag = false;
+    private boolean pdfFlag = false;
 
     public LecturesFragment() {
         // Required empty public constructor
@@ -68,10 +66,8 @@ public class LecturesFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_lectures, container, false);
         ButterKnife.bind(this, rootView);
 
-        mSubjectsListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,
-                getResources().getStringArray(R.array.weeks)));
 
-        mSubjectsListView.setOnScrollListener(FabAnimationHelper.hideMenuOnScrollListener(mMenu));
+//        mSubjectsListView.setOnScrollListener(FabAnimationHelper.hideMenuOnScrollListener(mMenu));
         FabAnimationHelper.animMenu(getActivity(), mMenu);
 
         return rootView;
@@ -100,15 +96,12 @@ public class LecturesFragment extends Fragment {
             public void done(List<LinkType> links, ParseException e) {
                 if (e == null) {
                     mLinks = links;
-                    ArrayList<String> descriptions = new ArrayList<>();
-                    for (LinkType link : links) descriptions.add(link.getDescription());
-
-                    mSubjectsListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,
-                            descriptions));
+                    linkFlag = true;
+                    fillFinally();
 
                     Log.d(TAG, "done " + links.toString());
                 } else {
-                    Log.d("score", "Error: " + e.getMessage());
+                    Log.d("linkQuery Error: ", e.getMessage());
                 }
             }
         });
@@ -116,9 +109,12 @@ public class LecturesFragment extends Fragment {
             public void done(List<PdfType> pdfs, ParseException e) {
                 if (e == null) {
                     mPDFs = pdfs;
+                    pdfFlag = true;
+                    fillFinally();
+
                     Log.d(TAG, "done " + pdfs.toString());
                 } else {
-                    Log.d("score", "Error: " + e.getMessage());
+                    Log.d("pdfQuery Error: ", e.getMessage());
                 }
             }
         });
@@ -127,23 +123,27 @@ public class LecturesFragment extends Fragment {
             public void done(List<ImageType> images, ParseException e) {
                 if (e == null) {
                     mImages = images;
-                    Log.d(TAG, "done " + images.toString());
+                    imageFlag = true;
+                    fillFinally();
 
+                    Log.d(TAG, "done " + images.toString());
                 } else {
-                    Log.d("score", "Error: " + e.getMessage());
+                    Log.d("ImageQuery Error", e.getMessage());
                 }
             }
         });
+    }
 
-
-        if (mLinks == null) {
-            Log.d(TAG, "refreshList " + "null");
+    //fill the recyclerView when all three findInBackground finished.
+    private void fillFinally() {
+//        if (isEmpty()) mEmptyLoadingTextView.setVisibility(View.GONE);
+        Log.d(TAG, "fillFinally " + "loading");
+        if (linkFlag && imageFlag && pdfFlag) {
+            Log.d(TAG, "fillFinally " + true);
+            LecturesAdapter adapter = new LecturesAdapter(getActivity(), mPDFs, mImages, mLinks);
+            mLecturesRecyclerView.setAdapter(adapter);
+            mLecturesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         }
-
-
-//        mSubjectsListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,
-//                getResources().getStringArray(R.array.weeks)));
-
     }
 
 
@@ -192,7 +192,6 @@ public class LecturesFragment extends Fragment {
                     ImageType.showImageDescriptionDialog(getActivity(), image);
 
                     Log.d(TAG, "onActivityResult " + dir);
-                    Glide.with(this).load(dir).asBitmap().into(mImageView);
                     break;
                 case PdfType.REQUEST_CHOOSE_PDF:
                     dir = data.getData();
@@ -272,6 +271,11 @@ public class LecturesFragment extends Fragment {
         linkQuery.whereEqualTo(ParseConstants.KEY_WEEK, DataItem.getWeek());
     }
 
+    private boolean isEmpty() {
+        return LecturesFragment.mPDFs.isEmpty()
+                && LecturesFragment.mImages.isEmpty()
+                && LecturesFragment.mLinks.isEmpty();
+    }
 
     @Override
     public void onDestroyView() {
