@@ -10,7 +10,7 @@
         android:id="@+id/empty_loading_text_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:text="Loading..."/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lectures_recyclerView"

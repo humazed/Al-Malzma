@@ -72,9 +72,9 @@
 
     <!--Empty and error messages-->
     <string name="coming_soon_message">Coming soon</string>
-    <string name="no_announcements_message">No announcements</string>
-    <string name="no_lectures_message">No lectures</string>
-    <string name="no_sections_message">No sections</string>
+    <string name="empty_announcements_message">No announcements yet</string>
+    <string name="empty_lectures_message">No lectures yet</string>
+    <string name="empty_sections_message">No sections yet</string>
     <string name="loading">Loading…</string>
     <string name="unexpected_error">Sorry un expected error</string>
     <string name="connection_error">Please check your connection</string>

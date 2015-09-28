@@ -136,13 +136,17 @@ public class LecturesFragment extends Fragment {
 
     //fill the recyclerView when all three findInBackground finished.
     private void fillFinally() {
-//        if (isEmpty()) mEmptyLoadingTextView.setVisibility(View.GONE);
         Log.d(TAG, "fillFinally " + "loading");
         if (linkFlag && imageFlag && pdfFlag) {
-            Log.d(TAG, "fillFinally " + true);
-            LecturesAdapter adapter = new LecturesAdapter(getActivity(), mPDFs, mImages, mLinks);
-            mLecturesRecyclerView.setAdapter(adapter);
-            mLecturesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            if (!isEmpty()) {
+                mEmptyLoadingTextView.setVisibility(View.GONE);
+                Log.d(TAG, "fillFinally " + true);
+                LecturesAdapter adapter = new LecturesAdapter(getActivity(), mPDFs, mImages, mLinks);
+                mLecturesRecyclerView.setAdapter(adapter);
+                mLecturesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            } else {
+                mEmptyLoadingTextView.setText(R.string.empty_lectures_message);
+            }
         }
     }
 
@@ -241,6 +245,12 @@ public class LecturesFragment extends Fragment {
         });
     }
 
+    private boolean isEmpty() {
+        return LecturesFragment.mPDFs.isEmpty()
+                && LecturesFragment.mImages.isEmpty()
+                && LecturesFragment.mLinks.isEmpty();
+    }
+
     private void setImageCurrentConstrains(ParseQuery<ImageType> imageQuery) {
         imageQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, DataItem.getUniversity());
         imageQuery.whereEqualTo(ParseConstants.KEY_FACULTY, DataItem.getFaculty());
@@ -271,11 +281,6 @@ public class LecturesFragment extends Fragment {
         linkQuery.whereEqualTo(ParseConstants.KEY_WEEK, DataItem.getWeek());
     }
 
-    private boolean isEmpty() {
-        return LecturesFragment.mPDFs.isEmpty()
-                && LecturesFragment.mImages.isEmpty()
-                && LecturesFragment.mLinks.isEmpty();
-    }
 
     @Override
     public void onDestroyView() {
