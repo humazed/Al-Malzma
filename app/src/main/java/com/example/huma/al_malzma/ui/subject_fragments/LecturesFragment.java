@@ -21,6 +21,7 @@ import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
 import com.example.huma.al_malzma.model.PdfType;
 import com.example.huma.al_malzma.parse.ParseConstants;
+import com.example.huma.al_malzma.ui.SubjectActivity;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.parse.FindCallback;
@@ -76,6 +77,10 @@ public class LecturesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        mLinks = null;
+        mPDFs = null;
+        mImages = null;
 
         refreshList();
     }
@@ -138,9 +143,9 @@ public class LecturesFragment extends Fragment {
     private void fillFinally() {
         Log.d(TAG, "fillFinally " + "loading");
         if (linkFlag && imageFlag && pdfFlag) {
-            if (!isEmpty()) {
+            if (!noData()) {
                 mEmptyLoadingTextView.setVisibility(View.GONE);
-                Log.d(TAG, "fillFinally " + true);
+                Log.d(TAG, "noData " + false);
                 LecturesAdapter adapter = new LecturesAdapter(getActivity(), mPDFs, mImages, mLinks);
                 mLecturesRecyclerView.setAdapter(adapter);
                 mLecturesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -245,7 +250,7 @@ public class LecturesFragment extends Fragment {
         });
     }
 
-    private boolean isEmpty() {
+    private boolean noData() {
         return LecturesFragment.mPDFs.isEmpty()
                 && LecturesFragment.mImages.isEmpty()
                 && LecturesFragment.mLinks.isEmpty();
@@ -258,7 +263,8 @@ public class LecturesFragment extends Fragment {
         imageQuery.whereEqualTo(ParseConstants.KEY_GRADE, DataItem.getGrade());
         imageQuery.whereEqualTo(ParseConstants.KEY_TERM, DataItem.getTerm());
         imageQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, DataItem.getSubject());
-        imageQuery.whereEqualTo(ParseConstants.KEY_WEEK, DataItem.getWeek());
+        imageQuery.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
+        imageQuery.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, ParseConstants.KEY_LECTURES);
     }
 
     private void setPdfCurrentConstrains(ParseQuery<PdfType> pdfQuery) {
@@ -268,7 +274,8 @@ public class LecturesFragment extends Fragment {
         pdfQuery.whereEqualTo(ParseConstants.KEY_GRADE, DataItem.getGrade());
         pdfQuery.whereEqualTo(ParseConstants.KEY_TERM, DataItem.getTerm());
         pdfQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, DataItem.getSubject());
-        pdfQuery.whereEqualTo(ParseConstants.KEY_WEEK, DataItem.getWeek());
+        pdfQuery.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
+        pdfQuery.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, ParseConstants.KEY_LECTURES);
     }
 
     private void setLinkCurrentConstrains(ParseQuery<LinkType> linkQuery) {
@@ -278,7 +285,8 @@ public class LecturesFragment extends Fragment {
         linkQuery.whereEqualTo(ParseConstants.KEY_GRADE, DataItem.getGrade());
         linkQuery.whereEqualTo(ParseConstants.KEY_TERM, DataItem.getTerm());
         linkQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, DataItem.getSubject());
-        linkQuery.whereEqualTo(ParseConstants.KEY_WEEK, DataItem.getWeek());
+        linkQuery.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
+        linkQuery.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, ParseConstants.KEY_LECTURES);
     }
 
 
