@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.huma.al_malzma.R;
-import com.example.huma.al_malzma.adapters.VH.DataItemViewHolder;
-import com.example.huma.al_malzma.adapters.VH.FooterViewHolder;
-import com.example.huma.al_malzma.adapters.VH.HeaderViewHolder;
+import com.example.huma.al_malzma.adapters.VH.DataItemVH;
+import com.example.huma.al_malzma.adapters.VH.FooterVH;
+import com.example.huma.al_malzma.adapters.VH.HeaderVH;
 import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
 import com.example.huma.al_malzma.model.PdfType;
@@ -18,7 +18,7 @@ import com.truizlop.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 
 import java.util.List;
 
-public class LecturesAdapter extends SectionedRecyclerViewAdapter<HeaderViewHolder, DataItemViewHolder, FooterViewHolder> {
+public class LecturesAdapter extends SectionedRecyclerViewAdapter<HeaderVH, DataItemVH, FooterVH> {
 
     private static final String TAG = LecturesAdapter.class.getSimpleName();
 
@@ -68,24 +68,24 @@ public class LecturesAdapter extends SectionedRecyclerViewAdapter<HeaderViewHold
     }
 
     @Override
-    protected HeaderViewHolder onCreateSectionHeaderViewHolder(ViewGroup parent, int viewType) {
+    protected HeaderVH onCreateSectionHeaderViewHolder(ViewGroup parent, int viewType) {
         View view = getLayoutInflater().inflate(R.layout.view_recycler_header, parent, false);
-        return new HeaderViewHolder(view);
+        return new HeaderVH(view);
     }
 
     @Override
-    protected FooterViewHolder onCreateSectionFooterViewHolder(ViewGroup parent, int viewType) {
+    protected FooterVH onCreateSectionFooterViewHolder(ViewGroup parent, int viewType) {
         return null;
     }
 
     @Override
-    protected DataItemViewHolder onCreateItemViewHolder(ViewGroup parent, int viewType) {
+    protected DataItemVH onCreateItemViewHolder(ViewGroup parent, int viewType) {
         View view = getLayoutInflater().inflate(R.layout.row_data_item, parent, false);
-        return new DataItemViewHolder(view);
+        return new DataItemVH(view);
     }
 
     @Override
-    protected void onBindSectionHeaderViewHolder(HeaderViewHolder holder, int section) {
+    protected void onBindSectionHeaderViewHolder(HeaderVH holder, int section) {
         switch (section) {
             case 0:
                 holder.render("PDFs");
@@ -101,10 +101,10 @@ public class LecturesAdapter extends SectionedRecyclerViewAdapter<HeaderViewHold
     }
 
     @Override
-    protected void onBindSectionFooterViewHolder(FooterViewHolder holder, int section) { /***/}
+    protected void onBindSectionFooterViewHolder(FooterVH holder, int section) { /***/}
 
     @Override
-    protected void onBindItemViewHolder(DataItemViewHolder holder, int section, int position) {
+    protected void onBindItemViewHolder(DataItemVH holder, int section, int position) {
         switch (section) {
             case 0:
                 holder.render(pdfs.get(position).getDescription());
