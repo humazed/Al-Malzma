@@ -15,6 +15,7 @@ public interface ParseConstants {
     ///////////////////////////////////////////////////////////////////////////
     // User keys
     String KEY_CREATOR = "creator";
+    String KEY_CREATOR_NAME = "creator_name";
     String KEY_UNIVERSITY = "university";
     String KEY_FACULTY = "faculty";
     String KEY_DEPARTMENT = "department";
@@ -22,6 +23,9 @@ public interface ParseConstants {
     String KEY_TERM = "term";
     String KEY_WEEK = "week";
     String KEY_SUBJECT = "subject";
+
+    String KEY_POSITIVE_VOTES = "positive_votes";
+    String KEY_NEGATIVE_VOTES = "negative_votes";
 
     //Image
     String CLASS_IMAGE = "Image";

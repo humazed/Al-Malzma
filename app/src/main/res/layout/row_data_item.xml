@@ -52,23 +52,23 @@
             android:text="no description"/>
 
         <TextView
-            android:id="@+id/points"
+            android:id="@+id/votes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/description"
             android:background="#f5f5f5"
-            android:text="points"
+            android:text="0"
             android:textSize="12sp"/>
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/creator_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/points"
+            android:layout_alignTop="@+id/votes"
             android:layout_marginLeft="16dp"
-            android:layout_toRightOf="@+id/points"
+            android:layout_toRightOf="@+id/votes"
             android:text="author"
             android:textSize="12sp"/>
 
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/name"
+            android:layout_alignTop="@+id/creator_name"
             android:layout_gravity="center_vertical"
             android:paddingRight="8dp"
             android:paddingEnd="8dp"

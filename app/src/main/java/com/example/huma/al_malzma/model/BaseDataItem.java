@@ -47,7 +47,7 @@ public abstract class BaseDataItem extends ParseObject {
     public BaseDataItem() { /*Default constructor required by parse */ }
 
     public BaseDataItem(@ParseConstants.FragmentSource String fragmentSource,
-                    @ParseConstants.DataType String dataType) {
+                        @ParseConstants.DataType String dataType) {
         put(ParseConstants.KEY_FRAGMENT_SOURCE, fragmentSource);
         put(ParseConstants.KEY_DATA_TYPE, dataType);
 
@@ -56,6 +56,7 @@ public abstract class BaseDataItem extends ParseObject {
 
     private void putIdentifiers() {
         put(ParseConstants.KEY_CREATOR, creator);
+        put(ParseConstants.KEY_CREATOR_NAME, creator.getUsername());
         put(ParseConstants.KEY_UNIVERSITY, university);
         put(ParseConstants.KEY_FACULTY, faculty);
         put(ParseConstants.KEY_DEPARTMENT, department);
@@ -69,7 +70,7 @@ public abstract class BaseDataItem extends ParseObject {
     /**
      * in this class the member variables getters and setters are normal noe's because all of them
      * can be got without user direct input and save them to parse in the constructor.
-     * <p>
+     * <p/>
      * but in the classes that inherit from him getters and setters will deal with parse directly
      * because as they say in there site this is the recommenced approach.
      * https://www.parse.com/docs/android/guide#objects-accessors-mutators-and-methods
@@ -159,8 +160,17 @@ public abstract class BaseDataItem extends ParseObject {
 
     }
 
-    public void edit() {}
+    public void edit() {
+    }
 
+
+    public ParseUser getCreator() {
+        return getParseUser(ParseConstants.KEY_CREATOR);
+    }
+
+    public String getCreatorName() {
+        return getString(ParseConstants.KEY_CREATOR_NAME);
+    }
 
     public String getFragmentSource() {
         return getString(ParseConstants.KEY_FRAGMENT_SOURCE);
@@ -179,34 +189,26 @@ public abstract class BaseDataItem extends ParseObject {
     }
 
 
-
     public int getPositiveVotes() {
-        return positiveVotes;
+        return getInt(ParseConstants.KEY_POSITIVE_VOTES);
     }
 
-    public void setPositiveVotes(int positiveVotes) {
-        this.positiveVotes = positiveVotes;
+    public void incrementPositiveVotes() {
+        increment(ParseConstants.KEY_POSITIVE_VOTES);
+        saveInBackground();
     }
 
     public int getNegativeVotes() {
-        return negativeVotes;
+        return getInt(ParseConstants.KEY_NEGATIVE_VOTES);
     }
 
-    public void setNegativeVotes(int negativeVotes) {
-        this.negativeVotes = negativeVotes;
+    public void incrementNegativeVotes() {
+        increment(ParseConstants.KEY_NEGATIVE_VOTES, -1);
+        saveInBackground();
     }
 
-
-    public String getTerm() {
-        return term;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public String getWeek() {
-        return week;
+    public int getVotes() {
+        return getPositiveVotes() + getNegativeVotes();
     }
 
 }

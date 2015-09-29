@@ -13,6 +13,7 @@ import com.example.huma.al_malzma.adapters.VH.HeaderVH;
 import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
 import com.example.huma.al_malzma.model.PdfType;
+import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.ui.subject_fragments.LecturesFragment;
 import com.truizlop.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 
@@ -107,13 +108,19 @@ public class LecturesAdapter extends SectionedRecyclerViewAdapter<HeaderVH, Data
     protected void onBindItemViewHolder(DataItemVH holder, int section, int position) {
         switch (section) {
             case 0:
-                holder.render(pdfs.get(position).getDescription());
+                PdfType pdf = pdfs.get(position);
+                holder.render(ParseConstants.KEY_TYPE_IMAGE, "PDF", pdf.getDescription(),
+                        pdf.getVotes(), pdf.getCreatorName(), "1 h");
                 break;
             case 1:
-                holder.render(images.get(position).getDescription());
+                ImageType image = images.get(position);
+                holder.render(ParseConstants.KEY_TYPE_IMAGE, "PDF", image.getDescription(),
+                        image.getVotes(), image.getCreatorName(), "1 h");
                 break;
             case 2:
-                holder.render(links.get(position).getDescription());
+                LinkType link = links.get(position);
+                holder.render(ParseConstants.KEY_TYPE_LINK, link.getLink(), link.getDescription(),
+                        link.getVotes(), link.getCreatorName(), "1 h");
                 break;
         }
     }
