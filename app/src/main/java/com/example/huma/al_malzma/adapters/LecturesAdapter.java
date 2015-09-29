@@ -109,18 +109,15 @@ public class LecturesAdapter extends SectionedRecyclerViewAdapter<HeaderVH, Data
         switch (section) {
             case 0:
                 PdfType pdf = pdfs.get(position);
-                holder.render(ParseConstants.KEY_TYPE_IMAGE, "PDF", pdf.getDescription(),
-                        pdf.getVotes(), pdf.getCreatorName(), "1 h");
+                holder.render(pdf, ParseConstants.KEY_TYPE_IMAGE, "PDF", pdf.getDescription());
                 break;
             case 1:
                 ImageType image = images.get(position);
-                holder.render(ParseConstants.KEY_TYPE_IMAGE, "PDF", image.getDescription(),
-                        image.getVotes(), image.getCreatorName(), "1 h");
+                holder.render(image, ParseConstants.KEY_TYPE_IMAGE, "IMG", image.getDescription());
                 break;
             case 2:
                 LinkType link = links.get(position);
-                holder.render(ParseConstants.KEY_TYPE_LINK, link.getLink(), link.getDescription(),
-                        link.getVotes(), link.getCreatorName(), "1 h");
+                holder.render(link, ParseConstants.KEY_TYPE_LINK, link.getLink(), link.getDescription());
                 break;
         }
     }

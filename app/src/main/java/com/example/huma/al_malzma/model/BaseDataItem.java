@@ -28,6 +28,7 @@ public abstract class BaseDataItem extends ParseObject {
 
     // Fields that identify the ParseObject and help when retrieving it
     private String university = creator.getString(ParseConstants.KEY_UNIVERSITY);
+    private String username = creator.getUsername();
     private String faculty = creator.getString(ParseConstants.KEY_FACULTY);
     private String department = creator.getString(ParseConstants.KEY_DEPARTMENT);
     private String grade = creator.getString(ParseConstants.KEY_GRADE);
@@ -56,7 +57,7 @@ public abstract class BaseDataItem extends ParseObject {
 
     private void putIdentifiers() {
         put(ParseConstants.KEY_CREATOR, creator);
-        put(ParseConstants.KEY_CREATOR_NAME, creator.getUsername());
+        put(ParseConstants.KEY_CREATOR_NAME, username);
         put(ParseConstants.KEY_UNIVERSITY, university);
         put(ParseConstants.KEY_FACULTY, faculty);
         put(ParseConstants.KEY_DEPARTMENT, department);
@@ -64,6 +65,8 @@ public abstract class BaseDataItem extends ParseObject {
         put(ParseConstants.KEY_TERM, term);
         put(ParseConstants.KEY_SUBJECT, subject);
         put(ParseConstants.KEY_WEEK, week);
+        put(ParseConstants.KEY_POSITIVE_VOTES, 0);
+        put(ParseConstants.KEY_NEGATIVE_VOTES, 0);
     }
 
 
@@ -157,7 +160,6 @@ public abstract class BaseDataItem extends ParseObject {
     }
 
     public void remove() {
-
     }
 
     public void edit() {
