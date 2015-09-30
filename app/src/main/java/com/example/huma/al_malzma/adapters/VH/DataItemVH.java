@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.model.BaseDataItem;
+import com.example.huma.al_malzma.model.LinkType;
 import com.example.huma.al_malzma.parse.ParseConstants;
 
 import butterknife.Bind;
@@ -26,13 +27,17 @@ public class DataItemVH extends RecyclerView.ViewHolder {
     @Bind(R.id.up_Text_view) TextView mUpTextView;
     @Bind(R.id.down_Text_view) TextView mDownTextView;
 
+    View itemView;
 
-    public DataItemVH(View itemView) {
+    public DataItemVH(final View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        this.itemView = itemView;
+
     }
 
-    public void render(final BaseDataItem item, @ParseConstants.DataType String type, String title,
+
+    public void render(final BaseDataItem item, String title,
                        String description) {
         mTitle.setText(title);
         mDescription.setText(description);
@@ -40,13 +45,25 @@ public class DataItemVH extends RecyclerView.ViewHolder {
         mCreatorName.setText(item.getCreatorName());
         mTime.setText(item.getCreatedAt().toString());
 
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (item.getDataType().equals(ParseConstants.KEY_TYPE_PDF)) {
+
+                } else if (item.getDataType().equals(ParseConstants.KEY_TYPE_IMAGE)) {
+
+                } else if (item.getDataType().equals(ParseConstants.KEY_TYPE_LINK)) {
+                    LinkType.openUri(itemView.getContext(), ((LinkType) item).getLink());
+                }
+                Log.d(TAG, "onClick " + item.getDataType());
+            }
+        });
 
         mUpTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 item.incrementPositiveVotes();
                 mVotes.setText(String.valueOf(item.getVotes()));
-                Log.d(TAG, "onClick() returned: " + item.getVotes());
             }
         });
 

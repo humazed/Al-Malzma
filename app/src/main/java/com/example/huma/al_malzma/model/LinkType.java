@@ -1,6 +1,8 @@
 package com.example.huma.al_malzma.model;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -107,6 +109,10 @@ public class LinkType extends BaseDataItem {
         positiveAction.setEnabled(false); // disabled by default
     }
 
+    public static void openUri(Context context, String uri) {
+        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+    }
+
 
     @Override
     public void saveToParse(Context context) {
@@ -128,6 +134,6 @@ public class LinkType extends BaseDataItem {
 
     public void setLink(String link) {
         link = Utility.validateLink(link);
-        put(ParseConstants.KEY_LINK, link);
+        if (link != null) put(ParseConstants.KEY_LINK, link);
     }
 }
