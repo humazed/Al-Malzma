@@ -24,8 +24,10 @@ public interface ParseConstants {
     String KEY_WEEK = "week";
     String KEY_SUBJECT = "subject";
 
-    String KEY_POSITIVE_VOTES = "positive_votes";
-    String KEY_NEGATIVE_VOTES = "negative_votes";
+    //votes
+    String KEY_POSITIVE_VOTERS_NAMES = "positive_voters_names";
+    String KEY_NEGATIVE_VOTERS_NAMES = "negative_voters_names";
+
 
     //Image
     String CLASS_IMAGE = "Image";

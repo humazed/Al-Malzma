@@ -42,12 +42,11 @@ public class LecturesAdapter extends SectionedRecyclerViewAdapter<HeaderVH, Data
     protected int getItemCountForSection(int section) {
         switch (section) {
             case 0:
-                LecturesFragment.mPDFs.isEmpty();
-                return LecturesFragment.mPDFs.size();
+                return LecturesFragment.mPDFs == null ? 0 : LecturesFragment.mPDFs.size();
             case 1:
-                return LecturesFragment.mImages.size();
+                return LecturesFragment.mImages == null ? 0 : LecturesFragment.mImages.size();
             case 2:
-                return LecturesFragment.mLinks.size();
+                return LecturesFragment.mLinks == null ? 0 : LecturesFragment.mLinks.size();
             default:
                 return 0;
         }

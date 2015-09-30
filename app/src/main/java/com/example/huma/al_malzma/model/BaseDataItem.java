@@ -19,19 +19,22 @@ import com.parse.ParseUser;
 import com.parse.ProgressCallback;
 import com.parse.SaveCallback;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public abstract class BaseDataItem extends ParseObject {
     private static final String TAG = DataItem.class.getSimpleName();
 
 
-    private ParseUser creator = ParseUser.getCurrentUser();
+    private ParseUser currentUser = ParseUser.getCurrentUser();
 
     // Fields that identify the ParseObject and help when retrieving it
-    private String university = creator.getString(ParseConstants.KEY_UNIVERSITY);
-    private String username = creator.getUsername();
-    private String faculty = creator.getString(ParseConstants.KEY_FACULTY);
-    private String department = creator.getString(ParseConstants.KEY_DEPARTMENT);
-    private String grade = creator.getString(ParseConstants.KEY_GRADE);
+    private String university = currentUser.getString(ParseConstants.KEY_UNIVERSITY);
+    private String currentUserName = currentUser.getUsername();
+    private String faculty = currentUser.getString(ParseConstants.KEY_FACULTY);
+    private String department = currentUser.getString(ParseConstants.KEY_DEPARTMENT);
+    private String grade = currentUser.getString(ParseConstants.KEY_GRADE);
 
     private String term = Utility.getCurrentTerm();
 
@@ -43,6 +46,9 @@ public abstract class BaseDataItem extends ParseObject {
 
     private int positiveVotes = 0;
     private int negativeVotes = 0;
+
+    private List<ParseUser> positiveVoters;
+    private List<ParseUser> negativeVoters;
 
 
     public BaseDataItem() { /*Default constructor required by parse */ }
@@ -56,8 +62,8 @@ public abstract class BaseDataItem extends ParseObject {
     }
 
     private void putIdentifiers() {
-        put(ParseConstants.KEY_CREATOR, creator);
-        put(ParseConstants.KEY_CREATOR_NAME, username);
+        put(ParseConstants.KEY_CREATOR, currentUser);
+        put(ParseConstants.KEY_CREATOR_NAME, currentUserName);
         put(ParseConstants.KEY_UNIVERSITY, university);
         put(ParseConstants.KEY_FACULTY, faculty);
         put(ParseConstants.KEY_DEPARTMENT, department);
@@ -65,8 +71,8 @@ public abstract class BaseDataItem extends ParseObject {
         put(ParseConstants.KEY_TERM, term);
         put(ParseConstants.KEY_SUBJECT, subject);
         put(ParseConstants.KEY_WEEK, week);
-        put(ParseConstants.KEY_POSITIVE_VOTES, 0);
-        put(ParseConstants.KEY_NEGATIVE_VOTES, 0);
+        add(ParseConstants.KEY_POSITIVE_VOTERS_NAMES, "");
+        add(ParseConstants.KEY_NEGATIVE_VOTERS_NAMES, "");
     }
 
 
@@ -155,6 +161,19 @@ public abstract class BaseDataItem extends ParseObject {
         }
     }
 
+    private void saveInBackgroundWithLog() {
+        saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.d(TAG, "done() returned: " + true);
+                } else {
+                    Log.e(TAG, "done: fail: ", e);
+                }
+            }
+        });
+    }
+
     public boolean add() {
         return true;
     }
@@ -191,26 +210,59 @@ public abstract class BaseDataItem extends ParseObject {
     }
 
 
-    public int getPositiveVotes() {
-        return getInt(ParseConstants.KEY_POSITIVE_VOTES);
-    }
-
     public void incrementPositiveVotes() {
-        increment(ParseConstants.KEY_POSITIVE_VOTES);
-        saveInBackground();
-    }
-
-    public int getNegativeVotes() {
-        return getInt(ParseConstants.KEY_NEGATIVE_VOTES);
+        addToPositiveVoters();
+        saveInBackgroundWithLog();
     }
 
     public void incrementNegativeVotes() {
-        increment(ParseConstants.KEY_NEGATIVE_VOTES, -1);
-        saveInBackground();
+        addToNegativeVoters();
+        saveInBackgroundWithLog();
+    }
+
+    public int getPositiveVotes() {
+        return getPositiveVotersNames().size();
+    }
+
+    public int getNegativeVotesCount() {
+        return getPositiveVotersNames().size();
     }
 
     public int getVotes() {
-        return getPositiveVotes() + getNegativeVotes();
+        return getPositiveVotes() - getNegativeVotesCount();
     }
+
+    public List<ParseUser> getPositiveVotersNames() {
+        return getList(ParseConstants.KEY_POSITIVE_VOTERS_NAMES);
+    }
+
+    public void addToPositiveVoters() {
+        addUnique(ParseConstants.KEY_POSITIVE_VOTERS_NAMES, currentUserName);
+        saveInBackgroundWithLog();
+    }
+
+    public List<ParseUser> getNegativeVotersNames() {
+        return getList(ParseConstants.KEY_NEGATIVE_VOTERS_NAMES);
+    }
+
+    public void addToNegativeVoters() {
+        addUnique(ParseConstants.KEY_NEGATIVE_VOTERS_NAMES, currentUserName);
+        saveInBackgroundWithLog();
+    }
+
+    public void removeFromPositiveVoters() {
+        ArrayList<String> nameToRemove = new ArrayList<>();
+        nameToRemove.add(currentUserName);
+        removeAll(ParseConstants.KEY_POSITIVE_VOTERS_NAMES, nameToRemove);
+        saveInBackgroundWithLog();
+    }
+
+    public void removeFromNegativeVoters() {
+        ArrayList<String> nameToRemove = new ArrayList<>();
+        nameToRemove.add(currentUserName);
+        removeAll(ParseConstants.KEY_NEGATIVE_VOTERS_NAMES, nameToRemove);
+        saveInBackgroundWithLog();
+    }
+
 
 }

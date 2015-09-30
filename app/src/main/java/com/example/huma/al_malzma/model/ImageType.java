@@ -48,10 +48,9 @@ public class ImageType extends BaseDataItem {
 
     public ImageType(Context context, @RequestType int requestType,
                      @ParseConstants.FragmentSource String fragmentSource) {
+        super(fragmentSource, ParseConstants.KEY_TYPE_IMAGE);
         mContext = context;
         mType = requestType;
-//        setDataType(ParseConstants.KEY_TYPE_IMAGE);
-//        setFragmentSource(fragmentSource);
     }
 
     public Intent getActionIntent() {

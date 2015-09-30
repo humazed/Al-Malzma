@@ -251,7 +251,10 @@ public class LecturesFragment extends Fragment {
     }
 
     private boolean noData() {
-        return LecturesFragment.mPDFs.isEmpty()
+        return LecturesFragment.mPDFs == null
+                && LecturesFragment.mImages == null
+                && LecturesFragment.mLinks == null
+                && LecturesFragment.mPDFs.isEmpty()
                 && LecturesFragment.mImages.isEmpty()
                 && LecturesFragment.mLinks.isEmpty();
     }
