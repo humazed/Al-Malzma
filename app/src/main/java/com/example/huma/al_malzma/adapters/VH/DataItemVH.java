@@ -1,15 +1,20 @@
 package com.example.huma.al_malzma.adapters.VH;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.model.BaseDataItem;
+import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
 import com.example.huma.al_malzma.parse.ParseConstants;
+import com.example.huma.al_malzma.ui.ImageActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,16 +50,40 @@ public class DataItemVH extends RecyclerView.ViewHolder {
         mCreatorName.setText(item.getCreatorName());
         mTime.setText(item.getCreatedAt().toString());
 
+        if (item.getDataType().equals(ParseConstants.KEY_TYPE_IMAGE))
+            Glide.with(itemView.getContext())
+                    .load(Uri.parse(((ImageType) item).getImage().getUrl()))
+                    .centerCrop()
+//                .placeholder(R.drawable.loading_spinner)
+                    .crossFade()
+                    .into(mTypeImageView);
+
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (item.getDataType().equals(ParseConstants.KEY_TYPE_PDF)) {
-
-                } else if (item.getDataType().equals(ParseConstants.KEY_TYPE_IMAGE)) {
-
-                } else if (item.getDataType().equals(ParseConstants.KEY_TYPE_LINK)) {
-                    LinkType.openUri(itemView.getContext(), ((LinkType) item).getLink());
+                switch (item.getDataType()) {
+                    case ParseConstants.KEY_TYPE_PDF:
+                        break;
+                    case ParseConstants.KEY_TYPE_IMAGE:
+                        Intent intent = new Intent(v.getContext(), ImageActivity.class);
+                        intent.setData(Uri.parse(((ImageType) item).getImage().getUrl()));
+                        v.getContext().startActivity(intent);
+                        break;
+                    case ParseConstants.KEY_TYPE_LINK:
+                        LinkType.openUri(itemView.getContext(), ((LinkType) item).getLink());
+                        break;
                 }
+//
+//                if (item.getDataType().equals(ParseConstants.KEY_TYPE_PDF)) {
+//                    Log.d(TAG, "onClick " + "");
+//                } else if (item.getDataType().equals(ParseConstants.KEY_TYPE_IMAGE)) {
+//                    Intent intent = new Intent(v.getContext(), ImageActivity.class);
+//                    intent.setData(Uri.parse(((ImageType) item).getImage().getUrl()));
+//                    v.getContext().startActivity(intent);
+//                } else if (item.getDataType().equals(ParseConstants.KEY_TYPE_LINK)) {
+//                    LinkType.openUri(itemView.getContext(), ((LinkType) item).getLink());
+//                }
                 Log.d(TAG, "onClick " + item.getDataType());
             }
         });

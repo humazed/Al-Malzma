@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -51,13 +50,6 @@ public class SignupActivity extends AppCompatActivity {
 
     private SubjectDataSource mSubjectDataSource;
 
-    @OnClick(R.id.test_button)
-    void test() {
-        Log.d(TAG, "test " + mSelectedUniversity);
-        Log.d(TAG, "test " + mSelectedFaculty);
-        Log.d(TAG, "test " + mSelectedDepartment);
-        Log.d(TAG, "test " + mSelectedGrade);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
