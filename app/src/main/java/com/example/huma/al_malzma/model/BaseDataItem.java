@@ -220,35 +220,47 @@ public abstract class BaseDataItem extends ParseObject {
         saveInBackgroundWithLog();
     }
 
+    public void addToPositiveVoters() {
+        removeFromNegativeVoters();
+
+        if (!getPositiveVotersNames().contains(currentUserName))
+            addUnique(ParseConstants.KEY_POSITIVE_VOTERS_NAMES, currentUserName);
+        else
+            removeFromPositiveVoters();
+        saveInBackgroundWithLog();
+    }
+
+    public void addToNegativeVoters() {
+        removeFromPositiveVoters();
+
+        if (!getNegativeVotersNames().contains(currentUserName))
+            addUnique(ParseConstants.KEY_NEGATIVE_VOTERS_NAMES, currentUserName);
+        else
+            removeFromNegativeVoters();
+        saveInBackgroundWithLog();
+    }
+
     public int getPositiveVotes() {
         return getPositiveVotersNames().size();
     }
 
     public int getNegativeVotesCount() {
-        return getPositiveVotersNames().size();
+        return getNegativeVotersNames().size();
     }
 
     public int getVotes() {
         return getPositiveVotes() - getNegativeVotesCount();
     }
 
-    public List<ParseUser> getPositiveVotersNames() {
+    public List<String> getPositiveVotersNames() {
         return getList(ParseConstants.KEY_POSITIVE_VOTERS_NAMES);
     }
 
-    public void addToPositiveVoters() {
-        addUnique(ParseConstants.KEY_POSITIVE_VOTERS_NAMES, currentUserName);
-        saveInBackgroundWithLog();
-    }
 
-    public List<ParseUser> getNegativeVotersNames() {
+    public List<String> getNegativeVotersNames() {
         return getList(ParseConstants.KEY_NEGATIVE_VOTERS_NAMES);
     }
 
-    public void addToNegativeVoters() {
-        addUnique(ParseConstants.KEY_NEGATIVE_VOTERS_NAMES, currentUserName);
-        saveInBackgroundWithLog();
-    }
 
     public void removeFromPositiveVoters() {
         ArrayList<String> nameToRemove = new ArrayList<>();

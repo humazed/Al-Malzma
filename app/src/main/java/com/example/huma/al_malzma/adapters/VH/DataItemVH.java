@@ -1,6 +1,7 @@
 package com.example.huma.al_malzma.adapters.VH;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ public class DataItemVH extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 item.incrementPositiveVotes();
                 mVotes.setText(String.valueOf(item.getVotes()));
+                Log.d(TAG, "onClick() returned: " + item.getVotes());
             }
         });
 
