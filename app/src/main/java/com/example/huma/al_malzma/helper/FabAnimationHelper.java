@@ -3,6 +3,7 @@ package com.example.huma.al_malzma.helper;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.v7.widget.RecyclerView;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 
@@ -14,8 +15,10 @@ public class FabAnimationHelper {
 
 
     private static int mPreviousVisibleItem;
+    private static int mScrollOffset = 4;
 
-    public static AbsListView.OnScrollListener hideMenuOnScrollListener(final FloatingActionMenu fam) {
+
+    public static AbsListView.OnScrollListener hideMenuOnListScrollListener(final FloatingActionMenu fam) {
         //hide the Menu when scroll.
         return new AbsListView.OnScrollListener() {
             @Override
@@ -30,6 +33,22 @@ public class FabAnimationHelper {
                     fam.showMenuButton(true);
                 }
                 mPreviousVisibleItem = firstVisibleItem;
+            }
+        };
+    }
+
+    public static RecyclerView.OnScrollListener hideMenuOnRecyclerScrollListener(final FloatingActionMenu fam) {
+        return new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (Math.abs(dy) > mScrollOffset) {
+                    if (dy > 0) {
+                        fam.hideMenuButton(true);
+                    } else {
+                        fam.showMenuButton(true);
+                    }
+                }
             }
         };
     }

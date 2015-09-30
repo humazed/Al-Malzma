@@ -20,6 +20,19 @@
         android:scaleType="centerCrop"
         android:src="@color/gray"/>
 
+    <ImageView
+        android:id="@+id/download_image_view"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/type_image_view"
+        android:layout_marginTop="12dp"
+        android:contentDescription="download"
+        android:src="@mipmap/ic_cloud_download_grey600_36dp"
+        android:visibility="gone"/>
+
+
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
@@ -80,8 +93,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/creator_name"
             android:layout_gravity="center_vertical"
-            android:paddingRight="8dp"
             android:paddingEnd="8dp"
+            android:paddingRight="8dp"
             android:text="TIME"
             android:textSize="12sp"/>
 
@@ -91,8 +104,8 @@
         android:id="@+id/up_down_layout"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="2dp"
         android:layout_marginStart="2dp">
@@ -104,6 +117,7 @@
             android:layout_alignEnd="@+id/s1_Text_view"
             android:layout_alignParentTop="true"
             android:layout_alignRight="@+id/s1_Text_view"
+            android:layout_margin="3dp"
             android:background="#52ff12"
             android:text="+1"
             android:textSize="25sp"/>
@@ -116,6 +130,7 @@
             android:layout_alignParentTop="@+id/up_Text_view"
             android:layout_alignRight="@+id/s1_Text_view"
             android:layout_below="@+id/up_Text_view"
+            android:layout_margin="3dp"
             android:background="#ff312e"
             android:text="-1"
             android:textSize="25sp"/>

@@ -24,6 +24,7 @@ public class DataItemVH extends RecyclerView.ViewHolder {
 
 
     @Bind(R.id.type_image_view) ImageView mTypeImageView;
+    @Bind(R.id.download_image_view) ImageView mDownlandImageView;
     @Bind(R.id.title) TextView mTitle;
     @Bind(R.id.description) TextView mDescription;
     @Bind(R.id.votes) TextView mVotes;
@@ -38,7 +39,6 @@ public class DataItemVH extends RecyclerView.ViewHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.itemView = itemView;
-
     }
 
 
@@ -50,15 +50,22 @@ public class DataItemVH extends RecyclerView.ViewHolder {
         mCreatorName.setText(item.getCreatorName());
         mTime.setText(item.getCreatedAt().toString());
 
-        if (item.getDataType().equals(ParseConstants.KEY_TYPE_IMAGE))
-            Glide.with(itemView.getContext())
-                    .load(Uri.parse(((ImageType) item).getImage().getUrl()))
-                    .centerCrop()
-//                .placeholder(R.drawable.loading_spinner)
-                    .crossFade()
-                    .into(mTypeImageView);
+        switch (item.getDataType()) {
+            case ParseConstants.KEY_TYPE_PDF:
+                mDownlandImageView.setVisibility(View.VISIBLE);
+                break;
+            case ParseConstants.KEY_TYPE_IMAGE:
+                Glide.with(itemView.getContext())
+                        .load(Uri.parse(((ImageType) item).getImage().getUrl()))
+                        .centerCrop()
+                        .crossFade()
+                        .into(mTypeImageView);
+                break;
+            case ParseConstants.KEY_TYPE_LINK:
+                break;
+        }
 
-
+        //open the data when type on item.
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,20 +81,11 @@ public class DataItemVH extends RecyclerView.ViewHolder {
                         LinkType.openUri(itemView.getContext(), ((LinkType) item).getLink());
                         break;
                 }
-//
-//                if (item.getDataType().equals(ParseConstants.KEY_TYPE_PDF)) {
-//                    Log.d(TAG, "onClick " + "");
-//                } else if (item.getDataType().equals(ParseConstants.KEY_TYPE_IMAGE)) {
-//                    Intent intent = new Intent(v.getContext(), ImageActivity.class);
-//                    intent.setData(Uri.parse(((ImageType) item).getImage().getUrl()));
-//                    v.getContext().startActivity(intent);
-//                } else if (item.getDataType().equals(ParseConstants.KEY_TYPE_LINK)) {
-//                    LinkType.openUri(itemView.getContext(), ((LinkType) item).getLink());
-//                }
                 Log.d(TAG, "onClick " + item.getDataType());
             }
         });
 
+        //handel up and down tv
         mUpTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

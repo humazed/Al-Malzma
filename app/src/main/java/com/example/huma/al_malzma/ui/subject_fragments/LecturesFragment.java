@@ -68,7 +68,7 @@ public class LecturesFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
 
-//        mSubjectsListView.setOnScrollListener(FabAnimationHelper.hideMenuOnScrollListener(mMenu));
+        mLecturesRecyclerView.addOnScrollListener(FabAnimationHelper.hideMenuOnRecyclerScrollListener(mMenu));
         FabAnimationHelper.animMenu(getActivity(), mMenu);
 
         return rootView;
