@@ -67,7 +67,7 @@ public class PdfType extends BaseDataItem {
             target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
             try {
-                context.startActivity(Intent.createChooser(target, "Open File"));
+                context.startActivity(target);
             } catch (ActivityNotFoundException e) {
                 // Instruct the user to install a PDF reader here, or something
                 Toast.makeText(context, "there is no program PDF", Toast.LENGTH_SHORT).show();
@@ -83,7 +83,7 @@ public class PdfType extends BaseDataItem {
 
 
     public ParseFile getPDF() {
-        return PDF;
+        return getParseFile(ParseConstants.KEY_PDF);
     }
 
     public void setPDF(Uri pdfUri) {

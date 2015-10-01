@@ -3,9 +3,12 @@ package com.example.huma.al_malzma.helper;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 
+import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.parse.ParseConstants;
+import com.example.huma.al_malzma.ui.SubjectActivity;
 
 import org.apache.commons.io.IOUtils;
 
@@ -31,7 +34,7 @@ public class FileHelper {
                 inStream = context.getContentResolver().openInputStream(uri);
                 outStream = new ByteArrayOutputStream();
 
-                byte[] bytesFromFile = new byte[1024 * 1024 * 10]; // buffer size (1 MB)
+                byte[] bytesFromFile = new byte[1024 * 1024 * 10]; // buffer size (10 MB)
                 int bytesRead = inStream != null ? inStream.read(bytesFromFile) : 0;
                 while (bytesRead != -1) {
                     outStream.write(bytesFromFile, 0, bytesRead);
@@ -94,5 +97,32 @@ public class FileHelper {
         }
 
         return fileName;
+    }
+
+    public static boolean isExternalStorageAvailable() {
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+    }
+
+    /**
+     * this method will make folder with subjectName inside Al-Malzma folder
+     * and return the Uri
+     */
+    public static File getSubjectFile(Context context) {
+        String appName = context.getString(R.string.app_name);
+        String subjectName = SubjectActivity.subjectName;
+        //must remove spaces as it used for Image file name.
+        String week = SubjectActivity.week.replaceAll("\\s+", "");
+
+        //directory where images will be saved.
+        File imagesDir = new File(
+                Environment.getExternalStoragePublicDirectory(appName),
+                subjectName);
+
+        //Create our subdirectory.
+        if (!imagesDir.exists()) if (!imagesDir.mkdirs()) {
+            Log.e(TAG, "Failed to create directory.");
+            return null;
+        }
+        return imagesDir;
     }
 }

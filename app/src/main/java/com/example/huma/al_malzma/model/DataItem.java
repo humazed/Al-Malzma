@@ -65,7 +65,7 @@ public abstract class DataItem extends ParseObject {
     }
 
     public static String getSubject() {
-        return subject;
+        return SubjectActivity.subjectName;
     }
 
     public static void setSubject(String subject) {
@@ -73,7 +73,7 @@ public abstract class DataItem extends ParseObject {
     }
 
     public static String getWeek() {
-        return week;
+        return SubjectActivity.week;
     }
 
     public static void setWeek(String week) {

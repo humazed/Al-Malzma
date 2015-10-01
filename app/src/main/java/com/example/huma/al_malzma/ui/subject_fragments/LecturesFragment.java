@@ -67,7 +67,6 @@ public class LecturesFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_lectures, container, false);
         ButterKnife.bind(this, rootView);
 
-
         mLecturesRecyclerView.addOnScrollListener(FabAnimationHelper.hideMenuOnRecyclerScrollListener(mMenu));
         FabAnimationHelper.animMenu(getActivity(), mMenu);
 
@@ -143,7 +142,7 @@ public class LecturesFragment extends Fragment {
     private void fillFinally() {
         Log.d(TAG, "fillFinally " + "loading");
         if (linkFlag && imageFlag && pdfFlag) {
-            if (!noData()) {
+            if (!noData()) {// FIXME: 10/1/2015 there is nullPointerExaction
                 mEmptyLoadingTextView.setVisibility(View.GONE);
                 Log.d(TAG, "noData " + false);
                 LecturesAdapter adapter = new LecturesAdapter(getActivity(), mPDFs, mImages, mLinks);

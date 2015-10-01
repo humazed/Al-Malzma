@@ -79,7 +79,7 @@ public abstract class BaseDataItem extends ParseObject {
     /**
      * in this class the member variables getters and setters are normal noe's because all of them
      * can be got without user direct input and save them to parse in the constructor.
-     * <p/>
+     * <p>
      * but in the classes that inherit from him getters and setters will deal with parse directly
      * because as they say in there site this is the recommenced approach.
      * https://www.parse.com/docs/android/guide#objects-accessors-mutators-and-methods

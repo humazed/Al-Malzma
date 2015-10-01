@@ -2,6 +2,7 @@ package com.example.huma.al_malzma.adapters.VH;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -14,14 +15,25 @@ import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.model.BaseDataItem;
 import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
+import com.example.huma.al_malzma.model.PdfType;
 import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.ui.ImageActivity;
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ProgressCallback;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class DataItemVH extends RecyclerView.ViewHolder {
     private static final String TAG = DataItemVH.class.getSimpleName();
+    public static final String KEY_IMAGE_ID = "imageID";
 
 
     @Bind(R.id.type_image_view) ImageView mTypeImageView;
@@ -74,11 +86,18 @@ public class DataItemVH extends RecyclerView.ViewHolder {
                 mContainer.setBackgroundColor(0xFFC107);
                 switch (item.getDataType()) {
                     case ParseConstants.KEY_TYPE_PDF:
+                        String pdfUrl = ((PdfType) item).getPDF().getUrl();
+
+                        String googleDocsUrl = "http://docs.google.com/viewer?url=" + pdfUrl;
+                        Intent viewPdfIntent = new Intent(Intent.ACTION_VIEW);
+                        viewPdfIntent.setDataAndType(Uri.parse(googleDocsUrl), "text/html");
+                        itemView.getContext().startActivity(viewPdfIntent);
                         break;
                     case ParseConstants.KEY_TYPE_IMAGE:
-                        Intent intent = new Intent(v.getContext(), ImageActivity.class);
-                        intent.setData(Uri.parse(((ImageType) item).getImage().getUrl()));
-                        v.getContext().startActivity(intent);
+                        Intent imageIntent = new Intent(v.getContext(), ImageActivity.class);
+//                        imageIntent.setData(Uri.parse(((ImageType) item).getImage().getUrl()));
+                        imageIntent.putExtra(KEY_IMAGE_ID, item.getObjectId());
+                        v.getContext().startActivity(imageIntent);
                         break;
                     case ParseConstants.KEY_TYPE_LINK:
                         LinkType.openUri(itemView.getContext(), ((LinkType) item).getLink());
@@ -105,6 +124,48 @@ public class DataItemVH extends RecyclerView.ViewHolder {
             }
         });
 
+        mDownlandImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Uri pdfUri = Uri.parse(((PdfType) item).getPDF().getUrl());
+                ((PdfType) item).getPDF().getDataInBackground(new GetDataCallback() {
+                    @Override
+                    public void done(byte[] bytess, ParseException e) {
+
+                        File dir = Environment.getExternalStorageDirectory();
+
+                        File assist = new File("/mnt/sdcard/Sample.pdf");
+                        try {
+                            FileInputStream fis = new FileInputStream(assist);
+
+                            long length = assist.length();
+                            if (length > Integer.MAX_VALUE) {
+                                Log.e(TAG, "Sorry! Your given file is too large. cannnottt   readddd");
+                            }
+                            byte[] bytes = new byte[(int) length];
+                            int offset = 0;
+                            int numRead;
+                            while (offset < bytes.length && (numRead = fis.read(bytes, offset, bytes.length - offset)) >= 0) {
+                                offset += numRead;
+                            }
+
+                            File data = new File(dir, "mydemo.pdf");
+                            OutputStream op = new FileOutputStream(data);
+                            op.write(bytes);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }, new ProgressCallback() {
+                    @Override
+                    public void done(Integer integer) {
+
+                    }
+                });
+
+
+            }
+        });
 
     }
 

@@ -94,7 +94,7 @@ public class SubjectActivity extends AppCompatActivity implements ActionBar.TabL
         super.onResume();
         // TODO: 9/9/2015 I didn't use any of that things except subjectName an week. so  try delete them when you finish.
         Intent mainIntent = getIntent().getParcelableExtra(WeeksActivity.KEY_MAIN_INTENT);
-        if (mainIntent != null && mainIntent.getStringExtra(MainActivity.KEY_SUBJECT_NAME) != null) {
+            if (mainIntent != null && mainIntent.getStringExtra(MainActivity.KEY_SUBJECT_NAME) != null) {
             university = mainIntent.getStringExtra(MainActivity.KEY_UNIVERSITY);
             faculty = mainIntent.getStringExtra(MainActivity.KEY_FACULTY);
             department = mainIntent.getStringExtra(MainActivity.KEY_DEPARTMENT);
@@ -109,7 +109,7 @@ public class SubjectActivity extends AppCompatActivity implements ActionBar.TabL
 
         // TODO: 9/12/2015 change the Activity title to be the name of subject
 
-        Log.d(TAG, "onCreate " + university + faculty + department + grade + term + subjectName + week);
+        Log.d(TAG, "onResume " + university + faculty + department + grade + term + subjectName + week);
 
         setTitle(subjectName);
     }
