@@ -39,5 +39,5 @@ dependencies {
     compile 'com.truizlop.sectionedrecyclerview:library:1.0.0'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
-
+    compile 'com.balysv:material-ripple:1.0.2'
 }

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -32,6 +33,7 @@ public class DataItemVH extends RecyclerView.ViewHolder {
     @Bind(R.id.time) TextView mTime;
     @Bind(R.id.up_Text_view) TextView mUpTextView;
     @Bind(R.id.down_Text_view) TextView mDownTextView;
+    @Bind(R.id.row_container) RelativeLayout mContainer;
 
     View itemView;
 
@@ -69,6 +71,7 @@ public class DataItemVH extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mContainer.setBackgroundColor(0xFFC107);
                 switch (item.getDataType()) {
                     case ParseConstants.KEY_TYPE_PDF:
                         break;
