@@ -84,10 +84,9 @@ public class DataItemVH extends RecyclerView.ViewHolder {
         }
 
         //open the data when type on item.
-        itemView.setOnClickListener(new View.OnClickListener() {
+        mContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContainer.setBackgroundColor(0xFFC107);
                 switch (item.getDataType()) {
                     case ParseConstants.KEY_TYPE_PDF:
                         String pdfUrl = ((PdfType) item).getPDF().getUrl();

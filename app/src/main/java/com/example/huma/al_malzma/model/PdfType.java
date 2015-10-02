@@ -70,7 +70,7 @@ public class PdfType extends BaseDataItem {
                 context.startActivity(target);
             } catch (ActivityNotFoundException e) {
                 // Instruct the user to install a PDF reader here, or something
-                Toast.makeText(context, "there is no program PDF", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "there is no program to open PDF", Toast.LENGTH_SHORT).show();
             }
         } else
             Toast.makeText(context, "File path is incorrect.", Toast.LENGTH_LONG).show();
