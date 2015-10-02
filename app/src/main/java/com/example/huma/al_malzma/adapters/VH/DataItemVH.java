@@ -2,16 +2,17 @@ package com.example.huma.al_malzma.adapters.VH;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.huma.al_malzma.R;
+import com.example.huma.al_malzma.helper.FileHelper;
 import com.example.huma.al_malzma.model.BaseDataItem;
 import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
@@ -20,13 +21,13 @@ import com.example.huma.al_malzma.parse.ParseConstants;
 import com.example.huma.al_malzma.ui.ImageActivity;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ProgressCallback;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,6 +39,8 @@ public class DataItemVH extends RecyclerView.ViewHolder {
 
     @Bind(R.id.type_image_view) ImageView mTypeImageView;
     @Bind(R.id.download_image_view) ImageView mDownlandImageView;
+    @Bind(R.id.open_image_view) ImageView mOpenImageView;
+    @Bind(R.id.loading_text_view) TextView mLoadingTextView;
     @Bind(R.id.title) TextView mTitle;
     @Bind(R.id.description) TextView mDescription;
     @Bind(R.id.votes) TextView mVotes;
@@ -48,6 +51,7 @@ public class DataItemVH extends RecyclerView.ViewHolder {
     @Bind(R.id.row_container) RelativeLayout mContainer;
 
     View itemView;
+    private File mPdfFile;
 
     public DataItemVH(final View itemView) {
         super(itemView);
@@ -95,7 +99,6 @@ public class DataItemVH extends RecyclerView.ViewHolder {
                         break;
                     case ParseConstants.KEY_TYPE_IMAGE:
                         Intent imageIntent = new Intent(v.getContext(), ImageActivity.class);
-//                        imageIntent.setData(Uri.parse(((ImageType) item).getImage().getUrl()));
                         imageIntent.putExtra(KEY_IMAGE_ID, item.getObjectId());
                         v.getContext().startActivity(imageIntent);
                         break;
@@ -126,44 +129,47 @@ public class DataItemVH extends RecyclerView.ViewHolder {
 
         mDownlandImageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-//                Uri pdfUri = Uri.parse(((PdfType) item).getPDF().getUrl());
-                ((PdfType) item).getPDF().getDataInBackground(new GetDataCallback() {
+            public void onClick(final View v) {
+                mLoadingTextView.setVisibility(View.VISIBLE);
+                mDownlandImageView.setVisibility(View.GONE);
+
+                ParseFile pdfParseFile = ((PdfType) item).getPDF();
+                final String fileName = pdfParseFile.getName();
+
+                pdfParseFile.getDataInBackground(new GetDataCallback() {
                     @Override
                     public void done(byte[] bytess, ParseException e) {
+                        if (e == null) {
+                            mLoadingTextView.setVisibility(View.GONE);
+                            mOpenImageView.setVisibility(View.VISIBLE);
 
-                        File dir = Environment.getExternalStorageDirectory();
-
-                        File assist = new File("/mnt/sdcard/Sample.pdf");
-                        try {
-                            FileInputStream fis = new FileInputStream(assist);
-
-                            long length = assist.length();
-                            if (length > Integer.MAX_VALUE) {
-                                Log.e(TAG, "Sorry! Your given file is too large. cannnottt   readddd");
+                            File subjectDir = FileHelper.getSubjectFile(v.getContext());
+                            mPdfFile = new File(subjectDir, fileName);
+                            try {
+                                FileUtils.writeByteArrayToFile(mPdfFile, bytess);
+                                Toast.makeText(v.getContext(), "Saved to: " + mPdfFile.getAbsolutePath(), Toast.LENGTH_LONG).show();
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
                             }
-                            byte[] bytes = new byte[(int) length];
-                            int offset = 0;
-                            int numRead;
-                            while (offset < bytes.length && (numRead = fis.read(bytes, offset, bytes.length - offset)) >= 0) {
-                                offset += numRead;
-                            }
-
-                            File data = new File(dir, "mydemo.pdf");
-                            OutputStream op = new FileOutputStream(data);
-                            op.write(bytes);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
+                        } else {
+                            Log.e(TAG, "done: Fail: ", e);
+                            Toast.makeText(v.getContext(), "Fail! :(", Toast.LENGTH_LONG).show();
                         }
                     }
                 }, new ProgressCallback() {
                     @Override
                     public void done(Integer integer) {
-
+                        String percent = integer + "%";
+                        mLoadingTextView.setText(percent);
                     }
                 });
+            }
+        });
 
-
+        mOpenImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PdfType.displayPdf(v.getContext(), Uri.fromFile(mPdfFile.getAbsoluteFile()));
             }
         });
 

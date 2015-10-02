@@ -25,6 +25,17 @@
             android:scaleType="centerCrop"
             android:src="@color/gray"/>
 
+
+        <TextView
+            android:id="@+id/loading_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/type_image_view"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"/>
+
         <ImageView
             android:id="@+id/download_image_view"
             android:layout_width="36dp"
@@ -35,6 +46,18 @@
             android:layout_marginTop="12dp"
             android:contentDescription="download"
             android:src="@mipmap/ic_cloud_download_grey600_36dp"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/open_image_view"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/type_image_view"
+            android:layout_marginTop="12dp"
+            android:contentDescription="download"
+            android:src="@drawable/ic_folder_24dp"
             android:visibility="gone"/>
 
 
