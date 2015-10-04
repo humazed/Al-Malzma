@@ -68,11 +68,13 @@ public class DataItemVH extends RecyclerView.ViewHolder {
         mCreatorName.setText(item.getCreatorName());
         mTime.setText(item.getCreatedAt().toString());
 
+
         switch (item.getDataType()) {
             case ParseConstants.KEY_TYPE_PDF:
                 mDownlandImageView.setVisibility(View.VISIBLE);
                 break;
             case ParseConstants.KEY_TYPE_IMAGE:
+                mDownlandImageView.setVisibility(View.GONE);
                 Glide.with(itemView.getContext())
                         .load(Uri.parse(((ImageType) item).getImage().getUrl()))
                         .centerCrop()
@@ -80,6 +82,7 @@ public class DataItemVH extends RecyclerView.ViewHolder {
                         .into(mTypeImageView);
                 break;
             case ParseConstants.KEY_TYPE_LINK:
+                mDownlandImageView.setVisibility(View.GONE);
                 break;
         }
 

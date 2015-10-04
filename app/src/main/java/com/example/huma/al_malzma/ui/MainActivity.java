@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.subjects_listView) ListView mSubjectsListView;
     @Bind(R.id.empty_text_view) TextView mEmptyTextView;
-    @Bind(R.id.fab) FloatingActionButton mFab;
 
     public static final String KEY_UNIVERSITY = "university";
     public static final String KEY_FACULTY = "faculty";
