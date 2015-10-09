@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.diegocarloslima.byakugallery.lib.TouchImageView;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.adapters.VH.DataItemVH;
 import com.example.huma.al_malzma.model.ImageType;
@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 public class ImageActivity extends AppCompatActivity {
     private static final String TAG = ImageActivity.class.getSimpleName();
 
-    @Bind(R.id.imageView) ImageView mImageView;
+    @Bind(R.id.imageView) TouchImageView mImageView;
     @Bind(R.id.loading_text_view) TextView mLoadingTextView;
 
     @Override

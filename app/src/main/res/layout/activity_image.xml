@@ -9,15 +9,15 @@
 
 
     <TextView
+        android:id="@+id/loading_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Loading..."
-        android:id="@+id/loading_text_view"
-        android:layout_below="@+id/imageView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView"
+        android:text="Loading..."/>
 
-    <ImageView
+    <com.diegocarloslima.byakugallery.lib.TouchImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,5 +25,23 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:contentDescription="Image"/>
+
+    <!--<ImageView-->
+    <!--android:id="@+id/imageView"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:contentDescription="Image"/>-->
+
+    <!--<it.sephiroth.android.library.imagezoom.ImageViewTouch-->
+    <!--android:id="@+id/imageView"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:contentDescription="Image"/>-->
 
 </RelativeLayout>
