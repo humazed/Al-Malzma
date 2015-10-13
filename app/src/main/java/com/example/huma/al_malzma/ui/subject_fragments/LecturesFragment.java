@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.huma.al_malzma.R;
-import com.example.huma.al_malzma.adapters.LecturesAdapter;
+import com.example.huma.al_malzma.adapters.LSAdapter;
 import com.example.huma.al_malzma.helper.FabAnimationHelper;
 import com.example.huma.al_malzma.model.DataItem;
 import com.example.huma.al_malzma.model.ImageType;
@@ -49,9 +49,9 @@ public class LecturesFragment extends Fragment {
     ImageType image;
     PdfType mPdfData;
 
-    public static List<LinkType> mLinks;
-    public static List<PdfType> mPDFs;
-    public static List<ImageType> mImages;
+    private List<LinkType> mLinks;
+    private List<PdfType> mPDFs;
+    private List<ImageType> mImages;
 
     private boolean linkFlag = false;
     private boolean imageFlag = false;
@@ -142,10 +142,10 @@ public class LecturesFragment extends Fragment {
     private void fillFinally() {
         Log.d(TAG, "fillFinally " + "loading");
         if (linkFlag && imageFlag && pdfFlag) {
-            if (!noData()) {// FIXME: 10/1/2015 there is nullPointerExaction
+            if (hasData()) {// FIXME: 10/1/2015 there is nullPointerExaction
                 mEmptyLoadingTextView.setVisibility(View.GONE);
-                Log.d(TAG, "noData " + false);
-                LecturesAdapter adapter = new LecturesAdapter(getActivity(), mPDFs, mImages, mLinks);
+                Log.d(TAG, "hasData " + false);
+                LSAdapter adapter = new LSAdapter(getActivity(), mPDFs, mImages, mLinks);
                 mLecturesRecyclerView.setAdapter(adapter);
                 mLecturesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             } else {
@@ -249,13 +249,13 @@ public class LecturesFragment extends Fragment {
         });
     }
 
-    private boolean noData() {
-        return LecturesFragment.mPDFs == null
-                && LecturesFragment.mImages == null
-                && LecturesFragment.mLinks == null
-                && LecturesFragment.mPDFs.isEmpty()
-                && LecturesFragment.mImages.isEmpty()
-                && LecturesFragment.mLinks.isEmpty();
+    private boolean hasData() {
+        return mPDFs != null
+                && mImages != null
+                && mLinks != null
+                && !(mPDFs.isEmpty())
+                && !(mImages.isEmpty())
+                && !(mLinks.isEmpty());
     }
 
     private void setImageCurrentConstrains(ParseQuery<ImageType> imageQuery) {

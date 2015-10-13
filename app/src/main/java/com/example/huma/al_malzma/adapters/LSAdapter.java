@@ -13,14 +13,17 @@ import com.example.huma.al_malzma.adapters.VH.HeaderVH;
 import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
 import com.example.huma.al_malzma.model.PdfType;
-import com.example.huma.al_malzma.ui.subject_fragments.LecturesFragment;
 import com.truizlop.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 
 import java.util.List;
 
-public class LecturesAdapter extends SectionedRecyclerViewAdapter<HeaderVH, DataItemVH, FooterVH> {
+/**
+ * Lectures and Sections recyclerView adapter.
+ */
 
-    private static final String TAG = LecturesAdapter.class.getSimpleName();
+public class LSAdapter extends SectionedRecyclerViewAdapter<HeaderVH, DataItemVH, FooterVH> {
+
+    private static final String TAG = LSAdapter.class.getSimpleName();
 
 
     protected Context context = null;
@@ -29,7 +32,7 @@ public class LecturesAdapter extends SectionedRecyclerViewAdapter<HeaderVH, Data
     List<ImageType> images;
     List<LinkType> links;
 
-    public LecturesAdapter(Context context, List<PdfType> pdfs, List<ImageType> images, List<LinkType> links) {
+    public LSAdapter(Context context, List<PdfType> pdfs, List<ImageType> images, List<LinkType> links) {
         this.context = context;
         this.pdfs = pdfs;
         this.images = images;
@@ -41,11 +44,11 @@ public class LecturesAdapter extends SectionedRecyclerViewAdapter<HeaderVH, Data
     protected int getItemCountForSection(int section) {
         switch (section) {
             case 0:
-                return LecturesFragment.mPDFs == null ? 0 : LecturesFragment.mPDFs.size();
+                return pdfs== null ? 0 : pdfs.size();
             case 1:
-                return LecturesFragment.mImages == null ? 0 : LecturesFragment.mImages.size();
+                return images== null ? 0 : images.size();
             case 2:
-                return LecturesFragment.mLinks == null ? 0 : LecturesFragment.mLinks.size();
+                return links== null ? 0 : links.size();
             default:
                 return 0;
         }
