@@ -71,17 +71,28 @@ public class DataItemVH extends RecyclerView.ViewHolder {
 
         switch (item.getDataType()) {
             case ParseConstants.KEY_TYPE_PDF:
+                Glide.with(itemView.getContext())
+                        .load(R.drawable.ic_insert_drive_file_36dp)
+                        .centerCrop()
+                        .crossFade()
+                        .into(mTypeImageView);
                 mDownlandImageView.setVisibility(View.VISIBLE);
                 break;
             case ParseConstants.KEY_TYPE_IMAGE:
-                mDownlandImageView.setVisibility(View.GONE);
                 Glide.with(itemView.getContext())
                         .load(Uri.parse(((ImageType) item).getImage().getUrl()))
                         .centerCrop()
                         .crossFade()
+                        .placeholder(R.drawable.ic_photo_36dp)
                         .into(mTypeImageView);
+                mDownlandImageView.setVisibility(View.GONE);
                 break;
             case ParseConstants.KEY_TYPE_LINK:
+                Glide.with(itemView.getContext())
+                        .load(R.drawable.ic_insert_link_36dp)
+                        .centerCrop()
+                        .crossFade()
+                        .into(mTypeImageView);
                 mDownlandImageView.setVisibility(View.GONE);
                 break;
         }
