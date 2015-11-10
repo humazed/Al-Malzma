@@ -47,7 +47,8 @@
         </activity>
         <activity
             android:name=".ui.SubjectActivity"
-            android:label="@string/title_activity_subject">
+            android:label="@string/title_activity_subject"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.huma.al_malzma.ui.WeeksActivity"/>

@@ -96,5 +96,6 @@
     <string name="fab_label_add_link">Add link</string>
     <string name="fab_label_add_pdf_file">Add pdf file</string>
 
+    <string name="section_format">Hello World from section: %1$d</string>
 
 </resources>
