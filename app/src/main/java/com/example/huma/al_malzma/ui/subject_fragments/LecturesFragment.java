@@ -213,42 +213,6 @@ public class LecturesFragment extends Fragment {
         }
     }
 
-    private void fillLinksList(ParseQuery<LinkType> linkQuery) {
-        linkQuery.findInBackground(new FindCallback<LinkType>() {
-            public void done(List<LinkType> links, ParseException e) {
-                if (e == null) {
-                    mLinks = links;
-                } else {
-                    Log.d("score", "Error: " + e.getMessage());
-                }
-            }
-        });
-    }
-
-    private void fillPDFsList(ParseQuery<PdfType> linkQuery) {
-        linkQuery.findInBackground(new FindCallback<PdfType>() {
-            public void done(List<PdfType> pdfs, ParseException e) {
-                if (e == null) {
-                    mPDFs = pdfs;
-                } else {
-                    Log.d("score", "Error: " + e.getMessage());
-                }
-            }
-        });
-    }
-
-    private void fillImagesList(ParseQuery<ImageType> linkQuery) {
-        linkQuery.findInBackground(new FindCallback<ImageType>() {
-            public void done(List<ImageType> images, ParseException e) {
-                if (e == null) {
-                    mImages = images;
-                } else {
-                    Log.d("score", "Error: " + e.getMessage());
-                }
-            }
-        });
-    }
-
     private boolean hasData() {
         return mPDFs != null
                 && mImages != null

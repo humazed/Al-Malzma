@@ -48,7 +48,7 @@ public class DataItemVH extends RecyclerView.ViewHolder {
     @Bind(R.id.time) TextView mTime;
     @Bind(R.id.up_Text_view) TextView mUpTextView;
     @Bind(R.id.down_Text_view) TextView mDownTextView;
-    @Bind(R.id.row_container) RelativeLayout mContainer;
+    @Bind(R.id.data_container) RelativeLayout mDataContainer;
 
     View itemView;
     private File mPdfFile;
@@ -73,8 +73,6 @@ public class DataItemVH extends RecyclerView.ViewHolder {
             case ParseConstants.KEY_TYPE_PDF:
                 Glide.with(itemView.getContext())
                         .load(R.drawable.ic_insert_drive_file_36dp)
-                        .centerCrop()
-                        .crossFade()
                         .into(mTypeImageView);
                 mDownlandImageView.setVisibility(View.VISIBLE);
                 break;
@@ -90,15 +88,13 @@ public class DataItemVH extends RecyclerView.ViewHolder {
             case ParseConstants.KEY_TYPE_LINK:
                 Glide.with(itemView.getContext())
                         .load(R.drawable.ic_insert_link_36dp)
-                        .centerCrop()
-                        .crossFade()
                         .into(mTypeImageView);
                 mDownlandImageView.setVisibility(View.GONE);
                 break;
         }
 
         //open the data when type on item.
-        mContainer.setOnClickListener(new View.OnClickListener() {
+        mDataContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (item.getDataType()) {

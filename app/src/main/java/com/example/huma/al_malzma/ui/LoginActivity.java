@@ -48,8 +48,8 @@ public class LoginActivity extends AppCompatActivity {
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mName = mNameEditText.getText().toString().trim();
-                mPassword = mPasswordEditText.getText().toString().trim();
+                mName = mNameEditText.getText().toString().trim().toLowerCase();
+                mPassword = mPasswordEditText.getText().toString().trim().toLowerCase();
 
                 //if user leave any thing empty show him AlertDialog.
                 if (mName.isEmpty() || mPassword.isEmpty()) {
