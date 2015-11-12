@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.adapters.LSAdapter;
 import com.example.huma.al_malzma.helper.FabAnimationHelper;
+import com.example.huma.al_malzma.helper.Utility;
 import com.example.huma.al_malzma.model.DataItem;
 import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
@@ -81,7 +82,9 @@ public class LecturesFragment extends Fragment {
         mPDFs = null;
         mImages = null;
 
-        refreshList();
+        if (Utility.isNetworkAvailableWithToast(getContext()))
+            refreshList();
+        else mEmptyLoadingTextView.setText(R.string.no_internet_connection);
     }
 
 

@@ -49,8 +49,6 @@ public class SubjectActivity extends AppCompatActivity {
             week = getIntent().getStringExtra(WeeksActivity.KEY_WEEK);
 
 
-        // TODO: 9/12/2015 change the Activity title to be the name of subject
-
         Log.d(TAG, "onResume " + university + faculty + department + grade + term + subjectName + week);
 
         setTitle(subjectName);
