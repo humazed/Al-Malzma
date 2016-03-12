@@ -276,5 +276,24 @@ public abstract class BaseDataItem extends ParseObject {
         saveInBackgroundWithLog();
     }
 
-
+    @Override
+    public String toString() {
+        return "BaseDataItem{" +
+                "currentUser=" + currentUser +
+                ", university='" + university + '\'' +
+                ", currentUserName='" + currentUserName + '\'' +
+                ", faculty='" + faculty + '\'' +
+                ", department='" + department + '\'' +
+                ", grade='" + grade + '\'' +
+                ", term='" + term + '\'' +
+                ", subject='" + subject + '\'' +
+                ", week='" + week + '\'' +
+                ", fragmentSource='" + fragmentSource + '\'' +
+                ", dataType='" + dataType + '\'' +
+                ", positiveVotes=" + positiveVotes +
+                ", negativeVotes=" + negativeVotes +
+                ", positiveVoters=" + positiveVoters +
+                ", negativeVoters=" + negativeVoters +
+                '}';
+    }
 }

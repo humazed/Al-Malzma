@@ -145,18 +145,23 @@ public class LecturesFragment extends Fragment {
     private void fillFinally() {
         Log.d(TAG, "fillFinally " + "loading");
         if (linkFlag && imageFlag && pdfFlag) {
-            if (hasData()) {// FIXME: 10/1/2015 there is nullPointerExaction
+            if (hasData()) {
                 mEmptyLoadingTextView.setVisibility(View.GONE);
-                Log.d(TAG, "hasData " + false);
+                Log.d(TAG, "hasData " + true);
                 LSAdapter adapter = new LSAdapter(getActivity(), mPDFs, mImages, mLinks);
                 mLecturesRecyclerView.setAdapter(adapter);
                 mLecturesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             } else {
+                Log.d(TAG, "hasData " + false);
                 mEmptyLoadingTextView.setText(R.string.empty_lectures_message);
             }
         }
     }
 
+    private boolean hasData() {
+        return mPDFs != null && mImages != null && mLinks != null
+                && (!(mPDFs.isEmpty()) || !(mImages.isEmpty()) || !(mLinks.isEmpty()));
+    }
 
     @OnClick(R.id.camera_fab)
     void takePic() {
@@ -214,15 +219,6 @@ public class LecturesFragment extends Fragment {
                     break;
             }
         }
-    }
-
-    private boolean hasData() {
-        return mPDFs != null
-                && mImages != null
-                && mLinks != null
-                && !(mPDFs.isEmpty())
-                && !(mImages.isEmpty())
-                && !(mLinks.isEmpty());
     }
 
     private void setImageCurrentConstrains(ParseQuery<ImageType> imageQuery) {

@@ -44,11 +44,11 @@ public class LSAdapter extends SectionedRecyclerViewAdapter<HeaderVH, DataItemVH
     protected int getItemCountForSection(int section) {
         switch (section) {
             case 0:
-                return pdfs== null ? 0 : pdfs.size();
+                return pdfs == null ? 0 : pdfs.size();
             case 1:
-                return images== null ? 0 : images.size();
+                return images == null ? 0 : images.size();
             case 2:
-                return links== null ? 0 : links.size();
+                return links == null ? 0 : links.size();
             default:
                 return 0;
         }

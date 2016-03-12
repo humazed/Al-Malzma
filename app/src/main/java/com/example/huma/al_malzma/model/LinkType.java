@@ -3,6 +3,7 @@ package com.example.huma.al_malzma.model;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -39,18 +40,14 @@ public class LinkType extends BaseDataItem {
                 .customView(R.layout.add_link_dialog, true)
                 .positiveText(R.string.add)
                 .negativeText(android.R.string.cancel)
-                .callback(new MaterialDialog.ButtonCallback() {
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onPositive(MaterialDialog dialog) {
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         //save link and description to parse.
                         LinkType link = new LinkType(fragmentSource);
                         link.setLink(mLinkEditText.getText().toString());
                         link.setDescription(mLinkDescriptionEditText.getText().toString());
                         link.saveToParse(context);
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
                     }
                 }).build();
 
@@ -135,5 +132,13 @@ public class LinkType extends BaseDataItem {
     public void setLink(String link) {
         link = Utility.validateLink(link);
         if (link != null) put(ParseConstants.KEY_LINK, link);
+    }
+
+
+    @Override
+    public String toString() {
+        return "LinkType: Link: " + getLink() + " Description: " +
+                getDescription() + "\n" +
+                super.toString();
     }
 }

@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     app:theme="@style/AppTheme.NoActionBar"
-    tools:context=".MainActivity">
+    tools:context=".ui.SubjectActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

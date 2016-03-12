@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.example.huma.al_malzma"
@@ -21,19 +21,20 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.1.0'
-    compile 'com.android.support:cardview-v7:23.1.0'
-    compile 'com.android.support:recyclerview-v7:23.1.0'
-    compile 'com.android.support:support-annotations:23.1.0'
-    compile 'com.android.support:design:23.1.0'
-    compile 'com.android.support:cardview-v7:23.1.0'
-    compile 'com.parse:parse-android:1.10.3'
+    compile 'com.android.support:appcompat-v7:23.2.0'
+    compile 'com.android.support:cardview-v7:23.2.0'
+    compile 'com.android.support:recyclerview-v7:23.2.0'
+    compile 'com.android.support:support-annotations:23.2.0'
+    compile 'com.android.support:design:23.2.0'
+    compile 'com.android.support:cardview-v7:23.2.0'
+    compile 'com.parse:parse-android:1.13.0'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.github.clans:fab:1.5.5'
-    compile 'com.github.rey5137:material:1.2.1'
-    compile 'com.afollestad:material-dialogs:0.7.9.1'
+    compile 'com.github.clans:fab:1.6.2'
+    compile 'com.github.rey5137:material:1.2.2'
     compile 'com.github.bumptech.glide:glide:3.6.1'
-    //   compile 'com.truizlop.sectionedrecyclerview:library:1.0.0'
     compile 'com.balysv:material-ripple:1.0.2'
     compile 'com.diegocarloslima:byakugallery:0.1.0@aar'
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.6@aar') {
+        transitive = true
+    }
 }
