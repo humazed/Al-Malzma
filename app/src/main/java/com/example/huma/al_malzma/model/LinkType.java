@@ -137,8 +137,8 @@ public class LinkType extends BaseDataItem {
 
     @Override
     public String toString() {
-        return "LinkType: Link: " + getLink() + " Description: " +
-                getDescription() + "\n" +
+        return "LinkType: Link: " + getLink() +
+                " Description: " + getDescription() + "\n" +
                 super.toString();
     }
 }

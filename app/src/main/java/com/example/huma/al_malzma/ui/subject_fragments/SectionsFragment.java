@@ -18,12 +18,11 @@ import com.example.huma.al_malzma.R;
 import com.example.huma.al_malzma.adapters.LSAdapter;
 import com.example.huma.al_malzma.helper.FabAnimationHelper;
 import com.example.huma.al_malzma.helper.Utility;
-import com.example.huma.al_malzma.model.DataItem;
+import com.example.huma.al_malzma.model.BaseDataItem;
 import com.example.huma.al_malzma.model.ImageType;
 import com.example.huma.al_malzma.model.LinkType;
 import com.example.huma.al_malzma.model.PdfType;
 import com.example.huma.al_malzma.parse.ParseConstants;
-import com.example.huma.al_malzma.ui.SubjectActivity;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.parse.FindCallback;
@@ -96,9 +95,11 @@ public class SectionsFragment extends Fragment {
         ParseQuery<PdfType> pdfQuery = ParseQuery.getQuery(ParseConstants.CLASS_PDF);
         ParseQuery<ImageType> ImageQuery = ParseQuery.getQuery(ParseConstants.CLASS_IMAGE);
 
-        setLinkCurrentConstrains(linkQuery);
-        setPdfCurrentConstrains(pdfQuery);
-        setImageCurrentConstrains(ImageQuery);
+        BaseDataItem.setQueryCurrentConstrains(ParseConstants.KEY_SECTIONS,
+                linkQuery, pdfQuery, ImageQuery);
+//        setLinkCurrentConstrains(linkQuery);
+//        setPdfCurrentConstrains(pdfQuery);
+//        setImageCurrentConstrains(ImageQuery);
 
         //List is fill now.
         linkQuery.findInBackground(new FindCallback<LinkType>() {
@@ -147,7 +148,7 @@ public class SectionsFragment extends Fragment {
     private void fillFinally() {
         Log.d(TAG, "fillFinally " + "loading");
         if (linkFlag && imageFlag && pdfFlag) {
-            if (hasData()) {// FIXME: 10/1/2015 there is nullPointerExaction
+            if (hasData()) {
                 mEmptyLoadingTextView.setVisibility(View.GONE);
                 Log.d(TAG, "hasData " + false);
                 LSAdapter adapter = new LSAdapter(getActivity(), mPDFs, mImages, mLinks);
@@ -219,46 +220,42 @@ public class SectionsFragment extends Fragment {
 
 
     private boolean hasData() {
-        return mPDFs != null
-                && mImages != null
-                && mLinks != null
-                && !(mPDFs.isEmpty())
-                && !(mImages.isEmpty())
-                && !(mLinks.isEmpty());
+        return mPDFs != null && mImages != null && mLinks != null
+                && (!(mPDFs.isEmpty()) || !(mImages.isEmpty()) || !(mLinks.isEmpty()));
     }
 
-    private void setImageCurrentConstrains(ParseQuery<ImageType> imageQuery) {
-        imageQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, DataItem.getUniversity());
-        imageQuery.whereEqualTo(ParseConstants.KEY_FACULTY, DataItem.getFaculty());
-        imageQuery.whereEqualTo(ParseConstants.KEY_DEPARTMENT, DataItem.getDepartment());
-        imageQuery.whereEqualTo(ParseConstants.KEY_GRADE, DataItem.getGrade());
-        imageQuery.whereEqualTo(ParseConstants.KEY_TERM, DataItem.getTerm());
-        imageQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, DataItem.getSubject());
-        imageQuery.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
-        imageQuery.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, ParseConstants.KEY_SECTIONS);
-    }
-
-    private void setPdfCurrentConstrains(ParseQuery<PdfType> pdfQuery) {
-        pdfQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, DataItem.getUniversity());
-        pdfQuery.whereEqualTo(ParseConstants.KEY_FACULTY, DataItem.getFaculty());
-        pdfQuery.whereEqualTo(ParseConstants.KEY_DEPARTMENT, DataItem.getDepartment());
-        pdfQuery.whereEqualTo(ParseConstants.KEY_GRADE, DataItem.getGrade());
-        pdfQuery.whereEqualTo(ParseConstants.KEY_TERM, DataItem.getTerm());
-        pdfQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, DataItem.getSubject());
-        pdfQuery.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
-        pdfQuery.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, ParseConstants.KEY_SECTIONS);
-    }
-
-    private void setLinkCurrentConstrains(ParseQuery<LinkType> linkQuery) {
-        linkQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, DataItem.getUniversity());
-        linkQuery.whereEqualTo(ParseConstants.KEY_FACULTY, DataItem.getFaculty());
-        linkQuery.whereEqualTo(ParseConstants.KEY_DEPARTMENT, DataItem.getDepartment());
-        linkQuery.whereEqualTo(ParseConstants.KEY_GRADE, DataItem.getGrade());
-        linkQuery.whereEqualTo(ParseConstants.KEY_TERM, DataItem.getTerm());
-        linkQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, DataItem.getSubject());
-        linkQuery.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
-        linkQuery.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, ParseConstants.KEY_SECTIONS);
-    }
+//    private void setImageCurrentConstrains(ParseQuery<ImageType> imageQuery) {
+//        imageQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, UserInfo.getUniversity());
+//        imageQuery.whereEqualTo(ParseConstants.KEY_FACULTY, UserInfo.getFaculty());
+//        imageQuery.whereEqualTo(ParseConstants.KEY_DEPARTMENT, UserInfo.getDepartment());
+//        imageQuery.whereEqualTo(ParseConstants.KEY_GRADE, UserInfo.getGrade());
+//        imageQuery.whereEqualTo(ParseConstants.KEY_TERM, UserInfo.getTerm());
+//        imageQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, UserInfo.getSubject());
+//        imageQuery.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
+//        imageQuery.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, ParseConstants.KEY_SECTIONS);
+//    }
+//
+//    private void setPdfCurrentConstrains(ParseQuery<PdfType> pdfQuery) {
+//        pdfQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, UserInfo.getUniversity());
+//        pdfQuery.whereEqualTo(ParseConstants.KEY_FACULTY, UserInfo.getFaculty());
+//        pdfQuery.whereEqualTo(ParseConstants.KEY_DEPARTMENT, UserInfo.getDepartment());
+//        pdfQuery.whereEqualTo(ParseConstants.KEY_GRADE, UserInfo.getGrade());
+//        pdfQuery.whereEqualTo(ParseConstants.KEY_TERM, UserInfo.getTerm());
+//        pdfQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, UserInfo.getSubject());
+//        pdfQuery.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
+//        pdfQuery.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, ParseConstants.KEY_SECTIONS);
+//    }
+//
+//    private void setLinkCurrentConstrains(ParseQuery<LinkType> linkQuery) {
+//        linkQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, UserInfo.getUniversity());
+//        linkQuery.whereEqualTo(ParseConstants.KEY_FACULTY, UserInfo.getFaculty());
+//        linkQuery.whereEqualTo(ParseConstants.KEY_DEPARTMENT, UserInfo.getDepartment());
+//        linkQuery.whereEqualTo(ParseConstants.KEY_GRADE, UserInfo.getGrade());
+//        linkQuery.whereEqualTo(ParseConstants.KEY_TERM, UserInfo.getTerm());
+//        linkQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, UserInfo.getSubject());
+//        linkQuery.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
+//        linkQuery.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, ParseConstants.KEY_SECTIONS);
+//    }
 
 
     @Override

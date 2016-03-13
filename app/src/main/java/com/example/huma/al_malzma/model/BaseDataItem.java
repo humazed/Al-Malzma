@@ -15,7 +15,7 @@ import com.example.huma.al_malzma.ui.SubjectActivity;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
+import com.parse.ParseQuery;
 import com.parse.ProgressCallback;
 import com.parse.SaveCallback;
 
@@ -24,31 +24,32 @@ import java.util.List;
 
 
 public abstract class BaseDataItem extends ParseObject {
-    private static final String TAG = DataItem.class.getSimpleName();
+    private static final String TAG = UserInfo.class.getSimpleName();
 
 
-    private ParseUser currentUser = ParseUser.getCurrentUser();
-
-    // Fields that identify the ParseObject and help when retrieving it
-    private String university = currentUser.getString(ParseConstants.KEY_UNIVERSITY);
-    private String currentUserName = currentUser.getUsername();
-    private String faculty = currentUser.getString(ParseConstants.KEY_FACULTY);
-    private String department = currentUser.getString(ParseConstants.KEY_DEPARTMENT);
-    private String grade = currentUser.getString(ParseConstants.KEY_GRADE);
+//    private ParseUser currentUser = ParseUser.getCurrentUser();
+//
+//    // TODO: 3/12/2016 remove when make sure UserInfo is working correctly
+//    // Fields that identify the ParseObject and help when retrieving it
+//    private String university = currentUser.getString(ParseConstants.KEY_UNIVERSITY);
+//    private String currentUserName = currentUser.getUsername();
+//    private String faculty = currentUser.getString(ParseConstants.KEY_FACULTY);
+//    private String department = currentUser.getString(ParseConstants.KEY_DEPARTMENT);
+//    private String grade = currentUser.getString(ParseConstants.KEY_GRADE);
 
     private String term = Utility.getCurrentTerm();
 
     private String subject = SubjectActivity.subjectName;
     private String week = SubjectActivity.week;
 
-    private String fragmentSource; //ie: lecture, section or announcement. get it from ParseConstants.java
-    private String dataType; //ie: PDF, Image or link. get it from ParseConstants.java
+//    private String fragmentSource; //ie: lecture, section or announcement. get it from ParseConstants.java
+//    private String dataType; //ie: PDF, Image or link. get it from ParseConstants.java
 
-    private int positiveVotes = 0;
-    private int negativeVotes = 0;
+//    private int positiveVotes = 0;
+//    private int negativeVotes = 0;
 
-    private List<ParseUser> positiveVoters;
-    private List<ParseUser> negativeVoters;
+//    private List<ParseUser> positiveVoters;
+//    private List<ParseUser> negativeVoters;
 
 
     public BaseDataItem() { /*Default constructor required by parse */ }
@@ -62,12 +63,12 @@ public abstract class BaseDataItem extends ParseObject {
     }
 
     private void putIdentifiers() {
-        put(ParseConstants.KEY_CREATOR, currentUser);
-        put(ParseConstants.KEY_CREATOR_NAME, currentUserName);
-        put(ParseConstants.KEY_UNIVERSITY, university);
-        put(ParseConstants.KEY_FACULTY, faculty);
-        put(ParseConstants.KEY_DEPARTMENT, department);
-        put(ParseConstants.KEY_GRADE, grade);
+        put(ParseConstants.KEY_CREATOR, UserInfo.getCurrentUser());
+        put(ParseConstants.KEY_CREATOR_NAME, UserInfo.getUserName());
+        put(ParseConstants.KEY_UNIVERSITY, UserInfo.getUniversity());
+        put(ParseConstants.KEY_FACULTY, UserInfo.getFaculty());
+        put(ParseConstants.KEY_DEPARTMENT, UserInfo.getDepartment());
+        put(ParseConstants.KEY_GRADE, UserInfo.getGrade());
         put(ParseConstants.KEY_TERM, term);
         put(ParseConstants.KEY_SUBJECT, subject);
         put(ParseConstants.KEY_WEEK, week);
@@ -75,11 +76,26 @@ public abstract class BaseDataItem extends ParseObject {
         add(ParseConstants.KEY_NEGATIVE_VOTERS_NAMES, "");
     }
 
+    @SafeVarargs
+    public static void setQueryCurrentConstrains(
+            @ParseConstants.FragmentSource String fragmentSource,
+            ParseQuery<? extends BaseDataItem>... queries) {
+        for (ParseQuery<? extends BaseDataItem> query : queries) {
+            query.whereEqualTo(ParseConstants.KEY_UNIVERSITY, UserInfo.getUniversity());
+            query.whereEqualTo(ParseConstants.KEY_FACULTY, UserInfo.getFaculty());
+            query.whereEqualTo(ParseConstants.KEY_DEPARTMENT, UserInfo.getDepartment());
+            query.whereEqualTo(ParseConstants.KEY_GRADE, UserInfo.getGrade());
+            query.whereEqualTo(ParseConstants.KEY_TERM, UserInfo.getTerm());
+            query.whereEqualTo(ParseConstants.KEY_SUBJECT, UserInfo.getSubject());
+            query.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
+            query.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, fragmentSource);
+        }
+    }
 
     /**
      * in this class the member variables getters and setters are normal noe's because all of them
      * can be got without user direct input and save them to parse in the constructor.
-     * <p>
+     * <p/>
      * but in the classes that inherit from him getters and setters will deal with parse directly
      * because as they say in there site this is the recommenced approach.
      * https://www.parse.com/docs/android/guide#objects-accessors-mutators-and-methods
@@ -185,14 +201,6 @@ public abstract class BaseDataItem extends ParseObject {
     }
 
 
-    public ParseUser getCreator() {
-        return getParseUser(ParseConstants.KEY_CREATOR);
-    }
-
-    public String getCreatorName() {
-        return getString(ParseConstants.KEY_CREATOR_NAME);
-    }
-
     public String getFragmentSource() {
         return getString(ParseConstants.KEY_FRAGMENT_SOURCE);
     }
@@ -209,6 +217,9 @@ public abstract class BaseDataItem extends ParseObject {
         put(ParseConstants.KEY_DATA_TYPE, dataType);
     }
 
+    public String getCreatorName() {
+        return getString(ParseConstants.KEY_CREATOR_NAME);
+    }
 
     public void incrementPositiveVotes() {
         addToPositiveVoters();
@@ -223,8 +234,8 @@ public abstract class BaseDataItem extends ParseObject {
     public void addToPositiveVoters() {
         removeFromNegativeVoters();
 
-        if (!getPositiveVotersNames().contains(currentUserName))
-            addUnique(ParseConstants.KEY_POSITIVE_VOTERS_NAMES, currentUserName);
+        if (!getPositiveVotersNames().contains(UserInfo.getUserName()))
+            addUnique(ParseConstants.KEY_POSITIVE_VOTERS_NAMES, UserInfo.getUserName());
         else
             removeFromPositiveVoters();
         saveInBackgroundWithLog();
@@ -233,14 +244,14 @@ public abstract class BaseDataItem extends ParseObject {
     public void addToNegativeVoters() {
         removeFromPositiveVoters();
 
-        if (!getNegativeVotersNames().contains(currentUserName))
-            addUnique(ParseConstants.KEY_NEGATIVE_VOTERS_NAMES, currentUserName);
+        if (!getNegativeVotersNames().contains(UserInfo.getUserName()))
+            addUnique(ParseConstants.KEY_NEGATIVE_VOTERS_NAMES, UserInfo.getUserName());
         else
             removeFromNegativeVoters();
         saveInBackgroundWithLog();
     }
 
-    public int getPositiveVotes() {
+    public int getPositiveVotesCount() {
         return getPositiveVotersNames().size();
     }
 
@@ -249,7 +260,7 @@ public abstract class BaseDataItem extends ParseObject {
     }
 
     public int getVotes() {
-        return getPositiveVotes() - getNegativeVotesCount();
+        return getPositiveVotesCount() - getNegativeVotesCount();
     }
 
     public List<String> getPositiveVotersNames() {
@@ -264,36 +275,25 @@ public abstract class BaseDataItem extends ParseObject {
 
     public void removeFromPositiveVoters() {
         ArrayList<String> nameToRemove = new ArrayList<>();
-        nameToRemove.add(currentUserName);
+        nameToRemove.add(UserInfo.getUserName());
         removeAll(ParseConstants.KEY_POSITIVE_VOTERS_NAMES, nameToRemove);
         saveInBackgroundWithLog();
     }
 
     public void removeFromNegativeVoters() {
         ArrayList<String> nameToRemove = new ArrayList<>();
-        nameToRemove.add(currentUserName);
+        nameToRemove.add(UserInfo.getUserName());
         removeAll(ParseConstants.KEY_NEGATIVE_VOTERS_NAMES, nameToRemove);
         saveInBackgroundWithLog();
     }
 
+    // TODO: 3/13/2016 complete it
     @Override
     public String toString() {
-        return "BaseDataItem{" +
-                "currentUser=" + currentUser +
-                ", university='" + university + '\'' +
-                ", currentUserName='" + currentUserName + '\'' +
-                ", faculty='" + faculty + '\'' +
-                ", department='" + department + '\'' +
-                ", grade='" + grade + '\'' +
-                ", term='" + term + '\'' +
-                ", subject='" + subject + '\'' +
-                ", week='" + week + '\'' +
-                ", fragmentSource='" + fragmentSource + '\'' +
-                ", dataType='" + dataType + '\'' +
-                ", positiveVotes=" + positiveVotes +
-                ", negativeVotes=" + negativeVotes +
-                ", positiveVoters=" + positiveVoters +
-                ", negativeVoters=" + negativeVoters +
+        return ", fragmentSource='" + getFragmentSource() + '\'' +
+                ", dataType='" + getDataType() + '\'' +
+                ", positiveVotes=" + getPositiveVotesCount() +
+                ", negativeVotes=" + getNegativeVotesCount() +
                 '}';
     }
 }
