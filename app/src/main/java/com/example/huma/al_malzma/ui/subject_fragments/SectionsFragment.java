@@ -168,8 +168,8 @@ public class SectionsFragment extends Fragment {
 
     @OnClick(R.id.choose_image_fab)
     void chooseImage() {
-        image = new ImageType(getActivity(), ImageType.REQUEST_CHOOSE_PHOTO, ParseConstants.KEY_SECTIONS);
-        startActivityForResult(image.getActionIntent(), ImageType.REQUEST_CHOOSE_PHOTO);
+        image = new ImageType(getActivity(), ImageType.REQUEST_CAPTURE_PHOTO, ParseConstants.KEY_SECTIONS);
+        startActivityForResult(image.getActionIntent(), ImageType.REQUEST_CAPTURE_PHOTO);
     }
 
     @OnClick(R.id.pdf_fab)
