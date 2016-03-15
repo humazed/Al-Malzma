@@ -75,6 +75,7 @@ public class DataItemVH extends RecyclerView.ViewHolder {
                 Log.d(TAG, "render " + item.getDataType());
                 Glide.with(itemView.getContext())
                         .load(R.drawable.ic_insert_drive_file_36dp)
+                        .placeholder(R.drawable.ic_insert_drive_file_36dp)
                         .into(mTypeImageView);
                 mDownlandImageView.setVisibility(View.VISIBLE);
                 break;
@@ -88,9 +89,12 @@ public class DataItemVH extends RecyclerView.ViewHolder {
                 mDownlandImageView.setVisibility(View.GONE);
                 break;
             case ParseConstants.KEY_TYPE_LINK:
+                Log.d(TAG, "render " + "link");
                 Glide.with(itemView.getContext())
                         .load(R.drawable.ic_insert_link_36dp)
+                        .placeholder(R.drawable.ic_insert_link_36dp)
                         .into(mTypeImageView);
+
                 mDownlandImageView.setVisibility(View.GONE);
                 break;
         }
