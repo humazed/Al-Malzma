@@ -95,12 +95,10 @@ public class LecturesFragment extends Fragment {
 
         BaseDataItem.setQueryCurrentConstrains(ParseConstants.KEY_LECTURES,
                 linkQuery, pdfQuery, ImageQuery);
-//        setLinkCurrentConstrains(linkQuery);
-//        setPdfCurrentConstrains(pdfQuery);
-//        setImageCurrentConstrains(ImageQuery);
 
         //List is fill now.
         linkQuery.findInBackground(new FindCallback<LinkType>() {
+            @Override
             public void done(List<LinkType> links, ParseException e) {
                 if (e == null) {
                     mLinks = links;
@@ -114,6 +112,7 @@ public class LecturesFragment extends Fragment {
             }
         });
         pdfQuery.findInBackground(new FindCallback<PdfType>() {
+            @Override
             public void done(List<PdfType> pdfs, ParseException e) {
                 if (e == null) {
                     mPDFs = pdfs;
@@ -128,6 +127,7 @@ public class LecturesFragment extends Fragment {
         });
 
         ImageQuery.findInBackground(new FindCallback<ImageType>() {
+            @Override
             public void done(List<ImageType> images, ParseException e) {
                 if (e == null) {
                     mImages = images;
@@ -198,8 +198,8 @@ public class LecturesFragment extends Fragment {
                     dir = image.getImageUri();
                     image.setImage(dir);
                     ImageType.showImageDescriptionDialog(getActivity(), image);
-                    image.refreshGallery(getActivity());
 
+                    image.refreshGallery(getActivity());
                     break;
                 case ImageType.REQUEST_CHOOSE_PHOTO:
                     dir = data.getData();
@@ -220,7 +220,6 @@ public class LecturesFragment extends Fragment {
             }
         }
     }
-
 
     @Override
     public void onDestroyView() {

@@ -43,7 +43,7 @@ public class SectionsFragment extends Fragment {
     @Bind(R.id.choose_image_fab) FloatingActionButton mChooseImageFab;
     @Bind(R.id.pdf_fab) FloatingActionButton mPdfFab;
     @Bind(R.id.link_fab) FloatingActionButton mLinkFab;
-    @Bind(R.id.lectures_recyclerView) RecyclerView mLecturesRecyclerView;
+    @Bind(R.id.sections_recyclerView) RecyclerView mSecrionsRecyclerView;
     @Bind(R.id.empty_loading_text_view) TextView mEmptyLoadingTextView;
 
     ImageType image;
@@ -69,7 +69,7 @@ public class SectionsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_sections, container, false);
         ButterKnife.bind(this, rootView);
 
-        mLecturesRecyclerView.addOnScrollListener(FabAnimationHelper.hideMenuOnRecyclerScrollListener(mMenu));
+        mSecrionsRecyclerView.addOnScrollListener(FabAnimationHelper.hideMenuOnRecyclerScrollListener(mMenu));
         FabAnimationHelper.animMenu(getActivity(), mMenu);
 
         return rootView;
@@ -100,6 +100,7 @@ public class SectionsFragment extends Fragment {
 
         //List is fill now.
         linkQuery.findInBackground(new FindCallback<LinkType>() {
+            @Override
             public void done(List<LinkType> links, ParseException e) {
                 if (e == null) {
                     mLinks = links;
@@ -113,6 +114,7 @@ public class SectionsFragment extends Fragment {
             }
         });
         pdfQuery.findInBackground(new FindCallback<PdfType>() {
+            @Override
             public void done(List<PdfType> pdfs, ParseException e) {
                 if (e == null) {
                     mPDFs = pdfs;
@@ -127,6 +129,7 @@ public class SectionsFragment extends Fragment {
         });
 
         ImageQuery.findInBackground(new FindCallback<ImageType>() {
+            @Override
             public void done(List<ImageType> images, ParseException e) {
                 if (e == null) {
                     mImages = images;
@@ -149,8 +152,8 @@ public class SectionsFragment extends Fragment {
                 mEmptyLoadingTextView.setVisibility(View.GONE);
                 Log.d(TAG, "hasData " + false);
                 LSAdapter adapter = new LSAdapter(getActivity(), mPDFs, mImages, mLinks);
-                mLecturesRecyclerView.setAdapter(adapter);
-                mLecturesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                mSecrionsRecyclerView.setAdapter(adapter);
+                mSecrionsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             } else {
                 mEmptyLoadingTextView.setText(R.string.empty_sections_message);
             }
@@ -188,9 +191,8 @@ public class SectionsFragment extends Fragment {
             Uri dir;
             switch (requestCode) {
                 case ImageType.REQUEST_CAPTURE_PHOTO:
-                    dir = data.getData();
+                    dir = image.getImageUri();
                     image.setImage(dir);
-
                     ImageType.showImageDescriptionDialog(getActivity(), image);
 
                     image.refreshGallery(getActivity());
