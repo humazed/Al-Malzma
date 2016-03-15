@@ -1,13 +1,68 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.example.huma.al_malzma.ui.subject_fragments.SectionsFragment">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.huma.al_malzma.ui.subject_fragments.LecturesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/empty_loading_text_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:text="Loading..."/>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lectures_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="50dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        fab:menu_backgroundColor="#ccffffff"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_singleLine="true">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/camera_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_photo_camera_white_24dp"
+            fab:fab_label="@string/fab_label_camera"
+            fab:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/choose_image_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_image_white_24dp"
+            fab:fab_label="@string/fab_label_choose_image"
+            fab:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/pdf_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_insert_drive_file_white_24dp"
+            fab:fab_label="@string/fab_label_add_pdf_file"
+            fab:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/link_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_insert_link_white_24dp"
+            fab:fab_label="@string/fab_label_add_link"
+            fab:fab_size="mini"/>
+    </com.github.clans.fab.FloatingActionMenu>
 </FrameLayout>

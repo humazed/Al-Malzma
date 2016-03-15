@@ -56,7 +56,6 @@ public class LSAdapter extends SectionedRecyclerViewAdapter<HeaderVH, DataItemVH
 
     @Override
     protected int getSectionCount() {
-        Log.d(TAG, "getSectionCount ");
         return 3;
     }
 

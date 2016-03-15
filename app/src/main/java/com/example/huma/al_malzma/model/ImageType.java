@@ -39,7 +39,8 @@ public class ImageType extends BaseDataItem {
     private Context mContext;
     private int mType;
 
-    private static Uri imageUri; //must be deleted.
+
+    private Uri imageUri; //must be deleted.
 
 
     public ImageType() {/*Default constructor required by parse */}
@@ -99,7 +100,7 @@ public class ImageType extends BaseDataItem {
 
     // FIXME: 9/13/2015 didn't works on my sony phone
     /* refresh the gallery with the taken Image  */
-    public static void refreshGallery(Context context) {
+    public void refreshGallery(Context context) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         mediaScanIntent.setData(imageUri);
         context.sendBroadcast(mediaScanIntent);
@@ -133,6 +134,7 @@ public class ImageType extends BaseDataItem {
     }
 
     public void setImage(Uri imageUri) {
+        Log.d(TAG, "setImage " + "called");
         byte[] fileBytes = FileHelper.getByteArrayFromFile(mContext, imageUri);
         String fileName = imageUri.getLastPathSegment()
                 .replaceAll("\\s+", "_").replaceAll(":", "_") + ".jpg";
@@ -155,4 +157,9 @@ public class ImageType extends BaseDataItem {
     public void setDescription(String description) {
         put(ParseConstants.KEY_IMAGE_DESCRIPTION, description);
     }
+
+    public Uri getImageUri() {
+        return imageUri;
+    }
+
 }

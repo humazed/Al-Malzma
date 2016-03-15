@@ -13,6 +13,7 @@ import com.example.huma.al_malzma.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+// TODO: 3/15/2016 I just don't know why I created this class
 public class BaseDataAdapter extends RecyclerView.Adapter<BaseDataAdapter.ViewHolder> {
 
     Context mContext;

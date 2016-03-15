@@ -110,8 +110,6 @@ public class FileHelper {
     public static File getSubjectFile(Context context) {
         String appName = context.getString(R.string.app_name);
         String subjectName = SubjectActivity.subjectName;
-        //must remove spaces as it used for Image file name.
-        String week = SubjectActivity.week.replaceAll("\\s+", "");
 
         //directory where images will be saved.
         File imagesDir = new File(

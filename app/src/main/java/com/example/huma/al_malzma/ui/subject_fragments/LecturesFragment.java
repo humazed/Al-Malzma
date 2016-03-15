@@ -195,12 +195,11 @@ public class LecturesFragment extends Fragment {
             Uri dir;
             switch (requestCode) {
                 case ImageType.REQUEST_CAPTURE_PHOTO:
-                    dir = data.getData();
+                    dir = image.getImageUri();
                     image.setImage(dir);
-
                     ImageType.showImageDescriptionDialog(getActivity(), image);
+                    image.refreshGallery(getActivity());
 
-                    ImageType.refreshGallery(getActivity());
                     break;
                 case ImageType.REQUEST_CHOOSE_PHOTO:
                     dir = data.getData();
@@ -221,54 +220,6 @@ public class LecturesFragment extends Fragment {
             }
         }
     }
-
-//    @SafeVarargs
-//    private final void setQueryCurrentConstrains(@ParseConstants.FragmentSource String fragmentSource,
-//                                                 ParseQuery<? extends BaseDataItem>... queries) {
-//        for (ParseQuery<? extends BaseDataItem> query : queries) {
-//            query.whereEqualTo(ParseConstants.KEY_UNIVERSITY, UserInfo.getUniversity());
-//            query.whereEqualTo(ParseConstants.KEY_FACULTY, UserInfo.getFaculty());
-//            query.whereEqualTo(ParseConstants.KEY_DEPARTMENT, UserInfo.getDepartment());
-//            query.whereEqualTo(ParseConstants.KEY_GRADE, UserInfo.getGrade());
-//            query.whereEqualTo(ParseConstants.KEY_TERM, UserInfo.getTerm());
-//            query.whereEqualTo(ParseConstants.KEY_SUBJECT, UserInfo.getSubject());
-//            query.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
-//            query.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, fragmentSource);
-//        }
-//    }
-
-//    private void setImageCurrentConstrains(ParseQuery<ImageType> imageQuery) {
-//        imageQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, UserInfo.getUniversity());
-//        imageQuery.whereEqualTo(ParseConstants.KEY_FACULTY, UserInfo.getFaculty());
-//        imageQuery.whereEqualTo(ParseConstants.KEY_DEPARTMENT, UserInfo.getDepartment());
-//        imageQuery.whereEqualTo(ParseConstants.KEY_GRADE, UserInfo.getGrade());
-//        imageQuery.whereEqualTo(ParseConstants.KEY_TERM, UserInfo.getTerm());
-//        imageQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, UserInfo.getSubject());
-//        imageQuery.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
-//        imageQuery.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, ParseConstants.KEY_LECTURES);
-//    }
-//
-//    private void setPdfCurrentConstrains(ParseQuery<PdfType> pdfQuery) {
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, UserInfo.getUniversity());
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_FACULTY, UserInfo.getFaculty());
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_DEPARTMENT, UserInfo.getDepartment());
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_GRADE, UserInfo.getGrade());
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_TERM, UserInfo.getTerm());
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, UserInfo.getSubject());
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, ParseConstants.KEY_LECTURES);
-//    }
-//
-//    private void setLinkCurrentConstrains(ParseQuery<LinkType> linkQuery) {
-//        linkQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, UserInfo.getUniversity());
-//        linkQuery.whereEqualTo(ParseConstants.KEY_FACULTY, UserInfo.getFaculty());
-//        linkQuery.whereEqualTo(ParseConstants.KEY_DEPARTMENT, UserInfo.getDepartment());
-//        linkQuery.whereEqualTo(ParseConstants.KEY_GRADE, UserInfo.getGrade());
-//        linkQuery.whereEqualTo(ParseConstants.KEY_TERM, UserInfo.getTerm());
-//        linkQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, UserInfo.getSubject());
-//        linkQuery.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
-//        linkQuery.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, ParseConstants.KEY_LECTURES);
-//    }
 
 
     @Override

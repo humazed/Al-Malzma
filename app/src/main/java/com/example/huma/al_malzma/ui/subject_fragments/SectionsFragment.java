@@ -66,7 +66,7 @@ public class SectionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_lectures, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_sections, container, false);
         ButterKnife.bind(this, rootView);
 
         mLecturesRecyclerView.addOnScrollListener(FabAnimationHelper.hideMenuOnRecyclerScrollListener(mMenu));
@@ -97,9 +97,6 @@ public class SectionsFragment extends Fragment {
 
         BaseDataItem.setQueryCurrentConstrains(ParseConstants.KEY_SECTIONS,
                 linkQuery, pdfQuery, ImageQuery);
-//        setLinkCurrentConstrains(linkQuery);
-//        setPdfCurrentConstrains(pdfQuery);
-//        setImageCurrentConstrains(ImageQuery);
 
         //List is fill now.
         linkQuery.findInBackground(new FindCallback<LinkType>() {
@@ -196,7 +193,7 @@ public class SectionsFragment extends Fragment {
 
                     ImageType.showImageDescriptionDialog(getActivity(), image);
 
-                    ImageType.refreshGallery(getActivity());
+                    image.refreshGallery(getActivity());
                     break;
                 case ImageType.REQUEST_CHOOSE_PHOTO:
                     dir = data.getData();
@@ -223,40 +220,6 @@ public class SectionsFragment extends Fragment {
         return mPDFs != null && mImages != null && mLinks != null
                 && (!(mPDFs.isEmpty()) || !(mImages.isEmpty()) || !(mLinks.isEmpty()));
     }
-
-//    private void setImageCurrentConstrains(ParseQuery<ImageType> imageQuery) {
-//        imageQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, UserInfo.getUniversity());
-//        imageQuery.whereEqualTo(ParseConstants.KEY_FACULTY, UserInfo.getFaculty());
-//        imageQuery.whereEqualTo(ParseConstants.KEY_DEPARTMENT, UserInfo.getDepartment());
-//        imageQuery.whereEqualTo(ParseConstants.KEY_GRADE, UserInfo.getGrade());
-//        imageQuery.whereEqualTo(ParseConstants.KEY_TERM, UserInfo.getTerm());
-//        imageQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, UserInfo.getSubject());
-//        imageQuery.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
-//        imageQuery.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, ParseConstants.KEY_SECTIONS);
-//    }
-//
-//    private void setPdfCurrentConstrains(ParseQuery<PdfType> pdfQuery) {
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, UserInfo.getUniversity());
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_FACULTY, UserInfo.getFaculty());
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_DEPARTMENT, UserInfo.getDepartment());
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_GRADE, UserInfo.getGrade());
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_TERM, UserInfo.getTerm());
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, UserInfo.getSubject());
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
-//        pdfQuery.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, ParseConstants.KEY_SECTIONS);
-//    }
-//
-//    private void setLinkCurrentConstrains(ParseQuery<LinkType> linkQuery) {
-//        linkQuery.whereEqualTo(ParseConstants.KEY_UNIVERSITY, UserInfo.getUniversity());
-//        linkQuery.whereEqualTo(ParseConstants.KEY_FACULTY, UserInfo.getFaculty());
-//        linkQuery.whereEqualTo(ParseConstants.KEY_DEPARTMENT, UserInfo.getDepartment());
-//        linkQuery.whereEqualTo(ParseConstants.KEY_GRADE, UserInfo.getGrade());
-//        linkQuery.whereEqualTo(ParseConstants.KEY_TERM, UserInfo.getTerm());
-//        linkQuery.whereEqualTo(ParseConstants.KEY_SUBJECT, UserInfo.getSubject());
-//        linkQuery.whereEqualTo(ParseConstants.KEY_WEEK, SubjectActivity.week);
-//        linkQuery.whereEqualTo(ParseConstants.KEY_FRAGMENT_SOURCE, ParseConstants.KEY_SECTIONS);
-//    }
-
 
     @Override
     public void onDestroyView() {
